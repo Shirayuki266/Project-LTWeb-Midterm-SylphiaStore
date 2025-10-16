@@ -5,13 +5,17 @@ body {
     }
 
     /* HEADER */
-    header {
-      background-color: #cfa64e;
-      padding: 10px 20px;
+    #header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      color: white;
+      padding: 10px 60px;
+      background-color: #e3e6f2;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+      z-index: 999;
+      position: sticky;
+      top: 0;
+      left: 0;
     }
 
     .logo {
@@ -59,24 +63,27 @@ body {
     }
 
     /* MENU */
-    nav {
-      background-color: #333;
+    #navbar {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       padding: 10px;
     }
 
-    nav a {
-      color: white;
+    #navbar li{
+      list-style: none;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    #navbar li a {
       text-decoration: none;
       margin: 8px 15px;
       font-weight: bold;
+      font-size: 16px;
+      color: #333;
     }
 
-    nav a:hover {
-      color: #ffd700;
-    }
 
     /* SẢN PHẨM */
     .products {
