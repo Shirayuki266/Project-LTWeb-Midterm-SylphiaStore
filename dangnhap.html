@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đăng nhập - Duy Mobile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-box {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px gray;
+      width: 300px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #c89b3c;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 90%;
+      padding: 8px;
+      margin: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #c89b3c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #a47f2a;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <h2>Đăng Nhập</h2>
+    <form onsubmit="return dangNhap()">
+      <input type="text" id="user" placeholder="Tên đăng nhập" required><br>
+      <input type="password" id="pass" placeholder="Mật khẩu" required><br>
+      <input type="submit" value="Đăng nhập">
+      <a href="#">Quên mật khẩu?</a> <br>
+      <a href="#">Chưa có tài khoản? Đăng ký ngay</a>
+    </form>
+  </div>
+</body>
+</html>
