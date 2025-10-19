@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>....STORE - Trang Chủ</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      /* Base Styles & Typography */
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      /* Utility Classes */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      .text-right {
+        text-align: right;
+      }
+
+      .flex-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* ========================================================= */
+      /* Header Section */
+      /* ========================================================= */
+      .header-top {
+        background-color: #f8f8f8;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+        font-size: 0.9em;
+      }
+
+      .header-top .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .header-top-left,
+      .header-top-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .header-top-right a {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: #555;
+      }
+
+      .header-top-right a:hover {
+        color: #007bff;
+      }
+
+      .main-header {
+        background-color: #fff;
+        padding: 20px 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      .main-header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+        gap: 15px;
+      }
+
+      .logo {
+        font-size: 1.8em;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .search-bar {
+        flex-grow: 1; /* Cho phép thanh tìm kiếm mở rộng */
+        max-width: 400px;
+        position: relative;
+        display: flex;
+      }
+
+      .search-bar input {
+        width: 100%;
+        padding: 10px 40px 10px 15px; /* Giữ chỗ cho icon tìm kiếm */
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1em;
+      }
+
+      .search-bar button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        padding: 0 15px;
+        background: none;
+        border: none;
+        color: #555;
+        cursor: pointer;
+        font-size: 1.1em;
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .header-actions a {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: #555;
+      }
+
+      .header-actions a:hover {
+        color: #007bff;
+      }
+
+      .main-navigation {
+        background-color: #333;
+        padding: 15px 0;
+      }
+
+      .main-navigation .container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+      }
+
+      .main-navigation a {
+        color: #fff;
+        font-weight: 500;
+        padding: 5px 0;
+        transition: color 0.3s ease;
+      }
+
+      .main-navigation a:hover {
+        color: #007bff;
+      }
+
+      /* ========================================================= */
+      /* Hero Section */
+      /* ========================================================= */
+      .hero-section {
+        background-color: #000; /* Nền đen */
+        color: #fff;
+        padding: 50px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow: hidden; /* Để ảnh tràn ra ngoài nhưng không gây scroll */
+      }
+
+      .hero-section .container {
+        display: grid;
+        grid-template-columns: 2fr 1fr; /* 2 cột, ảnh lớn và thông tin */
+        gap: 30px;
+        align-items: center;
+        position: relative; /* Đảm bảo nội dung nằm trên ảnh nền */
+        z-index: 1;
+      }
+
+      .hero-main-content {
+        position: relative; /* Dành cho chữ "IPHONE 17 PRO" */
+        text-align: center;
+      }
+
+      .hero-main-content img {
+        width: 100%;
+        max-width: 600px; /* Giới hạn kích thước ảnh iPhone */
+        margin: 0 auto; /* Căn giữa ảnh */
+      }
+
+      .hero-text-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 5em; /* Kích thước chữ lớn */
+        font-weight: 900;
+        color: #ff9100; /* Màu cam nổi bật */
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        opacity: 0.9;
+        white-space: nowrap; /* Ngăn không cho chữ xuống dòng */
+      }
+
+      .hero-side-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+      }
+
+      .hero-side-content .promo-card {
+        background-color: #ff9100; /* Màu cam */
+        color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .hero-side-content .promo-card h3 {
+        margin: 0 0 10px 0;
+        font-size: 1.2em;
+      }
+
+      .hero-side-content .promo-card img {
+        width: 80%;
+        max-width: 150px;
+        margin: 0 auto 10px auto;
+      }
+
+      .hero-side-content .contact-info {
+        font-size: 3em;
+        font-weight: bold;
+        color: #fff;
+        margin-top: 20px;
+      }
+
+      .hero-side-content .warranty-info {
+        font-size: 1.2em;
+        font-weight: 500;
+        color: #ff9100;
+        text-transform: uppercase;
+        margin-top: 15px;
+      }
+
+      .series-navigation {
+        background-color: #3a3a3a;
+        padding: 15px 0;
+      }
+
+      .series-navigation .container {
+        display: flex;
+        justify-content: space-around;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
+      .series-navigation a {
+        background-color: #555;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: 500;
+        white-space: nowrap;
+        transition: background-color 0.3s ease;
+      }
+
+      .series-navigation a:hover {
+        background-color: #007bff;
+      }
+
+      /* ========================================================= */
+      /* Feature Icons Section */
+      /* ========================================================= */
+      .feature-icons {
+        background-color: #fff;
+        padding: 40px 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      .feature-icons .container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        text-align: center;
+      }
+
+      .feature-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .feature-item i {
+        font-size: 2.5em;
+        color: #007bff;
+      }
+
+      .feature-item h3 {
+        margin: 0;
+        font-size: 1.1em;
+        color: #333;
+      }
+
+      .feature-item p {
+        margin: 0;
+        font-size: 0.9em;
+        color: #777;
+      }
+
+      /* ========================================================= */
+      /* Product Slider Section */
+      /* ========================================================= */
+      .product-slider-section {
+        background-color: #f8f8f8;
+        padding: 50px 0;
+      }
+
+      .product-slider-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+      }
+
+      .product-slider-header h2 {
+        margin: 0;
+        font-size: 1.8em;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .product-slider-header h2 i {
+        color: #007bff;
+      }
+
+      .product-slider-nav a {
+        color: #007bff;
+        margin-left: 15px;
+        font-weight: 500;
+      }
+
+      .product-slider-nav a:hover {
+        text-decoration: underline;
+      }
+
+      .product-carousel {
+        display: flex;
+        overflow-x: auto; /* Cho phép cuộn ngang */
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch; /* Cho cuộn mượt trên iOS */
+        padding-bottom: 20px; /* Để tránh thanh cuộn che mất phần dưới */
+        scrollbar-width: none; /* Ẩn thanh cuộn Firefox */
+        -ms-overflow-style: none; /* Ẩn thanh cuộn IE/Edge */
+      }
+
+      /* Ẩn thanh cuộn Webkit */
+      .product-carousel::-webkit-scrollbar {
+        display: none;
+      }
+
+      .product-card-wrapper {
+        flex: 0 0 auto; /* Ngăn không cho card co lại */
+        width: 25%; /* 4 card/hàng */
+        padding: 0 10px; /* Khoảng cách giữa các card */
+        box-sizing: border-box;
+      }
+
+      .product-card {
+        background-color: #fff;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        overflow: hidden;
+        text-align: center;
+        padding: 15px;
+        height: 100%; /* Đảm bảo các card có chiều cao bằng nhau */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
+      }
+
+      .product-card:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transform: translateY(-5px);
+      }
+
+      .product-card img {
+        width: 80%;
+        margin: 0 auto 15px auto;
+        border-bottom: 1px solid #eee; /* Đường kẻ dưới ảnh */
+        padding-bottom: 15px;
+      }
+
+      .product-card h3 {
+        font-size: 1.05em;
+        margin: 0 0 10px 0;
+        color: #333;
+      }
+
+      .product-card .rating {
+        color: #ffc107; /* Màu vàng sao */
+        font-size: 0.9em;
+        margin-bottom: 10px;
+      }
+
+      .product-card .price {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #d9534f; /* Màu đỏ cho giá */
+      }
+
+      .countdown-card {
+        background-color: #333;
+        color: #fff;
+        border-radius: 8px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+
+      .countdown-card .time-value {
+        font-size: 2.5em;
+        font-weight: bold;
+        line-height: 1;
+      }
+
+      .countdown-card .time-label {
+        font-size: 0.8em;
+        text-transform: uppercase;
+      }
+
+      .countdown-image {
+        margin-top: 20px;
+      }
+
+      .countdown-image img {
+        width: 100%;
+        max-width: 200px;
+        margin: 0 auto;
+      }
+
+      /* Navigation arrows for carousel (optional, requires JS for functionality) */
+      .carousel-nav-arrows {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+        pointer-events: none; /* Cho phép click xuyên qua */
+        padding: 0 5px; /* Giữ mũi tên vào trong container */
+      }
+      .carousel-nav-arrows button {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.5em;
+        z-index: 10;
+        pointer-events: all; /* Cho phép click vào nút */
+        transition: background-color 0.3s ease;
+      }
+      .carousel-nav-arrows button:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+      .carousel-nav-arrows .prev {
+        left: 0;
+      }
+      .carousel-nav-arrows .next {
+        right: 0;
+      }
+
+      /* ========================================================= */
+      /* Footer Section */
+      /* ========================================================= */
+      .footer {
+        background-color: #222;
+        color: #ccc;
+        padding: 60px 0;
+        font-size: 0.9em;
+      }
+
+      .footer .container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* 4 cột trên desktop */
+        gap: 30px;
+      }
+
+      .footer-col h3 {
+        color: #fff;
+        font-size: 1.1em;
+        margin-bottom: 20px;
+        position: relative;
+      }
+
+      .footer-col h3::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 40px;
+        height: 2px;
+        background-color: #007bff;
+      }
+
+      .footer-col ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .footer-col ul li {
+        margin-bottom: 10px;
+      }
+
+      .footer-col ul li a {
+        color: #ccc;
+        transition: color 0.3s ease;
+      }
+
+      .footer-col ul li a:hover {
+        color: #007bff;
+      }
+
+      .footer-col p {
+        margin-bottom: 10px;
+      }
+
+      .footer-col .hotline {
+        font-size: 1.1em;
+        font-weight: bold;
+        color: #007bff;
+        margin-bottom: 20px;
+      }
+
+      .footer-col .store-address {
+        margin-bottom: 5px;
+      }
+      .footer-col .payment-methods img,
+      .footer-col .momo img, /* Thêm selector cho momo */
+      .footer-col .bocongthuong img {
+        width: 100%; /* Giữ chiều rộng 100% của container */
+        max-width: 150px; /* Giảm max-width để các ảnh nhỏ hơn và cân đối hơn */
+        height: auto;
+        margin-top: 10px; /* Giữ khoảng cách trên */
+        margin-bottom: 10px; /* Thêm khoảng cách dưới để tách các ảnh nếu có nhiều */
+        display: block; /* Đảm bảo mỗi ảnh nằm trên một dòng riêng */
+      }
+
+      .footer-col .bocongthuong img {
+        max-width: 120px; /* Có thể giữ hoặc điều chỉnh lại max-width riêng cho logo bộ công thương nếu muốn nhỏ hơn */
+      }
+      /* Tablets and smaller desktops */
+      @media (max-width: 992px) {
+        .header-top .container {
+          flex-direction: column;
+          gap: 10px;
+        }
+        .header-top-left,
+        .header-top-right {
+          justify-content: center;
+          width: 100%;
+          gap: 15px;
+        }
+
+        .main-header .container {
+          justify-content: center;
+        }
+        .search-bar {
+          order: 3; /* Đẩy thanh tìm kiếm xuống dưới */
+          width: 100%;
+          max-width: 100%;
+        }
+        .logo {
+          order: 1;
+        }
+        .header-actions {
+          order: 2;
+          flex-grow: 1; /* Để giỏ hàng & tài khoản căn phải */
+          justify-content: flex-end;
+        }
+
+        .main-navigation .container {
+          gap: 20px;
+          justify-content: center;
+        }
+
+        .hero-section .container {
+          grid-template-columns: 1fr; /* 1 cột trên tablet */
+          padding-top: 30px;
+          padding-bottom: 30px;
+        }
+        .hero-text-overlay {
+          font-size: 3.5em; /* Giảm kích thước chữ overlay */
+        }
+        .hero-side-content .contact-info {
+          font-size: 2.5em;
+        }
+        .hero-side-content .warranty-info {
+          font-size: 1.1em;
+        }
+
+        .feature-icons .container {
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          gap: 20px;
+        }
+
+        .product-card-wrapper {
+          width: 33.33%; /* 3 card/hàng */
+        }
+
+        .footer .container {
+          grid-template-columns: repeat(2, 1fr); /* 2 cột trên tablet */
+        }
+      }
+
+      /* Mobile devices */
+      @media (max-width: 576px) {
+        .header-top {
+          font-size: 0.8em;
+        }
+        .header-top-left,
+        .header-top-right {
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+        .main-header {
+          padding: 15px 0;
+        }
+        .logo {
+          font-size: 1.5em;
+        }
+        .header-actions {
+          gap: 15px;
+        }
+        .header-actions a span {
+          display: none; /* Ẩn chữ để tiết kiệm không gian */
+        }
+
+        .main-navigation {
+          padding: 10px 0;
+        }
+        .main-navigation .container {
+          gap: 15px 10px;
+          justify-content: flex-start; /* Căn trái trên di động */
+          overflow-x: auto; /* Cho phép cuộn ngang */
+          -webkit-overflow-scrolling: touch;
+          padding-bottom: 5px; /* Để thanh cuộn không bị dính */
+          scrollbar-width: none; /* Ẩn thanh cuộn Firefox */
+          -ms-overflow-style: none; /* Ẩn thanh cuộn IE/Edge */
+        }
+        .main-navigation .container::-webkit-scrollbar {
+          display: none;
+        }
+        .main-navigation a {
+          font-size: 0.9em;
+          padding: 5px 10px;
+          background-color: #444; /* Nền cho từng mục navigation */
+          border-radius: 5px;
+        }
+
+        .hero-section {
+          padding: 30px 0;
+        }
+        .hero-text-overlay {
+          font-size: 2.5em; /* Giảm nhiều hơn nữa */
+        }
+        .hero-side-content .promo-card {
+          padding: 15px;
+        }
+        .hero-side-content .promo-card h3 {
+          font-size: 1.1em;
+        }
+        .hero-side-content .contact-info {
+          font-size: 2em;
+        }
+        .hero-side-content .warranty-info {
+          font-size: 1em;
+        }
+
+        .series-navigation .container {
+          justify-content: flex-start;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          padding-bottom: 5px;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        .series-navigation .container::-webkit-scrollbar {
+          display: none;
+        }
+        .series-navigation a {
+          padding: 8px 15px;
+          font-size: 0.9em;
+        }
+
+        .feature-icons .container {
+          grid-template-columns: 1fr; /* 1 cột trên di động */
+          gap: 25px;
+        }
+        .feature-item i {
+          font-size: 2em;
+        }
+        .feature-item h3 {
+          font-size: 1em;
+        }
+        .feature-item p {
+          font-size: 0.85em;
+        }
+
+        .product-slider-header h2 {
+          font-size: 1.4em;
+        }
+        .product-slider-nav {
+          display: none; /* Ẩn navigation phụ trên mobile */
+        }
+        .product-card-wrapper {
+          width: 50%; /* 2 card/hàng */
+        }
+        .countdown-card .time-value {
+          font-size: 1.8em;
+        }
+        .countdown-image img {
+          max-width: 120px;
+        }
+
+        .footer {
+          padding: 40px 0;
+        }
+
+        .footer .container {
+          grid-template-columns: 1fr 1fr 1fr; /* 3 cột đều nhau */
+          gap: 30px; /* Khoảng cách giữa các cột */
+          text-align: left; /* Căn trái nội dung */
+        }
+
+        /* Gạch chân dưới tiêu đề cột */
+        .footer-col h3::after {
+          content: "";
+          display: block;
+          width: 50px;
+          height: 2px;
+          background: #00aaff;
+          margin: 8px 0;
+        }
+
+        /* Reset style danh sách */
+        .footer-col ul {
+          list-style: none;
+          padding: 0;
+          margin-bottom: 20px;
+        }
+
+        /* Responsive cho mobile */
+        @media (max-width: 768px) {
+          .footer .container {
+            grid-template-columns: 1fr; /* 1 cột khi màn hình nhỏ */
+            text-align: center; /* Căn giữa nội dung footer */
+          }
+
+          .footer-col h3::after {
+            left: 50%;
+            transform: translateX(-50%);
+            margin: 8px auto;
+          }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header Top -->
+    <header class="header-top">
+      <div class="container">
+        <div class="header-top-left">
+          <span>Hỗ trợ kỹ thuật: 02222.222222</span>
+        </div>
+        <div class="header-top-right">
+          <a href="#"><i class="fas fa-search"></i> Tra cứu bảo hành</a>
+          <a href="#"
+            ><i class="fas fa-map-marker-alt"></i> Hệ thống cửa hàng</a
+          >
+          <a href="/thongtincanhan/thongtincanhan.html"
+            ><i class="fas fa-user"></i>thông tin cá nhân</a
+          >
+          <a href="/trangdangnhap/ky/trangdangnhap.html"
+            ><i class="fas fa-user"></i> Đăng nhập / Đăng Ký</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Header -->
+    <header class="main-header">
+      <div class="container">
+        <div class="logo">
+          <a href="/trangchinh/trangchu.html"> ....STORE </a>
+        </div>
+        <div class="search-bar">
+          <input type="text" placeholder="Tìm kiếm sản phẩm..." />
+          <button type="submit"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="header-actions">
+          <a href="/giohang/giohang2.html"
+            ><i class="fas fa-shopping-cart"></i> Giỏ Hàng</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Navigation -->
+    <nav class="main-navigation">
+      <div class="container">
+        <a href="#"><i class="fas fa-mobile-alt"></i> iPhone</a>
+        <a href="#"><i class="fas fa-tablet-alt"></i> iPad</a>
+        <a href="#"><i class="fas fa-watch"></i> Watch</a>
+        <a href="#"><i class="fas fa-laptop"></i> Mac</a>
+        <a href="#"><i class="fas fa-headphones-alt"></i> Âm Thanh</a>
+        <a href="#"><i class="fas fa-boxes"></i> Phụ Kiện</a>
+        <a href="#"><i class="fas fa-credit-card"></i> Trả Góp</a>
+        <a href="#"><i class="fas fa-tag"></i> Thu Cũ</a>
+        <a href="#"><i class="fas fa-percent"></i> Sale</a>
+        <a href="#"><i class="fas fa-newspaper"></i> Tin Tức</a>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-main-content">
+          <span class="hero-text-overlay">IPHONE 17 PRO</span>
+          <img src="/image/Tieu-de-2.webp" alt="iPhone 17 Pro" />
+        </div>
+        <div class="hero-side-content">
+          <div class="promo-card">
+            <h3>Your new iPhone awaits. Make it yours.</h3>
+            <img src="/image/tieude3.jpg" alt="Promo iPhone" />
+          </div>
+          <div class="contact-info">0222.222.222</div>
+          <div class="warranty-info">
+            GÓI BẢO HÀNH NÂNG CẤP MÀN HÌNH - NGUỒN - FACE ID
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Series Navigation -->
+    <nav class="series-navigation">
+      <div class="container">
+        <a href="#">IPHONE 17 SERIES Nhận Máy Sớm !</a>
+        <a href="#">IPHONE AIR Mỏng Nhất !</a>
+        <a href="#">IPHONE 16 SERIES Hỗ Trợ Lên Đời</a>
+        <a href="#">IPHONE 15 SERIES Giá Tốt Nhất</a>
+      </div>
+    </nav>
+
+    <!-- Feature Icons Section -->
+    <section class="feature-icons">
+      <div class="container">
+        <div class="feature-item">
+          <i class="fas fa-shipping-fast"></i>
+          <h3>GIAO HÀNG TOÀN QUỐC</h3>
+          <p>Giao hàng tận nơi miễn phí</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-exchange-alt"></i>
+          <h3>THỜI GIAN ĐỔI TRẢ</h3>
+          <p>Thời gian từ 3 – 7 ngày đổi trả</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-headset"></i>
+          <h3>HỖ TRỢ KỸ THUẬT TRỌN ĐỜI</h3>
+          <p>Giờ làm việc từ 09:30 đến 22:00</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-credit-card"></i>
+          <h3>THANH TOÁN LINH HOẠT</h3>
+          <p>Thanh toán Visa, ATM, tín dụng,...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Slider Section -->
+    <section class="product-slider-section">
+      <div class="container" style="position: relative">
+        <div class="product-slider-header">
+          <h2><i class="fas fa-mobile-alt"></i> 17 Series Đẳng Cấp</h2>
+          <div class="product-slider-nav">
+            <a href="#">iPhone 17 Series</a>
+            <a href="#">iPhone Air</a>
+            <a href="/chitietmachang/chitiettmachang.html"
+              >Xem thêm <i class="fas fa-chevron-right"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="product-carousel">
+          <!-- Countdown Card (Fixed width) -->
+          <div class="product-card-wrapper" style="flex: 0 0 250px">
+            <div class="countdown-card">
+              <div class="countdown-image">
+                <img src="/image/iPhone Countdown.jpg" alt="iPhone Countdown" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Cards -->
+          <div class="product-card-wrapper">
+            <div class="product-card">
+              <img
+                src="/image/iphone_17_pro__dwccrdina7qu_large.jpg"
+                alt="Phone 17 PROMAX 512GB VN"
+              />
+              <h3>Phone 17 PROMAX 512GB VN</h3>
+              <div class="rating">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i
+                ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                ><i class="fas fa-star-half-alt"></i>
+              </div>
+              <div class="price">44.900.000VNĐ</div>
+            </div>
+          </div>
+
+          <div class="product-card-wrapper">
+            <div class="product-card">
+              <img
+                src="/image/iphone_air__f0t56fef3oey_large.jpg"
+                alt="iPhone Air 512GB VN"
+              />
+              <h3>iPhone Air 512GB VN</h3>
+              <div class="rating">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i
+                ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                ><i class="fas fa-star"></i>
+              </div>
+              <div class="price">39.200.000VNĐ</div>
+            </div>
+          </div>
+
+          <div class="product-card-wrapper">
+            <div class="product-card">
+              <img
+                src="/image/iphone_17__ck7zzemcw37m_large.jpg"
+                alt="iPhone 17"
+              />
+              <h3>iPhone 17</h3>
+              <div class="rating">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i
+                ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                ><i class="far fa-star"></i>
+              </div>
+              <div class="price">45.500.000VNĐ</div>
+            </div>
+          </div>
+          <!-- Repeat Product Cards as needed -->
+        </div>
+
+        <!-- Carousel navigation arrows (Optional, requires JS for functionality) -->
+        <div class="carousel-nav-arrows">
+          <button class="prev"><i class="fas fa-chevron-left"></i></button>
+          <button class="next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-col">
+          <h3>....STORE</h3>
+          <p class="hotline">HOTLINE: 022.222.2222</p>
+          <p class="store-address">
+            Store 1: 01 Quang Trung, P.1, Q.Gò Vấp, TP.HCM - 0913.846535
+          </p>
+          <p class="store-address">
+            Store 2: 02 Lê Hồng Phong, Q.10 TP.HCM - 0913.846535
+          </p>
+          <p class="store-address">
+            Store 3: 03 Trần Quang Khải, Q.1 TP.HCM - 0913.846535
+          </p>
+          <p class="store-address">
+            Store 4: 04 Võ Văn Ngân, P.Bình Thọ, Thủ Đức - 0913.846535
+          </p>
+          <p class="store-address">
+            Store 5: 05 Nguyễn Văn Rập, Trảng Bàng, Tây Ninh - 0913.846535
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h3>QUY ĐỊNH & CHÍNH SÁCH</h3>
+          <ul>
+            <li><a href="#">Quy định hình thức thanh toán</a></li>
+            <li><a href="#">Chính sách vận chuyển hàng</a></li>
+            <li><a href="#">Chính sách bảo hành</a></li>
+            <li><a href="#">Chính sách đổi trả</a></li>
+            <li><a href="#">Chính sách kiểm hàng</a></li>
+            <li><a href="#">Chính sách bảo mật</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>HÌNH THỨC THANH TOÁN</h3>
+          <div class="payment-methods">
+            <img src="/image/thevisa.png" alt="Payment Methods: visa" />
+          </div>
+          <div class="momo">
+            <img src="/image/momo.png" alt="MOMO" />
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3>HỆ THỐNG FANPAGE</h3>
+          <ul>
+            <li><a href="#">....STORE GÒ VẤP</a></li>
+            <li><a href="#">....STORE QUẬN 10</a></li>
+            <li><a href="#">....STORE QUẬN 1</a></li>
+            <li><a href="#">....STORE THỦ ĐỨC</a></li>
+            <li><a href="#">....STORE TÂY NINH</a></li>
+            <li><a href="#">....STORE TIỀN GIANG</a></li>
+            <li><a href="#">....STORE LONG KHÁNH</a></li>
+            <li><a href="#">....STORE LONG AN</a></li>
+            <li><a href="#">....STORE ĐÀ LẠT</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
