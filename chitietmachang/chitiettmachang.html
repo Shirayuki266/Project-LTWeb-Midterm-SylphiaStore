@@ -566,93 +566,19 @@
 
           <div class="action-buttons">
             <a
-              href="/giohang/giohang2.html"
+              href="#"
               class="btn btn-primary add-to-cart-btn"
               >Thêm vào giỏ hàng</a
             >
-            <button class="btn btn-secondary buy-now-btn">Mua ngay</button>
-          </div>
         </div>
+            <div class="action-buttons">
+            <a
+              href="../giohang/giohang2.html"
+              class="btn btn-primary add-to-cart-btn"
+              >Mua Ngay</a
+            >
+          </div>
       </div>
     </div>
-
-    <!-- Success Message Container for Buy Now -->
-    <div id="buyNowSuccessMessage" class="success-message">
-      Sản phẩm đã được mua thành công!
-    </div>
-
-    <!-- Success Message Container for Add to Cart -->
-    <div id="addToCartSuccessMessage" class="success-message">
-      Sản phẩm đã được thêm vào giỏ hàng!
-    </div>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const buyNowButtons = document.querySelectorAll(".buy-now-btn");
-        const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
-        const buyNowSuccessMessage = document.getElementById(
-          "buyNowSuccessMessage"
-        );
-        const addToCartSuccessMessage = document.getElementById(
-          "addToCartSuccessMessage"
-        );
-        const productDetailContainers = document.querySelectorAll(
-          ".product-detail-container"
-        );
-
-        // Function to show success message
-        function showSuccessMessage(messageElement, text) {
-          messageElement.textContent = text;
-          messageElement.classList.add("show");
-          setTimeout(() => {
-            messageElement.classList.remove("show");
-          }, 3000);
-        }
-
-        // Event listeners for Buy Now buttons
-        buyNowButtons.forEach((button) => {
-          button.addEventListener("click", function (event) {
-            // event.preventDefault(); // Uncomment if you don't want to navigate immediately
-            showSuccessMessage(
-              buyNowSuccessMessage,
-              "Sản phẩm đã được mua thành công!"
-            );
-          });
-        });
-
-        // Event listeners for Add to Cart buttons
-        addToCartButtons.forEach((button) => {
-          button.addEventListener("click", function (event) {
-            event.preventDefault(); // Prevent immediate navigation to show message
-            showSuccessMessage(
-              addToCartSuccessMessage,
-              "Sản phẩm đã được thêm vào giỏ hàng!"
-            );
-
-            // Navigate to cart page after a short delay
-            setTimeout(() => {
-              window.location.href = button.href;
-            }, 1000); // Navigate after 1 second (allows message to be seen briefly)
-          });
-        });
-
-        // Image Gallery Logic
-        productDetailContainers.forEach((container) => {
-          const mainImage = container.querySelector(".main-image");
-          const thumbnails = container.querySelectorAll(".thumbnail");
-
-          if (mainImage && thumbnails.length > 0) {
-            thumbnails.forEach((thumbnail) => {
-              thumbnail.addEventListener("click", function () {
-                const fullImageUrl =
-                  this.getAttribute("data-full-image") || this.src;
-                mainImage.src = fullImageUrl;
-                mainImage.alt = this.alt;
-              });
-            });
-          }
-        });
-      });
-    </script>
   </body>
 </html>
