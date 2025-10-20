@@ -9,17 +9,157 @@
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         background-color: #f8f9fa;
         margin: 0;
-        padding: 20px;
+        padding: 0; /* Changed from 20px */
         color: #333;
         display: flex;
         justify-content: center;
         align-items: flex-start;
         min-height: 100vh;
+        flex-direction: column; /* Added to stack header and main content */
+      }
+
+      .header {
+        width: 100%;
+        background-color: #fff;
+        border-bottom: 1px solid #e0e0e0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        padding: 10px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        font-size: 0.9em;
+      }
+
+      .header-contact,
+      .header-links {
+        display: flex;
+        align-items: center;
+      }
+
+      .header-links a {
+        text-decoration: none;
+        color: #555;
+        margin-left: 20px;
+        display: flex;
+        align-items: center;
+        transition: color 0.2s;
+      }
+
+      .header-links a:hover {
+        color: #007bff;
+      }
+
+      .header-links i {
+        margin-right: 5px;
+      }
+
+      .header-main {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 15px 20px;
+      }
+
+      .logo {
+        font-size: 1.8em;
+        font-weight: bold;
+        color: #333;
+        text-decoration: none;
+      }
+
+      .search-bar {
+        display: flex;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+
+      .search-bar input {
+        border: none;
+        padding: 10px 15px;
+        font-size: 1em;
+        width: 300px;
+        outline: none;
+      }
+
+      .search-bar button {
+        background-color: #f8f9fa;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .search-bar button:hover {
+        background-color: #e9ecef;
+      }
+
+      .cart {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: #333;
+      }
+
+      .cart i {
+        margin-right: 5px;
+        font-size: 1.2em;
+      }
+
+      .navbar {
+        background-color: #343a40;
+        padding: 10px 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+      }
+
+      .navbar-item a {
+        text-decoration: none;
+        color: #f8f9fa;
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        transition: background-color 0.2s, color 0.2s;
+        border-radius: 5px;
+      }
+
+      .navbar-item a:hover {
+        background-color: #495057;
+        color: #fff;
+      }
+
+      .navbar-item i {
+        margin-right: 8px;
+        font-size: 1.1em;
       }
 
       .main-content-wrapper {
         width: 100%;
         max-width: 900px;
+        margin: 30px auto; /* Added margin-top */
+        padding: 0 20px; /* Added padding for smaller screens */
       }
 
       .product-selection-tabs {
@@ -55,18 +195,9 @@
 
       /* Style cho tab được chọn */
       /* Sử dụng id của input radio button và thuộc tính :checked */
-      #product1:checked
-        ~ .main-content-wrapper
-        .product-selection-tabs
-        label[for="product1"],
-      #product2:checked
-        ~ .main-content-wrapper
-        .product-selection-tabs
-        label[for="product2"],
-      #product3:checked
-        ~ .main-content-wrapper
-        .product-selection-tabs
-        label[for="product3"] {
+      #product1:checked ~ .product-selection-tabs label[for="product1"],
+      #product2:checked ~ .product-selection-tabs label[for="product2"],
+      #product3:checked ~ .product-selection-tabs label[for="product3"] {
         background-color: #007bff;
         color: #fff;
         border-color: #007bff;
@@ -107,16 +238,6 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       }
 
-      .logo {
-        position: absolute; /* Đặt logo ở vị trí tuyệt đối */
-        top: 20px; /* Cách lề trên 20px */
-        left: 20px; /* Cách lề trái 20px */
-        font-size: 1.8em;
-        font-weight: bold;
-        color: #333;
-        z-index: 100; /* Đảm bảo logo nằm trên các phần tử khác */
-      }
-
       .thumbnail-gallery {
         margin-top: 15px;
         display: flex;
@@ -134,8 +255,9 @@
         transition: border-color 0.2s ease-in-out;
       }
 
-      .thumbnail:hover {
-        border-color: #007bff; /* Thay đổi màu viền khi hover */
+      .thumbnail:hover,
+      .thumbnail.active {
+        border-color: #007bff; /* Thay đổi màu viền khi hover và khi active */
       }
 
       .product-info {
@@ -232,6 +354,35 @@
 
       /* Responsive adjustments */
       @media (max-width: 768px) {
+        .header-top {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .header-links {
+          margin-top: 10px;
+          flex-wrap: wrap;
+        }
+
+        .header-links a {
+          margin-left: 0;
+          margin-right: 15px;
+          margin-bottom: 5px;
+        }
+
+        .header-main {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .search-bar {
+          width: 100%;
+        }
+
+        .search-bar input {
+          width: calc(100% - 60px); /* Adjust for button width */
+        }
+
         .product-detail-container {
           flex-direction: column;
           padding: 20px;
@@ -254,32 +405,71 @@
         }
       }
 
-      /* Styles for the success message */
-      .success-message {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #28a745; /* Green */
-        color: white;
-        padding: 20px 30px;
-        border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        font-size: 1.2em;
-        z-index: 1000;
-        opacity: 0; /* Start hidden */
-        transition: opacity 0.5s ease-in-out;
-      }
-
-      .success-message.show {
-        opacity: 1; /* Show when 'show' class is added */
-      }
+      /* Icon styles (Font Awesome) */
+      @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
     </style>
   </head>
   <body>
-    <div class="logo">
-      <a href="../trangchinh/trangchu.html">....STORE</a>
-    </div>
+    <header class="header">
+      <div class="header-top">
+        <div class="header-contact">
+          Hỗ trợ kỹ thuật: <strong>02222.222222</strong>
+        </div>
+        <div class="header-links">
+          <a href="../trangchinh/trangchu.html"
+            ><i class="fas fa-home"></i> Trang Chủ</a
+          >
+          <a href="#"><i class="fas fa-undo-alt"></i> Tra Cứu Bảo Hành</a>
+          <a href="#"
+            ><i class="fas fa-map-marker-alt"></i> Hệ thống Cửa hàng</a
+          >
+          <a href="../trangdangnhap/ky/trangdangnhap.html"
+            ><i class="fas fa-user"></i> Đăng Nhập / Đăng Kí</a
+          >
+        </div>
+      </div>
+      <div class="header-main">
+        <a href="../trangchinh/trangchu.html" class="logo">....STORE</a>
+        <div class="search-bar">
+          <input type="text" placeholder="Tìm kiếm sản phẩm..." />
+          <button><i class="fas fa-search"></i></button>
+        </div>
+        <a href="../giohang/giohang2.html" class="cart">
+          <i class="fas fa-shopping-cart"></i> Giỏ Hàng (0)
+        </a>
+      </div>
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="#"><i class="fas fa-mobile-alt"></i> iPhone</a>
+          </li>
+          <li class="navbar-item">
+            <a href="#"><i class="fas fa-tablet-alt"></i> iPad</a>
+          </li>
+          <li class="navbar-item">
+            <a href="#"><i class="fas fa-watch"></i> Watch</a>
+          </li>
+          <li class="navbar-item">
+            <a href="#"><i class="fas fa-laptop-code"></i> Mac</a>
+          </li>
+          <li class="navbar-item">
+            <a href="#"><i class="fas fa-headphones"></i> Âm Thanh</a>
+          </li>
+          <li class="navbar-item">
+            <a href="#"><i class="fas fa-gem"></i> Phụ Kiện</a>
+          </li>
+          <li class="navbar-item">
+            <a href="#"><i class="fas fa-box-open"></i> Tất Gộp</a>
+          </li>
+          <li class="navbar-item">
+            <a href="#"><i class="fas fa-tags"></i> Xả Sale</a>
+          </li>
+          <li class="navbar-item">
+            <a href="#"><i class="fas fa-newspaper"></i> Tin Tức</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
 
     <div class="main-content-wrapper">
       <input
@@ -321,7 +511,7 @@
               src="../image/iphone_17_pro__dwccrdina7qu_large.jpg"
               data-full-image="../image/iphone_17_pro__dwccrdina7qu_large.jpg"
               alt="Thumbnail 1"
-              class="thumbnail"
+              class="thumbnail active"
             />
             <img
               src="../image/iPhone_17_Pro_Max_đen.webp"
@@ -364,7 +554,7 @@
               <label for="color-select-1">Màu sắc:</label>
               <select id="color-select-1">
                 <option value="cam_do">Cam Đỏ</option>
-                <option value="
+                <option value="den">Đen</option>
                 <option value="trang">Trắng</option>
               </select>
             </div>
@@ -385,12 +575,14 @@
           </div>
 
           <div class="action-buttons">
+            <a href="#" class="btn btn-primary add-to-cart-btn"
+              >Thêm Vào Giỏ Hàng</a
+            >
             <a
               href="../giohang/giohang2.html"
-              class="btn btn-primary add-to-cart-btn"
-              >Thêm vào giỏ hàng</a
+              class="btn btn-secondary buy-now-btn"
+              >Mua Ngay</a
             >
-            <button class="btn btn-secondary buy-now-btn">Mua ngay</button>
           </div>
         </div>
       </div>
@@ -408,7 +600,7 @@
               src="../image/iphone_air__f0t56fef3oey_large.jpg"
               data-full-image="../image/iphone_air__f0t56fef3oey_large.jpg"
               alt="Thumbnail 1"
-              class="thumbnail"
+              class="thumbnail active"
             />
             <img
               src="../image/iphone-air-xanh.jpg"
@@ -472,12 +664,14 @@
           </div>
 
           <div class="action-buttons">
+            <a href="#" class="btn btn-primary add-to-cart-btn"
+              >Thêm Vào Giỏ Hàng</a
+            >
             <a
               href="../giohang/giohang2.html"
-              class="btn btn-primary add-to-cart-btn"
-              >Thêm vào giỏ hàng</a
+              class="btn btn-secondary buy-now-btn"
+              >Mua Ngay</a
             >
-            <button class="btn btn-secondary buy-now-btn">Mua ngay</button>
           </div>
         </div>
       </div>
@@ -495,7 +689,7 @@
               src="../image/iphone_17__ck7zzemcw37m_large.jpg"
               data-full-image="../image/iphone_17__ck7zzemcw37m_large.jpg"
               alt="Thumbnail 1"
-              class="thumbnail"
+              class="thumbnail active"
             />
             <img
               src="../image/IPHONE-17-BLACK-02.webp"
@@ -558,12 +752,12 @@
 
           <div class="action-buttons">
             <a href="#" class="btn btn-primary add-to-cart-btn"
-              >Thêm vào giỏ hàng</a
+              >Thêm Vào Giỏ Hàng</a
             >
             <a
               href="../giohang/giohang2.html"
               class="btn btn-secondary buy-now-btn"
-              >Mua ngay</a
+              >Mua Ngay</a
             >
           </div>
         </div>
