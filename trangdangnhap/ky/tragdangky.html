@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang Đăng Kí</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #eef2f7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      form {
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 450px;
+        box-sizing: border-box;
+      }
+
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 30px;
+        font-size: 2.2em;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #34495e;
+        font-weight: 600;
+        font-size: 0.95em;
+      }
+
+      input[type="text"],
+      input[type="password"],
+      input[type="email"] {
+        width: 100%;
+        padding: 12px 15px;
+        margin-bottom: 20px; /* Khoảng cách dưới mỗi input */
+        border: 1px solid #c9d6df;
+        border-radius: 6px;
+        font-size: 1.05em;
+        box-sizing: border-box;
+      }
+
+      input[type="text"]:focus,
+      input[type="password"]:focus,
+      input[type="email"]:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+      }
+
+      .button-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 25px;
+        gap: 10px; /* Khoảng cách giữa các nút */
+      }
+
+      /* Base styles cho tất cả các nút trong button-group */
+      .button-group button,
+      .button-group a {
+        flex-grow: 1; /* Cho phép các nút giãn nở bằng nhau */
+        padding: 12px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1.05em;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none; /* Loại bỏ gạch chân cho thẻ a */
+        text-align: center; /* Căn giữa text trong nút/link */
+        display: inline-block; /* Quan trọng để flex-grow hoạt động và căn giữa */
+      }
+
+      /* Style cho nút "Quay lại đăng nhập" */
+      .back-to-login-button {
+        background-color: #6c757d; /* Màu xám */
+        color: white;
+      }
+
+      .back-to-login-button:hover {
+        background-color: #5a6268; /* Màu xám đậm hơn khi hover */
+        transform: translateY(-2px);
+      }
+
+      /* Style cho nút "Hoàn tất đăng ký" */
+      .complete-registration-button {
+        background-color: #28a745; /* Màu xanh lá cây */
+        color: white;
+      }
+
+      .complete-registration-button:hover {
+        background-color: #218838; /* Màu xanh lá cây đậm hơn khi hover */
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 600px) {
+        form {
+          padding: 25px;
+          border-radius: 8px;
+          box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+          max-width: 95%;
+        }
+
+        h1 {
+          margin-bottom: 20px;
+          font-size: 1.8em;
+        }
+
+        label {
+          font-size: 0.9em;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+          padding: 10px 12px;
+          margin-bottom: 15px;
+          font-size: 1em;
+        }
+
+        .button-group {
+          flex-direction: column; /* Xếp các nút theo chiều dọc trên điện thoại */
+          margin-top: 20px;
+          gap: 10px;
+        }
+
+        .button-group button,
+        .button-group a {
+          width: 100%; /* Các nút chiếm toàn bộ chiều rộng */
+          padding: 10px 15px;
+          font-size: 1em;
+          margin: 0; /* Loại bỏ margin ngang khi xếp dọc */
+          transform: translateY(
+            0
+          ); /* Loại bỏ hiệu ứng nâng khi hover trên màn hình cảm ứng */
+        }
+      }
+
+      @media (max-width: 380px) {
+        form {
+          padding: 20px;
+        }
+        h1 {
+          font-size: 1.6em;
+          margin-bottom: 15px;
+        }
+        label {
+          font-size: 0.85em;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+          padding: 8px 10px;
+          margin-bottom: 12px;
+          font-size: 0.95em;
+        }
+        .button-group {
+          margin-top: 15px;
+          gap: 8px;
+        }
+        .button-group button,
+        .button-group a {
+          padding: 8px 12px;
+          font-size: 0.9em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <form action="../../trangchinh/dangky" method="post">
+      <h1>Đăng Kí</h1>
+      <label for="username">Tên đăng ký</label>
+      <input type="text" id="username" name="username" />
+
+      <label for="number-phone">Số Điện Thoại</label>
+      <input type="text" id="number-phone" name="number-phone" />
+
+      <label for="password">Mật khẩu:</label>
+      <input type="password" id="password" name="password" />
+
+      <label for="password2">Xác nhận mật khẩu:</label>
+      <input type="password" id="password2" name="password2" />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" />
+
+      <div class="button-group">
+        <!-- Nút quay lại đăng nhập (link) -->
+        <a href="../ky/trangdangnhap.html" class="back-to-login-button">
+          Quay lại đăng nhập
+        </a>
+        <!-- Nút hoàn tất đăng ký (submit form) -->
+        <a
+          href="../../trangchinh/trangchu.html"
+          class="complete-registration-button"
+        >
+          Hoàn tất đăng ký
+        </a>
+      </div>
+    </form>
+  </body>
+</html>
