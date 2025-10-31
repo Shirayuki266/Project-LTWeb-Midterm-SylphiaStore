@@ -1,0 +1,252 @@
+/* ========== RESET & CƠ BẢN ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #f8f8f8;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ========== HEADER ========== */
+header {
+  display: flex;               /* xếp các phần logo, search, nav theo hàng ngang */
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white;
+  padding: 15px 5%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff6600;
+  display: flex;
+  align-items: center;         /* canh logo và chữ giữa */
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  margin: 0 12px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #ff6600;
+}
+
+.icons {
+  position: relative;
+  display: inline-block;
+}
+
+.icons input {
+  width: 300px;               /* độ rộng ô tìm kiếm */
+  padding: 6px 40px 6px 10px; /* chừa chỗ cho icon bên phải */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.icons .search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.icons .search-icon img {
+  width: 20px;
+  height: 20px;
+}
+
+/* ========== HERO SECTION ========== */
+#hero {
+  background: url('../images/halloween.webp') center/cover no-repeat;
+  /* nếu chưa có ảnh, dùng tạm màu nền */
+  background-color: #222;
+  color: white;
+  text-align: center;
+  padding: 100px 20px;
+  position: relative;
+}
+
+.hero-content {
+  background: rgba(0, 0, 0, 0.4);
+  display: inline-block;
+  padding: 20px 30px;
+  border-radius: 10px;
+}
+
+#hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+#hero p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+#hero button {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff6600;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#hero button:hover {
+  background-color: #e05500;
+}
+
+/* ========== DANH MỤC ========== */
+#categories {
+  padding: 60px 5%;
+  text-align: center;
+}
+
+#categories h2 {
+  margin-bottom: 30px;
+  color: #222;
+}
+
+.grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.cat-card {
+  background-color: white;
+  width: 200px;
+  padding: 30px 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  color: #333;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.cat-card:hover {
+  background-color: #ffefe3;
+  transform: translateY(-5px);
+}
+
+/* ========== SẢN PHẨM NỔI BẬT ========== */
+#featured {
+  padding: 60px 5%;
+  text-align: center;
+}
+
+#featured h2 {
+  margin-bottom: 30px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 25px;
+}
+
+.product-card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.product-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.product-card p {
+  color: #ff6600;
+  font-weight: bold;
+}
+
+.product-card button {
+  margin-top: 10px;
+  padding: 8px 15px;
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.product-card button:hover {
+  background-color: #e05500;
+}
+
+/* ========== KHUYẾN MÃI ========== */
+#promotion {
+  background-color: #ff6600;
+  color: white;
+  text-align: center;
+  padding: 50px 20px;
+  margin-top: 50px;
+}
+
+#promotion h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+#promotion p {
+  font-size: 1.1rem;
+}
+
+/* ========== FOOTER ========== */
+footer {
+  background: #333;
+  color: #ccc;
+  text-align: center;
+  padding: 25px 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .grid {
+    flex-direction: column;
+    align-items: center;
+  }
+  .cat-card {
+    width: 80%;
+  }
+}
