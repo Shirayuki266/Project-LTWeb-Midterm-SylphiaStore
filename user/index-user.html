@@ -1,101 +1,110 @@
-<!DOCTYPE html> 
-<html lang="vi"> <!-- Khai báo tài liệu HTML, ngôn ngữ là tiếng Việt -->
-<head>
-  <meta charset="UTF-8"> <!-- Cho phép hiển thị ký tự tiếng Việt -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--Hiển Thị tốt trên mobile-->
-  <title> Sylphia Shop </title> <!-- Tiêu đề hiển thị trên tab trình duyệt -->
-  <link rel="stylesheet" href="../css/styles.css"> <!--Link liên kết đến file css-->
-  <link rel="icon" type="images/png" href="../images/logo-web-removebg-preview.png">
-</head>
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sylphia Shop</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="../images/logo-web-removebg-preview.png"
+    />
+  </head>
+  <body>
+    <div class="main-content-wrapper">
+      <!--Header-->
+      <header>
+        <div class="logo">
+          <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
+          Sylphia Shop
+        </div>
 
-<body> <!--Bắt Đầu Hiển Thị Nội Dung Của Trang-->
+        <div class="icons">
+          <input type="text" placeholder="Tìm kiếm..." />
+          <span class="search-icon">
+            <img src="../images/kinh-lup.png" alt="Tìm kiếm" />
+          </span>
+        </div>
 
-  <!--Header-->
-  <header> <!--Thanh Đầu Trang-->
+        <nav>
+          <a href="index.html"> Trang Chủ </a>
+          <a href="cart.html"> Sản Phẩm </a>
+          <a href="#"> Liên Hệ </a>
+          <a href="#"> Giỏ Hàng </a>
+          <a href="#"> Thông Tin Cá Nhân </a>
+        </nav>
+      </header>
 
-    <div class="logo"> <!--Logo hoặc tên thương hiệu-->
-      <img src="../images/logo-web-removebg-preview.png" alt="Logo" style="width: 40px; height: 40px; vertical-align: middle; margin-right: 5px;">
-      Sylphia Shop
+      <!--Hero Banner-->
+      <section id="hero">
+        <div class="hero-content">
+          <h1>Ưu Đãi dịp halloween</h1>
+          <p>Deal sốc chỉ còn 80% giá gốc</p>
+          <button>Xem ngay</button>
+        </div>
+      </section>
+
+      <!--Danh Mục-->
+      <section id="categories">
+        <h2>Danh Mục Nổi Bật</h2>
+        <div class="grid">
+          <div class="cat-card">Điện Thoại</div>
+          <div class="cat-card">Máy Tính</div>
+          <div class="cat-card">Phụ Kiện</div>
+          <div class="cat-card">Thẻ Cào</div>
+        </div>
+      </section>
+
+      <!-- Sản phẩm nổi bật -->
+      <section id="featured">
+        <h2>Sản phẩm nổi bật</h2>
+        <div class="product-grid">
+          <!-- Sản phẩm 1 -->
+          <div class="product-card">
+            <img
+              src="../images/iphone-17-pro-max.jpg"
+              alt="Iphone 17 Pro Max 10"
+            />
+            <h3>Iphone 17 Pro Max 10</h3>
+            <p>37.250.000đ</p>
+            <button>Thêm vào giỏ</button>
+          </div>
+          <!-- Sản phẩm 2 -->
+          <div class="product-card">
+            <img src="../images/laptop-Asus.png" alt="Laptop Asus" />
+            <h3>Laptop Asus</h3>
+            <p>22.890.000đ</p>
+            <button>Thêm vào giỏ</button>
+          </div>
+          <!-- Sản phẩm 3 -->
+          <div class="product-card">
+            <img
+              src="../images/ban-phim-gaming.jpg"
+              alt="Bàn Phím Gaming Đời Mới"
+            />
+            <h3>Bàn Phím Gaming Đời Mới</h3>
+            <p>1.560.000đ</p>
+            <button>Thêm vào giỏ</button>
+          </div>
+        </div>
+
+        <!-- Nút chuyển qua sản phẩm kế -->
+        <button class="slide-btn next">></button>
+      </section>
+
+      <!-- Banner khuyến mãi -->
+      <section id="promotion">
+        <h2>🔥 Giảm giá dịp halloween 🔥</h2>
+        <p>Mua 1 tặng 1 – chỉ trong tuần này!</p>
+      </section>
     </div>
-
-    <div class="icons"> <!--Ô Tìm Kiếm-->
-      <input type="text" placeholder="Tìm kiếm...">
-      <span class="search-icon">
-        <img src="../images/kinh-lup.png" alt="Tìm kiếm">
-      </span>
-    </div>
-
-    <nav> <!--Thanh Điều Hướng-->
-      <a href="index.html"> Trang Chủ </a>
-      <a href="cart.html"> Sản Phẩm </a>
-      <a href="#"> Liên Hệ </a>
-      <a href="#"> Giỏ Hàng </a>
-      <a href="#"> Thông Tin Cá Nhân </a>
-    </nav>
-
-  </header>
-
-  <!--Hero Banner-->
-  <section id="hero"> <!--Khu Vực Banner lớn-->
-    <div class="hero-content"> <!--Nội Dung Nằng Giữa banner-->
-      <h1> Ưu Đãi dịp halloween </h1> <!--Tiêu Đề Chính-->
-      <p> Deal sốc chỉ còn 80% giá gốc</p> <!--Mô Tả Ngắn-->
-      <button>Xem ngay</button> <!-- Nút hành động (CTA) -->
-    </div>
-  </section>
-
-  <!--Danh Mục-->
-  <section id="categories"> <!--Phần Danh mục sản phẩm-->
-    <h2> Danh Mục Nổi Bật</h2>
-    <div class="grid"> <!--Lưới chứa các danh mục-->
-      <div class="cat-card"> Điện Thoại </div> <!-- Ô danh mục 1 -->
-      <div class="cat-card"> Máy Tính </div> <!-- Ô danh mục 2 -->
-      <div class="cat-card"> Phụ Kiện </div> <!-- Ô danh mục 3 -->
-      <div class="cat-card"> Thẻ Cào </div> <!-- Ô danh mục 4 -->
-    </div>
-  </section>
-
-   <!-- Sản phẩm nổi bật -->
-  <section id="featured"> <!-- Phần sản phẩm nổi bật -->
-    <h2>Sản phẩm nổi bật</h2> <!-- Tiêu đề -->
-    <div class="product-grid"> <!-- Lưới sản phẩm -->
-      <!-- Sản phẩm 1 -->
-      <div class="product-card"> <!-- Thẻ sản phẩm -->
-        <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 17 Pro Max 10"> <!-- Ảnh sản phẩm -->
-        <h3>Iphone 17 Pro Max 10</h3> <!-- Tên sản phẩm -->
-        <p>37.250.000đ</p> <!-- Giá -->
-        <button>Thêm vào giỏ</button> <!-- Nút mua -->
-      </div>
-      <!-- Sản phẩm 2 -->
-      <div class="product-card">
-        <img src="../images/laptop-Asus.png" alt="Laptop Asus">
-        <h3>Laptop Asus</h3>
-        <p>22.890.000đ</p>
-        <button>Thêm vào giỏ</button>
-      </div>
-      <!-- Sản phẩm 3 -->
-      <div class="product-card">
-        <img src="../images/ban-phim-gaming.jpg" alt="Bàn Phím Gaming Đời Mới">
-        <h3>Bàn Phím Gaming Đời Mới</h3>
-        <p>1.560.000đ</p>
-        <button>Thêm vào giỏ</button>
-      </div>
-    </div>
-
-    <!-- Nút chuyển qua sản phẩm kế -->
-    <button class="slide-btn next">></button>
-  </section>
-
-  <!-- Banner khuyến mãi -->
-  <section id="promotion"> <!-- Khu vực quảng cáo nhỏ -->
-    <h2>🔥 Giảm giá dịp halloween 🔥</h2> <!-- Tiêu đề đậm -->
-    <p>Mua 1 tặng 1 – chỉ trong tuần này!</p> <!-- Mô tả -->
-  </section>
+    <!-- Kết thúc main-content-wrapper -->
 
     <!-- Footer -->
-  <footer> <!-- Phần cuối trang -->
-    <p>© 2025 SylphiaShop. All rights reserved.</p> <!-- Bản quyền -->
-    <p>Email: support@sylphiashop.vn | Hotline: 0123-456-789</p> <!-- Liên hệ -->
-  </footer>
-</body>
+    <footer>
+      <p>© 2025 SylphiaShop. All rights reserved.</p>
+      <p>Email: support@sylphiashop.vn | Hotline: 0123-456-789</p>
+    </footer>
+  </body>
 </html>
