@@ -11,76 +11,90 @@
       href="../images/logo-web-removebg-preview.png"
     />
   </head>
+
   <body>
     <div class="page-wrapper">
-      <!-- Header -->
+      <!-- HEADER -->
       <header>
         <div class="logo">
           <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
           Sylphia Shop
         </div>
+
         <nav>
           <a href="index-user.html">Trang Chủ</a>
           <a href="#">Sản Phẩm</a>
           <a href="#">Liên Hệ</a>
-          <a href="#">Giỏ Hàng</a>
-          <a href="#">Thông Tin Cá Nhân</a>
+          <a href="cart.html" class="active">Giỏ Hàng</a>
+          <a href="profile.html">Thông Tin Cá Nhân</a>
+          <a href="index.html">Đăng Xuất</a>
         </nav>
       </header>
 
-      <!-- Giỏ hàng -->
+      <!-- MAIN GIỎ HÀNG -->
       <main class="cart-container">
         <h1>🛒 Giỏ Hàng Của Bạn</h1>
 
-        <!-- Bảng sản phẩm -->
-        <table class="cart-table">
-          <thead>
-            <tr>
-              <th>Sản phẩm</th>
-              <th>Giá</th>
-              <th>Số lượng</th>
-              <th>Tổng</th>
-              <th>Hành động</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <img
-                  src="../images/iphone-17-pro-max.jpg"
-                  alt="Iphone 17"
-                  class="product-img"
-                />
-                Iphone 17 Pro Max
-              </td>
-              <td>37.250.000đ</td>
-              <td>
-                <input type="number" min="1" value="1" class="quantity-input" />
-              </td>
-              <td>37.250.000đ</td>
-              <td><button class="remove-btn">Xóa</button></td>
-            </tr>
+        <div class="cart-table-wrapper">
+          <table class="cart-table">
+            <thead>
+              <tr>
+                <th>Sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Tổng</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="product-cell">
+                  <img
+                    src="../images/iphone-17-pro-max.jpg"
+                    alt="Iphone 17"
+                    class="product-img"
+                  />
+                  <span>Iphone 17 Pro Max</span>
+                </td>
+                <td>37.250.000đ</td>
+                <td>
+                  <input
+                    type="number"
+                    min="1"
+                    value="1"
+                    class="quantity-input"
+                  />
+                </td>
+                <td>37.250.000đ</td>
+                <td><button class="remove-btn">Xóa</button></td>
+              </tr>
 
-            <tr>
-              <td>
-                <img
-                  src="../images/laptop-Asus.png"
-                  alt="Laptop Asus"
-                  class="product-img"
-                />
-                Laptop Asus
-              </td>
-              <td>22.890.000đ</td>
-              <td>
-                <input type="number" min="1" value="1" class="quantity-input" />
-              </td>
-              <td>22.890.000đ</td>
-              <td><button class="remove-btn">Xóa</button></td>
-            </tr>
-          </tbody>
-        </table>
+              <tr>
+                <td class="product-cell">
+                  <img
+                    src="../images/laptop-Asus.png"
+                    alt="Laptop Asus"
+                    class="product-img"
+                  />
+                  <span>Laptop Asus</span>
+                </td>
+                <td>22.890.000đ</td>
+                <td>
+                  <input
+                    type="number"
+                    min="1"
+                    value="1"
+                    class="quantity-input"
+                  />
+                </td>
+                <td>22.890.000đ</td>
+                <td><button class="remove-btn">Xóa</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-        <!-- Tổng thanh toán -->
+        <!-- TỔNG THANH TOÁN -->
         <div class="cart-summary">
           <p>
             <strong>Tổng cộng:</strong>
@@ -90,9 +104,8 @@
         </div>
       </main>
     </div>
-    <!-- Kết thúc .page-wrapper -->
 
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer>
       <p>© 2025 SylphiaShop. All rights reserved.</p>
       <p>Email: support@sylphiashop.vn | Hotline: 0123-456-789</p>
