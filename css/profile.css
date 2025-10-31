@@ -1,0 +1,76 @@
+/* ========== TRANG THÔNG TIN CÁ NHÂN ========== */
+
+.profile-container {
+  max-width: 800px;
+  margin: 80px auto;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.profile-header h2 {
+  color: #ff6600;
+  margin-bottom: 5px;
+}
+
+.profile-header p {
+  color: #555;
+}
+
+.profile-info {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.profile-info label {
+  font-weight: bold;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.profile-info input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.btn-group {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn {
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 25px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin: 0 8px;
+}
+
+.btn:hover {
+  background-color: #e05500;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 600px) {
+  .profile-info {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-info label {
+    text-align: left;
+  }
+}
