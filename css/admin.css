@@ -19,6 +19,17 @@ body {
   padding: 20px 0;
   display: flex;
   flex-direction: column;
+
+  /* Thêm các dòng này để cố định sidebar */
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  /* Chiều cao toàn màn hình */
+  z-index: 999;
+  /* Giữ trên nội dung */
+  overflow-y: auto;
+  /* Cuộn trong sidebar nếu dài */
 }
 
 .sidebar .logo {
@@ -67,10 +78,13 @@ body {
 }
 
 /* ======= MAIN CONTENT ======= */
+/* Cập nhật lại phần main-content để không bị đè */
 .main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
+  margin-left: 260px;
+  /* Chừa chỗ cho sidebar cố định */
 }
 
 /* ======= TOP NAV ======= */
@@ -82,6 +96,11 @@ body {
   align-items: center;
   border-bottom: 1px solid #eee;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  /* Thêm các dòng này để cố định */
+  position: sticky;
+  /* hoặc: fixed */
+  top: 0;
+  z-index: 1000;
 }
 
 .search-bar {
@@ -262,10 +281,21 @@ tbody tr:hover {
 }
 
 /* Màu biểu tượng cụ thể */
-.btn.info i { color: #007bff; }
-.btn.reset i { color: #f0ad4e; }
-.btn.lock i { color: #d9534f; }
-.btn.unlock i { color: #28a745; }
+.btn.info i {
+  color: #007bff;
+}
+
+.btn.reset i {
+  color: #f0ad4e;
+}
+
+.btn.lock i {
+  color: #d9534f;
+}
+
+.btn.unlock i {
+  color: #28a745;
+}
 
 .btn:hover i {
   color: white;
@@ -287,4 +317,150 @@ tbody tr:hover {
 .status.locked {
   background: #fdecea;
   color: #d9534f;
+}
+
+/* ======= QUẢN LÝ SẢN PHẨM & LOẠI SẢN PHẨM ======= */
+
+/* Khung tổng thể cho phần quản lý */
+.manage-panel {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  margin: 30px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.manage-panel h2 {
+  color: #ff6600;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+/* Thanh công cụ (nút Thêm, Tìm kiếm, Lọc, v.v.) */
+.manage-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.manage-actions .btn-add {
+  background-color: #ff6600;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.manage-actions .btn-add:hover {
+  background-color: #e65500;
+}
+
+.manage-actions input[type="text"] {
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  width: 250px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.manage-actions input[type="text"]:focus {
+  border-color: #ff6600;
+}
+
+/* Bảng dữ liệu */
+.manage-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.manage-table th,
+.manage-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.manage-table thead {
+  background-color: #ff6600;
+  color: white;
+}
+
+.manage-table tbody tr:hover {
+  background-color: #fff8f3;
+}
+
+/* Nút hành động (sửa / xóa / ẩn) */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.action-buttons button {
+  border: none;
+  background: #f3f3f3;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.action-buttons button:hover {
+  background: #ff6600;
+  color: white;
+}
+
+/* ======= FORM THÊM / SỬA ======= */
+.manage-form {
+  background: #fff8f3;
+  border: 1px solid #ffd5b8;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 25px;
+}
+
+.manage-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #444;
+}
+
+.manage-form input,
+.manage-form select {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  font-size: 15px;
+  transition: border 0.25s;
+}
+
+.manage-form input:focus,
+.manage-form select:focus {
+  border-color: #ff6600;
+}
+
+.manage-form button {
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.manage-form button:hover {
+  background-color: #e65500;
 }
