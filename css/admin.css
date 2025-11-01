@@ -243,3 +243,48 @@ tbody tr:hover {
     align-items: flex-start;
   }
 }
+
+/* ======= NÚT HÀNH ĐỘNG ======= */
+.btn {
+  border: none;
+  background: #f3f3f3;
+  color: #555;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 6px;
+  transition: 0.25s;
+}
+
+.btn:hover {
+  background: #ff6600;
+  color: white;
+}
+
+/* Màu biểu tượng cụ thể */
+.btn.info i { color: #007bff; }
+.btn.reset i { color: #f0ad4e; }
+.btn.lock i { color: #d9534f; }
+.btn.unlock i { color: #28a745; }
+
+.btn:hover i {
+  color: white;
+}
+
+/* Trạng thái khách hàng */
+.status {
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+.status.active {
+  background: #e8f8f2;
+  color: #28a745;
+}
+
+.status.locked {
+  background: #fdecea;
+  color: #d9534f;
+}
