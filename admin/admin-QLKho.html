@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản Lý Đơn Hàng | Sylphia Shop</title>
+    <title>Quản Lý Tồn Kho | Sylphia Shop</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../css/admin.css" />
@@ -23,8 +23,8 @@
                 <li><a href="admin-QLSP.html"><i class="fas fa-box"></i>Sản phẩm</a></li>
                 <li><a href="admin-QLKH.html"><i class="fas fa-users"></i>Khách hàng</a></li>
                 <li><a href="admin-QLGia.html"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
-                <li><a href="admin-QLDonHang.html" class="active"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
-                <li><a href="admin-QLKho.html"><i class="fas fa-box"></i>Tồn kho</a></li>
+                <li><a href="admin-QLDonHang.html"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
+                <li><a href="admin-QLKho.html" class="active"><i class="fas fa-box"></i>Tồn kho</a></li>
                 <li><a href="#"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
             </ul>
         </aside>
@@ -44,39 +44,32 @@
             </div>
 
             <div class="dashboard">
-                <h1>Quản lý đơn hàng</h1>
-
-                <div class="manage-actions">
-                    <input type="text" placeholder="Tìm kiếm theo ngày hoặc tình trạng..." />
-                </div>
+                <h1>Quản lý tồn kho</h1>
 
                 <table class="manage-table">
                     <thead>
                         <tr>
-                            <th>ID Đơn</th>
-                            <th>Khách hàng</th>
-                            <th>Ngày đặt</th>
-                            <th>Tình trạng</th>
+                            <th>Sản phẩm</th>
+                            <th>Loại</th>
+                            <th>Số lượng tồn</th>
+                            <th>Cảnh báo</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>#1001</td>
-                            <td>Minh</td>
-                            <td>01/11/2025</td>
-                            <td>Mới đặt</td>
-                            <td>
-                                <button class="btn"><i class="fas fa-eye"></i> Xem</button>
-                                <button class="btn"><i class="fas fa-edit"></i> Cập nhật</button>
-                            </td>
+                            <td>iPhone 14</td>
+                            <td>Điện thoại</td>
+                            <td>15</td>
+                            <td><span class="status active">Đầy đủ</span></td>
+                            <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
                         </tr>
                         <tr>
-                            <td>#1002</td>
-                            <td>Trang</td>
-                            <td>02/11/2025</td>
-                            <td>Đã giao</td>
-                            <td><button class="btn"><i class="fas fa-eye"></i> Xem</button></td>
+                            <td>MacBook Pro</td>
+                            <td>Laptop</td>
+                            <td>2</td>
+                            <td><span class="status locked">Sắp hết</span></td>
+                            <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
                         </tr>
                     </tbody>
                 </table>
