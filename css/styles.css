@@ -455,4 +455,375 @@ footer {
   #promotion p {
     font-size: 0.9rem;
   }
+
+  /* ==== Pagination UI (Đẹp, hiện đại) ==== */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 24px 0;
+  font-family: "Poppins", sans-serif;
+  user-select: none;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  border: none;
+  background: #f0f4ff;
+  color: #333;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Hiệu ứng hover */
+.page-btn:hover {
+  background: #007bff;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+}
+
+/* Trang hiện tại */
+.page-btn.active {
+  background: #007bff;
+  color: white;
+  font-weight: 600;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+  pointer-events: none;
+}
+
+/* Nút mũi tên */
+.page-btn.prev,
+.page-btn.next {
+  background: #fff;
+  border: 1px solid #ddd;
+  font-weight: bold;
+  padding: 10px 14px;
+}
+
+/* Hover mũi tên */
+.page-btn.prev:hover,
+.page-btn.next:hover {
+  background: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+/* Nút vô hiệu */
+.page-btn:disabled {
+  background: #f5f5f5;
+  color: #bbb;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Responsive (mobile) */
+@media (max-width: 480px) {
+  .page-btn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  .pagination-container {
+    gap: 6px;
+  }
+}
+
+/* === RESET CSS === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #fff;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* === CONTAINER CHUNG === */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* === HERO SECTION === */
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f7f7;
+  padding: 40px 0;
+}
+
+.hero-main-content {
+  position: relative;
+  flex: 2;
+}
+
+.hero-main-content img {
+  width: 100%;
+  border-radius: 15px;
+}
+
+.hero-text-overlay {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.hero-side-content {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.promo-card {
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.promo-card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.contact-info {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #d10000;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.warranty-info {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+/* === SERIES NAVIGATION === */
+.series-navigation {
+  background-color: #000;
+  padding: 10px 0;
+}
+
+.series-navigation a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.series-navigation a:hover {
+  color: #ff9900;
+}
+
+/* === FEATURE ICONS === */
+.feature-icons {
+  background-color: #f9f9f9;
+  padding: 40px 0;
+}
+
+.feature-icons .container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.feature-item {
+  flex: 1;
+  min-width: 200px;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.feature-item i {
+  font-size: 2rem;
+  color: #ff9900;
+  margin-bottom: 10px;
+}
+
+.feature-item h3 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* === PRODUCT SLIDER SECTION === */
+.product-slider-section {
+  background-color: #fff;
+  padding: 40px 0;
+}
+
+.product-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.product-slider-header h2 {
+  color: #000;
+  font-size: 1.6rem;
+}
+
+.product-slider-nav a {
+  text-decoration: none;
+  margin-left: 15px;
+  color: #333;
+  font-weight: 500;
+}
+
+.product-slider-nav a:hover {
+  color: #ff0000;
+}
+
+.product-carousel {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 10px;
+}
+
+.product-card {
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: 250px;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.product-card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.product-card h3 {
+  font-size: 1rem;
+  margin: 10px 0;
+}
+
+.price {
+  color: #d10000;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.rating i {
+  color: #ff9900;
+}
+
+/* === PAGINATION === */
+.pagination-section {
+  text-align: center;
+  padding: 30px 0;
+}
+
+.pagination {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-link {
+  display: inline-block;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  color: #000;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.page-link:hover,
+.page-link.active {
+  background-color: #000;
+  color: #fff;
+}
+
+.page-dots {
+  padding: 0 5px;
+}
+
+/* === FOOTER === */
+.footer {
+  background-color: #111;
+  color: #fff;
+  padding: 40px 0;
+}
+
+.footer .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.footer-col {
+  flex: 1;
+  min-width: 220px;
+  margin-bottom: 20px;
+}
+
+.footer-col h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #ff9900;
+}
+
+.footer-col p,
+.footer-col li {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.footer-col a {
+  color: #ddd;
+  text-decoration: none;
+}
+
+.footer-col a:hover {
+  color: #fff;
+}
+
+.payment-methods img,
+.momo img {
+  width: 60px;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
 }
