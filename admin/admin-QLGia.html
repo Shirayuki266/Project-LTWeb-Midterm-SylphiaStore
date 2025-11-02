@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Lý Giá Bán | Sylphia Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/admin.css" />
+</head>
+
+<body>
+    <div class="admin-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
+                Sylphia Shop
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-profit.html" class="active"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
+                <li><a href="admin-orders.html"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
+                <li><a href="admin-stock.html"><i class="fas fa-box"></i>Tồn kho</a></li>
+            </ul>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="top-nav">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Tìm kiếm..." />
+                </div>
+                <div class="user-profile">
+                    <div class="notifications"><i class="fas fa-bell"></i></div>
+                    <img src="../images/admin-avatar.png" alt="Admin" class="avatar" />
+                    <span class="admin-name">Admin</span>
+                </div>
+            </div>
+
+            <div class="dashboard">
+                <h1>Quản lý giá bán</h1>
+
+                <div class="manage-panel">
+                    <h2>Tỉ lệ % lợi nhuận theo loại sản phẩm</h2>
+                    <table class="manage-table">
+                        <thead>
+                            <tr>
+                                <th>Loại sản phẩm</th>
+                                <th>% Lợi nhuận</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Điện thoại</td>
+                                <td>20%</td>
+                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>Laptop</td>
+                                <td>15%</td>
+                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2>Giá bán & lợi nhuận theo sản phẩm</h2>
+                    <table class="manage-table">
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Giá vốn</th>
+                                <th>% Lợi nhuận</th>
+                                <th>Giá bán</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>iPhone 14</td>
+                                <td>20,000,000</td>
+                                <td>20%</td>
+                                <td>24,000,000</td>
+                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>MacBook Pro</td>
+                                <td>35,000,000</td>
+                                <td>15%</td>
+                                <td>40,250,000</td>
+                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
