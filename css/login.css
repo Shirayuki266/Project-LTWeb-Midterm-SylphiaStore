@@ -203,6 +203,72 @@ footer {
   line-height: 1.5;
 }
 
+/* ======= POPUP ======= */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.popup-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.popup-box {
+  background: #fff;
+  padding: 25px 40px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  animation: popupFade 0.4s ease;
+}
+
+.popup-box h2 {
+  margin: 0 0 10px;
+  color: #333;
+}
+
+.popup-box p {
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.popup-box button {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.popup-box button:hover {
+  background: #444;
+}
+
+@keyframes popupFade {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 /* ======= RESPONSIVE ======= */
 @media (max-width: 600px) {
   .login-form {

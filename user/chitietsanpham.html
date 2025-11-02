@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chi Tiết Sản Phẩm - Sylphia Shop</title>
+    <!-- Liên kết Font Poppins cho giao diện hiện đại -->
+    <link rel="stylesheet" href="/css/chitietsanpham.css" />
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="logo">
+        <img
+          src="../images/logo-web-removebg-preview.png"
+          alt="Sylphia Shop Logo"
+        />
+        <!-- Đường dẫn ảnh mẫu -->
+        <span>Sylphia Shop</span>
+      </div>
+      <nav class="nav">
+        <a href="trangchu-dangnhap.html">Trang chủ</a>
+        <a href="sanpham-dangnhap.html">Sản phẩm</a>
+        <a href="#">Liên hệ</a>
+        <a href="giohang.html">Giỏ hàng</a>
+        <a href="trangchu.html">Đăng Xuất</a>
+      </nav>
+      <!-- Thêm khu vực tìm kiếm nếu muốn hiển thị trên trang chi tiết sản phẩm -->
+      <div class="icons">
+        <input type="text" placeholder="Tìm kiếm sản phẩm..." />
+        <span class="search-icon"><i class="fas fa-search"></i></span>
+      </div>
+    </header>
+
+    <!-- Khu vực hiển thị sản phẩm -->
+    <main class="product-detail">
+      <div class="product-image">
+        <img
+          id="product-image"
+          src="/images/iphone-17-pro-max.jpg"
+          alt="Sản phẩm"
+        />
+        <!-- Ảnh sản phẩm mẫu -->
+      </div>
+
+      <div class="product-info">
+        <h1 id="product-name">iPhone 17 Pro Max - Sức Mạnh Vượt Trội</h1>
+        <p id="product-price" class="price">42.990.000 VNĐ</p>
+
+        <!-- 5-6 điểm nổi bật chính -->
+        <ul class="key-features">
+          <li><i class="fas fa-tag"></i> <strong>Hãng:</strong> Apple</li>
+          <li>
+            <i class="fas fa-mobile-alt"></i>
+            <strong>Tên sản phẩm:</strong> iPhone 17 Pro Max
+          </li>
+          <li>
+            <i class="fas fa-money-bill-alt"></i>
+            <strong>Giá tiền:</strong> 42.990.000 VNĐ
+          </li>
+          <li>
+            <i class="fas fa-microchip"></i> <strong>Chip xử lý:</strong> A19
+            Bionic
+          </li>
+          <li>
+            <i class="fas fa-camera"></i> <strong>Camera:</strong> Hệ thống Tứ
+            Ống Kính Đột Phá
+          </li>
+          <li>
+            <i class="fas fa-battery-full"></i> <strong>Pin:</strong> Cực kỳ bền
+            bỉ, sạc nhanh
+          </li>
+          <li>
+            <i class="fas fa-expand"></i> <strong>Màn hình:</strong> ProMotion
+            XDR 120Hz
+          </li>
+        </ul>
+        <div class="actions">
+          <input type="number" min="1" value="1" id="quantity-input" />
+          <button class="add-to-cart">Thêm vào giỏ</button>
+          <button class="add-to-cart">Mua Ngay</button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>© 2025 SylphiaShop. All rights reserved.</p>
+      <p>Email: support@sylphiashop.vn | Hotline: 0123-456-789</p>
+    </footer>
+  </body>
+</html>

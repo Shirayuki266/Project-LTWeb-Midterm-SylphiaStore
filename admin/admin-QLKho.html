@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Lý Tồn Kho | Sylphia Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/admin.css" />
+</head>
+
+<body>
+    <div class="admin-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
+                Sylphia Shop
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-TongQuan.html"><i class="fas fa-home"></i>Tổng Quan</a></li>
+                <li><a href="admin-QLSP.html"><i class="fas fa-box"></i>Sản phẩm</a></li>
+                <li><a href="admin-QLKH.html"><i class="fas fa-users"></i>Khách hàng</a></li>
+                <li><a href="admin-QLGia.html"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
+                <li><a href="admin-QLDonHang.html"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
+                <li><a href="admin-QLKho.html" class="active"><i class="fas fa-box"></i>Tồn kho</a></li>
+                <li><a href="#"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
+            </ul>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="top-nav">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Tìm kiếm..." />
+                </div>
+                <div class="user-profile">
+                    <div class="notifications"><i class="fas fa-bell"></i></div>
+                    <img src="../images/admin-avatar.png" alt="Admin" class="avatar" />
+                    <span class="admin-name">Admin</span>
+                </div>
+            </div>
+
+            <div class="dashboard">
+                <h1>Quản lý tồn kho</h1>
+
+                <table class="manage-table">
+                    <thead>
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Loại</th>
+                            <th>Số lượng tồn</th>
+                            <th>Cảnh báo</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>iPhone 14</td>
+                            <td>Điện thoại</td>
+                            <td>15</td>
+                            <td><span class="status active">Đầy đủ</span></td>
+                            <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                        </tr>
+                        <tr>
+                            <td>MacBook Pro</td>
+                            <td>Laptop</td>
+                            <td>2</td>
+                            <td><span class="status locked">Sắp hết</span></td>
+                            <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
