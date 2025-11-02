@@ -130,23 +130,24 @@ body {
   align-items: center;
 }
 
-.notifications i {
-  font-size: 20px;
-  color: #666;
-  margin-right: 18px;
-  position: relative;
+.notifications {
+  display: inline-block;
+  cursor: pointer;
 }
 
-.notifications i::after {
-  content: "3";
-  position: absolute;
-  top: -5px;
-  right: -8px;
-  background: #ff6600;
-  color: white;
-  font-size: 11px;
-  padding: 2px 6px;
-  border-radius: 50%;
+.notifications i {
+  font-size: 28px;
+  color: #666;
+  transition: color 0.3s, transform 0.2s;
+  margin-right: 20px;
+  /* hiệu ứng mượt */
+}
+
+.notifications i:hover {
+  color: #ff6600;
+  /* sáng màu khi hover */
+  transform: scale(1.2);
+  /* phồng nhẹ khi hover */
 }
 
 .avatar {

@@ -1,177 +1,169 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sylphia Shop</title>
-    <link rel="stylesheet" href="../css/styles.css" />
-    <link rel="stylesheet" href="../css/footer.css" />
-    <link
-      rel="icon"
-      type="image/png"
-      href="../images/logo-web-removebg-preview.png"
-    />
-  </head>
 
-  <body>
-    <div class="main-content-wrapper">
-      <!--Header-->
-      <header>
-        <div class="logo">
-          <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
-          Sylphia Shop
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sylphia Shop</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/footer.css" />
+  <link rel="icon" type="image/png" href="../images/logo-web-removebg-preview.png" />
+</head>
+
+<body>
+  <div class="main-content-wrapper">
+    <!--Header-->
+    <header>
+      <div class="logo">
+        <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
+        Sylphia Shop
+      </div>
+
+      <div class="icons">
+        <input type="text" placeholder="Tìm kiếm..." />
+        <span class="search-icon">
+          <img src="../images/kinh-lup.png" alt="Tìm kiếm" />
+        </span>
+      </div>
+
+      <nav>
+        <a href="trangchu-dangnhap.html">Trang Chủ</a>
+        <a href="sanpham-dangnhap.html">Sản Phẩm</a>
+        <a href="#">Liên Hệ</a>
+        <a href="giohang.html">Giỏ Hàng</a>
+        <a href="../user/trangcanhan.html">Thông Tin Cá Nhân</a>
+        <a href="trangchu.html">Đăng Xuất</a>
+      </nav>
+    </header>
+
+    <!--Hero Banner-->
+    <section id="hero">
+      <div class="hero-content">
+        <h1>Ưu Đãi dịp halloween</h1>
+        <p>Deal sốc chỉ còn 80% giá gốc</p>
+        <button>Xem ngay</button>
+      </div>
+    </section>
+
+    <!--Danh Mục-->
+    <section id="categories">
+      <h2>Danh Mục Nổi Bật</h2>
+      <div class="grid">
+        <div class="cat-card">Điện Thoại</div>
+        <div class="cat-card">Máy Tính</div>
+        <div class="cat-card">Phụ Kiện</div>
+        <div class="cat-card">Thẻ Cào</div>
+      </div>
+    </section>
+
+    <!-- Sản phẩm nổi bật -->
+    <section id="featured">
+      <h2>Sản phẩm nổi bật</h2>
+      <div class="product-grid">
+        <!-- Sản phẩm 1 -->
+        <div class="product-card">
+          <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 17 Pro Max 10" />
+          <h3>Iphone 17 Pro Max 10</h3>
+          <p>37.250.000đ</p>
+          <button>Mua ngay</button>
         </div>
-
-        <div class="icons">
-          <input type="text" placeholder="Tìm kiếm..." />
-          <span class="search-icon">
-            <img src="../images/kinh-lup.png" alt="Tìm kiếm" />
-          </span>
+        <!-- Sản phẩm 2 -->
+        <div class="product-card">
+          <img src="../images/laptop-Asus.png" alt="Laptop Asus" />
+          <h3>Laptop Asus</h3>
+          <p>22.890.000đ</p>
+          <button>Mua ngay</button>
         </div>
-
-        <nav>
-          <a href="trangchu-dangnhap.html">Trang Chủ</a>
-          <a href="sanpham-dangnhap.html">Sản Phẩm</a>
-          <a href="#">Liên Hệ</a>
-          <a href="giohang.html">Giỏ Hàng</a>
-          <a href="../user/trangcanhan.html">Thông Tin Cá Nhân</a>
-          <a href="trangchu.html">Đăng Xuất</a>
-        </nav>
-      </header>
-
-      <!--Hero Banner-->
-      <section id="hero">
-        <div class="hero-content">
-          <h1>Ưu Đãi dịp halloween</h1>
-          <p>Deal sốc chỉ còn 80% giá gốc</p>
-          <button>Xem ngay</button>
+        <!-- Sản phẩm 3 -->
+        <div class="product-card">
+          <img src="../images/ban-phim-gaming.jpg" alt="Bàn Phím Gaming Đời Mới" />
+          <h3>Bàn Phím Gaming Đời Mới</h3>
+          <p>1.560.000đ</p>
+          <button>Mua ngay</button>
         </div>
-      </section>
+      </div>
 
-      <!--Danh Mục-->
-      <section id="categories">
-        <h2>Danh Mục Nổi Bật</h2>
-        <div class="grid">
-          <div class="cat-card">Điện Thoại</div>
-          <div class="cat-card">Máy Tính</div>
-          <div class="cat-card">Phụ Kiện</div>
-          <div class="cat-card">Thẻ Cào</div>
+      <!-- Nút chuyển qua sản phẩm kế -->
+      <button class="slide-btn next">></button>
+    </section>
+
+    <!-- Banner khuyến mãi -->
+    <section id="promotion">
+      <h2>🔥 Giảm giá dịp halloween 🔥</h2>
+      <p>Mua 1 tặng 1 – chỉ trong tuần này!</p>
+    </section>
+  </div>
+  <!-- Kết thúc main-content-wrapper -->
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container">
+      <!-- Cột 1 -->
+      <div class="footer-col">
+        <h3>SYLPHIASHOP</h3>
+        <p class="hotline">HOTLINE: 0917 997 997</p>
+        <p class="store-address">
+          Store 1: 01 Quang Trung, P.1, Q.Gò Vấp, TP.HCM - 0913.846535
+        </p>
+        <p class="store-address">
+          Store 2: 02 Lê Hồng Phong, Q.10 TP.HCM - 0913.846535
+        </p>
+        <p class="store-address">
+          Store 3: 03 Trần Quang Khải, Q.1 TP.HCM - 0913.846535
+        </p>
+        <p class="store-address">
+          Store 4: 04 Võ Văn Ngân, P.Bình Thọ, Thủ Đức - 0913.846535
+        </p>
+        <p class="store-address">
+          Store 5: 05 Nguyễn Văn Rập, Trảng Bàng, Tây Ninh - 0913.846535
+        </p>
+      </div>
+
+      <!-- Cột 2 -->
+      <div class="footer-col">
+        <h3>QUY ĐỊNH & CHÍNH SÁCH</h3>
+        <ul>
+          <li><a href="#">Quy định hình thức thanh toán</a></li>
+          <li><a href="#">Chính sách vận chuyển hàng</a></li>
+          <li><a href="#">Chính sách bảo hành</a></li>
+          <li><a href="#">Chính sách đổi trả</a></li>
+          <li><a href="#">Chính sách kiểm hàng</a></li>
+          <li><a href="#">Chính sách bảo mật</a></li>
+        </ul>
+      </div>
+
+      <!-- Cột 3 -->
+      <div class="footer-col">
+        <h3>HÌNH THỨC THANH TOÁN</h3>
+        <div class="payment-methods">
+          <img src="../images/visa.png" alt="Visa" class="payment-icon" />
         </div>
-      </section>
-
-      <!-- Sản phẩm nổi bật -->
-      <section id="featured">
-        <h2>Sản phẩm nổi bật</h2>
-        <div class="product-grid">
-          <!-- Sản phẩm 1 -->
-          <div class="product-card">
-            <img
-              src="../images/iphone-17-pro-max.jpg"
-              alt="Iphone 17 Pro Max 10"
-            />
-            <h3>Iphone 17 Pro Max 10</h3>
-            <p>37.250.000đ</p>
-            <button>Mua ngay</button>
-          </div>
-          <!-- Sản phẩm 2 -->
-          <div class="product-card">
-            <img src="../images/laptop-Asus.png" alt="Laptop Asus" />
-            <h3>Laptop Asus</h3>
-            <p>22.890.000đ</p>
-            <button>Mua ngay</button>
-          </div>
-          <!-- Sản phẩm 3 -->
-          <div class="product-card">
-            <img
-              src="../images/ban-phim-gaming.jpg"
-              alt="Bàn Phím Gaming Đời Mới"
-            />
-            <h3>Bàn Phím Gaming Đời Mới</h3>
-            <p>1.560.000đ</p>
-            <button>Mua ngay</button>
-          </div>
+        <div class="momo">
+          <img src="../images/momo.png" alt="MOMO" />
         </div>
+      </div>
 
-        <!-- Nút chuyển qua sản phẩm kế -->
-        <button class="slide-btn next">></button>
-      </section>
-
-      <!-- Banner khuyến mãi -->
-      <section id="promotion">
-        <h2>🔥 Giảm giá dịp halloween 🔥</h2>
-        <p>Mua 1 tặng 1 – chỉ trong tuần này!</p>
-      </section>
+      <!-- Cột 4 -->
+      <div class="footer-col">
+        <h3>HỆ THỐNG FANPAGE</h3>
+        <ul>
+          <li><a href="#">SYLPHIASHOP GÒ VẤP</a></li>
+          <li><a href="#">SYLPHIASHOP QUẬN 10</a></li>
+          <li><a href="#">SYLPHIASHOP QUẬN 1</a></li>
+          <li><a href="#">SYLPHIASHOP THỦ ĐỨC</a></li>
+          <li><a href="#">SYLPHIASHOP TÂY NINH</a></li>
+          <li><a href="#">SYLPHIASHOP TIỀN GIANG</a></li>
+          <li><a href="#">SYLPHIASHOP LONG AN</a></li>
+        </ul>
+      </div>
     </div>
-    <!-- Kết thúc main-content-wrapper -->
 
-    <!-- Footer Section -->
-    <footer class="footer">
-      <div class="container">
-        <!-- Cột 1 -->
-        <div class="footer-col">
-          <h3>SYLPHIASHOP</h3>
-          <p class="hotline">HOTLINE: 0917 997 997</p>
-          <p class="store-address">
-            Store 1: 01 Quang Trung, P.1, Q.Gò Vấp, TP.HCM - 0913.846535
-          </p>
-          <p class="store-address">
-            Store 2: 02 Lê Hồng Phong, Q.10 TP.HCM - 0913.846535
-          </p>
-          <p class="store-address">
-            Store 3: 03 Trần Quang Khải, Q.1 TP.HCM - 0913.846535
-          </p>
-          <p class="store-address">
-            Store 4: 04 Võ Văn Ngân, P.Bình Thọ, Thủ Đức - 0913.846535
-          </p>
-          <p class="store-address">
-            Store 5: 05 Nguyễn Văn Rập, Trảng Bàng, Tây Ninh - 0913.846535
-          </p>
-        </div>
+    <!-- Dòng bản quyền -->
+    <div class="footer-bottom">
+      <p>© 2025 SylphiaShop. All rights reserved.</p>
+      <p>Email: support@sylphiashop.vn | Hotline: 0123-456-789</p>
+    </div>
+  </footer>
+</body>
 
-        <!-- Cột 2 -->
-        <div class="footer-col">
-          <h3>QUY ĐỊNH & CHÍNH SÁCH</h3>
-          <ul>
-            <li><a href="#">Quy định hình thức thanh toán</a></li>
-            <li><a href="#">Chính sách vận chuyển hàng</a></li>
-            <li><a href="#">Chính sách bảo hành</a></li>
-            <li><a href="#">Chính sách đổi trả</a></li>
-            <li><a href="#">Chính sách kiểm hàng</a></li>
-            <li><a href="#">Chính sách bảo mật</a></li>
-          </ul>
-        </div>
-
-        <!-- Cột 3 -->
-        <div class="footer-col">
-          <h3>HÌNH THỨC THANH TOÁN</h3>
-          <div class="payment-methods">
-            <img src="../images/visa.png" alt="Visa" class="payment-icon" />
-          </div>
-          <div class="momo">
-            <img src="../images/momo.png" alt="MOMO" />
-          </div>
-        </div>
-
-        <!-- Cột 4 -->
-        <div class="footer-col">
-          <h3>HỆ THỐNG FANPAGE</h3>
-          <ul>
-            <li><a href="#">SYLPHIASHOP GÒ VẤP</a></li>
-            <li><a href="#">SYLPHIASHOP QUẬN 10</a></li>
-            <li><a href="#">SYLPHIASHOP QUẬN 1</a></li>
-            <li><a href="#">SYLPHIASHOP THỦ ĐỨC</a></li>
-            <li><a href="#">SYLPHIASHOP TÂY NINH</a></li>
-            <li><a href="#">SYLPHIASHOP TIỀN GIANG</a></li>
-            <li><a href="#">SYLPHIASHOP LONG AN</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Dòng bản quyền -->
-      <div class="footer-bottom">
-        <p>© 2025 SylphiaShop. All rights reserved.</p>
-        <p>Email: support@sylphiashop.vn | Hotline: 0123-456-789</p>
-      </div>
-    </footer>
-  </body>
 </html>
