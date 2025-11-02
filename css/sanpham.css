@@ -1,0 +1,84 @@
+/* Toàn trang */
+body {
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: #222;
+}
+
+/* Tiêu đề */
+.product-page h1 {
+  text-align: center;
+  font-size: 28px;
+  margin: 30px 0;
+  color: #ff6600;
+}
+
+/* Thanh lọc */
+.filter-bar {
+  text-align: right;
+  margin: 0 60px 20px 0;
+}
+
+.filter-bar select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Lưới sản phẩm */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 30px;
+  padding: 0 60px 50px;
+}
+
+.product-card {
+  background: #fafafa;
+  border-radius: 16px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.product-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.product-card h3 {
+  font-size: 18px;
+  margin: 10px 0 6px;
+}
+
+.product-card .price {
+  color: #e60000;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.buy-btn {
+  display: inline-block;
+  background: #ff6600;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.buy-btn:hover {
+  background: #e05500;
+}
+
+/* Footer đã có style riêng từ footer.css */
