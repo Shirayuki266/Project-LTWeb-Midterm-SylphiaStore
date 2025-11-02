@@ -866,9 +866,10 @@ footer {
 
   .payment-methods img,
   .momo img {
-    width: 60px;
+    width: 80px;
+    height: auto;
+    line-height: 20px;
     margin-top: 10px;
     border-radius: 8px;
   }
-
 }

@@ -1,117 +1,240 @@
 <!DOCTYPE html>
 <html lang="vi">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sản Phẩm | Sylphia Shop</title>
 
     <!-- Liên kết CSS -->
-    <link rel="icon" type="image/png" href="../images/logo-web-removebg-preview.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="../images/logo-web-removebg-preview.png"
+    />
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="../css/footer.css" />
     <link rel="stylesheet" href="../css/sanpham.css" />
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- Header -->
     <header>
-        <div class="logo">
-            <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
-            Sylphia Shop
-        </div>
-        <div class="icons">
-            <input type="text" placeholder="Tìm kiếm sản phẩm..." />
-            <span class="search-icon">
-                <img src="../images/kinh-lup.png" alt="Tìm kiếm" />
-            </span>
-        </div>
-        <nav>
-            <a href="trangchu-dangnhap.html">Trang Chủ</a>
-            <a href="sanpham-dangnhap.html" class="active">Sản Phẩm</a>
-            <a href="#">Liên Hệ</a>
-            <a href="giohang.html">Giỏ Hàng</a>
-            <a href="trangchu.html">Đăng Xuất</a>
-        </nav>
+      <div class="logo">
+        <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
+        Sylphia Shop
+      </div>
+      <div class="icons">
+        <input type="text" placeholder="Tìm kiếm sản phẩm..." />
+        <span class="search-icon">
+          <img src="../images/kinh-lup.png" alt="Tìm kiếm" />
+        </span>
+      </div>
+      <nav>
+        <a href="../user/trangchu-dangnhap.html">Trang Chủ</a>
+        <a href="../user/sanpham.html" class="active">Sản Phẩm</a>
+        <a href="#">Liên Hệ</a>
+        <a href="../user/giohang.html">Giỏ Hàng</a>
+        <a href="../user/dangnhap.html">Đăng xuất</a>
+      </nav>
     </header>
 
     <!-- Danh sách sản phẩm -->
     <main class="product-page">
-        <h1>TẤT CẢ SẢN PHẨM</h1>
+      <h1>TẤT CẢ SẢN PHẨM</h1>
 
-        <!-- Bộ lọc -->
-        <div class="filter-bar">
-            <label for="sort">Sắp xếp theo:</label>
-            <select id="sort">
-                <option value="default">Mặc định</option>
-                <option value="price-asc">Giá tăng dần</option>
-                <option value="price-desc">Giá giảm dần</option>
-                <option value="name">Tên sản phẩm (A-Z)</option>
-            </select>
+      <!-- Bộ lọc -->
+      <div class="filter-bar">
+        <label for="sort">Sắp xếp theo:</label>
+        <select id="sort">
+          <option value="default">Mặc định</option>
+          <option value="price-asc">Giá tăng dần</option>
+          <option value="price-desc">Giá giảm dần</option>
+          <option value="name">Tên sản phẩm (A-Z)</option>
+        </select>
+      </div>
+
+      <!-- Lưới sản phẩm -->
+      <div class="product-grid">
+        <div class="product-card">
+          <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 17 Pro Max" />
+          <h3>Iphone 17 Pro Max</h3>
+          <p class="price">37.250.000đ</p>
+          <a href="../user/chitietsanpham.html?id=iphone17" class="buy-btn"
+            >Xem chi tiết</a
+          >
         </div>
 
-        <!-- Lưới sản phẩm -->
-        <div class="product-grid">
-            <div class="product-card">
-                <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 17 Pro Max" />
-                <h3>Iphone 17 Pro Max</h3>
-                <p class="price">37.250.000đ</p>
-                <a href="chitietsanpham.html?id=iphone17" class="buy-btn">Xem chi tiết</a>
-            </div>
-
-            <div class="product-card">
-                <img src="../images/laptop-Asus.png" alt="Laptop Asus" />
-                <h3>Laptop Asus</h3>
-                <p class="price">22.890.000đ</p>
-                <a href="chitietsanpham.html?id=laptopasus" class="buy-btn">Xem chi tiết</a>
-            </div>
-
-            <div class="product-card">
-                <img src="../images/ban-phim-gaming.jpg" alt="Bàn phím gaming" />
-                <h3>Bàn phím gaming</h3>
-                <p class="price">1.560.000đ</p>
-                <a href="chitietsanpham.html?id=banphim" class="buy-btn">Xem chi tiết</a>
-            </div>
-
-            <div class="product-card">
-                <img src="../images/halloween.webp" alt="Tai nghe bluetooth" />
-                <h3>Tai nghe Bluetooth</h3>
-                <p class="price">1.090.000đ</p>
-                <a href="chitietsanpham.html?id=tainghe" class="buy-btn">Xem chi tiết</a>
-            </div>
+        <div class="product-card">
+          <img src="../images/laptop-Asus.png" alt="Laptop Asus" />
+          <h3>Laptop Asus</h3>
+          <p class="price">22.890.000đ</p>
+          <a href="../user/chitietsanpham.html?id=laptopasus" class="buy-btn"
+            >Xem chi tiết</a
+          >
         </div>
+
+        <div class="product-card">
+          <img src="../images/ban-phim-gaming.jpg" alt="Bàn phím gaming" />
+          <h3>Bàn phím gaming</h3>
+          <p class="price">1.560.000đ</p>
+          <a href="../user/chitietsanpham.html?id=banphim" class="buy-btn"
+            >Xem chi tiết</a
+          >
+        </div>
+
+        <div class="product-card">
+          <img src="../images/tainghebluetooth.webp" alt="Tai nghe bluetooth" />
+          <h3>Tai nghe Bluetooth True Wireless JBL Live Pro 2</h3>
+          <p class="price">2.150.000đ</p>
+          <a href="../user/chitietsanpham.html?id=tainghe" class="buy-btn"
+            >Xem chi tiết</a
+          >
+        </div>
+
+        <div class="product-card">
+          <img src="../images/iphone-16-pro-max.webp" alt="IPhone 16 Pro Max" />
+          <h3>Iphone 16 Pro Max</h3>
+          <p class="price">30.590.000đ</p>
+          <a href="../user/chitietsanpham.html?id=iphone16" class="buy-btn"
+            >Xem chi tiết</a
+          >
+        </div>
+
+        <div class="product-card">
+          <img src="../images/vivo-v60.jpg" alt="Điện thoại vivo V60 5G" />
+          <h3>Điện thoại vivo V60 5G 12GB/512GB</h3>
+          <p class="price">16.990.000đ</p>
+          <a href="../user/chitietsanpham.html?id=vivo-v60-5g" class="buy-btn"
+            >Xem chi tiết</a
+          >
+        </div>
+
+        <div class="product-card">
+          <img
+            src="../images/samsung-galaxy-z-fold7.jpg"
+            alt="Samsung Galaxy Z Fold7 5G 12GB/256GB"
+          />
+          <h3>Samsung Galaxy Z Fold7 5G 12GB/256GB</h3>
+          <p class="price">16.990.000đ</p>
+          <a
+            href="../user/chitietsanpham.html?id=samsung-galaxy-z-fold-7-5g"
+            class="buy-btn"
+            >Xem chi tiết</a
+          >
+        </div>
+
+        <div class="product-card">
+          <img
+            src="../images/oppo-find-x8-pro-.jpg"
+            alt="OPPO Find X8 Pro 5G 16GB/512GB"
+          />
+          <h3>OPPO Find X8 Pro 5G 16GB/512GB</h3>
+          <p class="price">26.450.000đ</p>
+          <a
+            href="../user/chitietsanpham.html?id=OPPO Find X8 Pro 5G 16GB/512GB"
+            class="buy-btn"
+            >Xem chi tiết</a
+          >
+        </div>
+
+        <div class="product-card">
+          <img
+            src="../images/thumb-flip7-den-jet.webp"
+            alt="Samsung Galaxy Z Flip7 5G 12GB/256GB"
+          />
+          <h3>Samsung Galaxy Z Flip7 5G 12GB/256GB</h3>
+          <p class="price">25.990.000₫</p>
+          <a
+            href="../user/chitietsanpham.html?id=samsung-galaxy-z-flip-7-5g"
+            class="buy-btn"
+            >Xem chi tiết</a
+          >
+        </div>
+
+        <div class="product-card">
+          <img
+            src="../images/laptop-asus-tuf-gaming.webp"
+            alt="Laptop ASUS TUF Gaming F16 FX607VJ-RL034W"
+          />
+          <h3>Laptop ASUS TUF Gaming F16 FX607VJ-RL034W</h3>
+          <p class="price">21.990.000₫</p>
+          <a
+            href="../user/chitietsanpham.html?id=laptop-asus-tuf-gaming-f16-fx607vj-rl034w"
+            class="buy-btn"
+            >Xem chi tiết</a
+          >
+        </div>
+      </div>
     </main>
 
-    <!-- Footer -->
+    <!-- Footer Section -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-col">
-                <h3>SYLPHIASHOP</h3>
-                <p class="hotline">HOTLINE: 022.222.2222</p>
-                <p class="store-address">Store 1: 01 Quang Trung, P.1, Q.Gò Vấp, TP.HCM</p>
-                <p class="store-address">Store 2: 02 Lê Hồng Phong, Q.10 TP.HCM</p>
-            </div>
-
-            <div class="footer-col">
-                <h3>QUY ĐỊNH & CHÍNH SÁCH</h3>
-                <ul>
-                    <li><a href="#">Chính sách bảo hành</a></li>
-                    <li><a href="#">Chính sách đổi trả</a></li>
-                    <li><a href="#">Chính sách bảo mật</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
-                <h3>HÌNH THỨC THANH TOÁN</h3>
-                <img src="../images/visa.png" alt="Visa" class="payment-icon" />
-                <img src="../images/momo.png" alt="Momo" class="payment-icon" />
-            </div>
+      <div class="container">
+        <!-- Cột 1 -->
+        <div class="footer-col">
+          <h3>SYLPHIASHOP</h3>
+          <p class="hotline">HOTLINE: 0917 997 997</p>
+          <p class="store-address">
+            Store 1: 01 Quang Trung, P.1, Q.Gò Vấp, TP.HCM - 0913.846535
+          </p>
+          <p class="store-address">
+            Store 2: 02 Lê Hồng Phong, Q.10 TP.HCM - 0913.846535
+          </p>
+          <p class="store-address">
+            Store 3: 03 Trần Quang Khải, Q.1 TP.HCM - 0913.846535
+          </p>
+          <p class="store-address">
+            Store 4: 04 Võ Văn Ngân, P.Bình Thọ, Thủ Đức - 0913.846535
+          </p>
+          <p class="store-address">
+            Store 5: 05 Nguyễn Văn Rập, Trảng Bàng, Tây Ninh - 0913.846535
+          </p>
         </div>
 
-        <div class="footer-bottom">
-            <p>© 2025 SylphiaShop. All rights reserved.</p>
+        <!-- Cột 2 -->
+        <div class="footer-col">
+          <h3>QUY ĐỊNH & CHÍNH SÁCH</h3>
+          <ul>
+            <li><a href="#">Quy định hình thức thanh toán</a></li>
+            <li><a href="#">Chính sách vận chuyển hàng</a></li>
+            <li><a href="#">Chính sách bảo hành</a></li>
+            <li><a href="#">Chính sách đổi trả</a></li>
+            <li><a href="#">Chính sách kiểm hàng</a></li>
+            <li><a href="#">Chính sách bảo mật</a></li>
+          </ul>
         </div>
+
+        <!-- Cột 3 -->
+        <div class="footer-col">
+          <h3>HÌNH THỨC THANH TOÁN</h3>
+          <div class="payment-methods">
+            <img src="../images/visa.png" alt="Visa" />
+          </div>
+          <div class="momo">
+            <img src="../images/momo.png" alt="MOMO" />
+          </div>
+        </div>
+
+        <!-- Cột 4 -->
+        <div class="footer-col">
+          <h3>HỆ THỐNG FANPAGE</h3>
+          <ul>
+            <li><a href="#">SYLPHIASHOP GÒ VẤP</a></li>
+            <li><a href="#">SYLPHIASHOP QUẬN 10</a></li>
+            <li><a href="#">SYLPHIASHOP QUẬN 1</a></li>
+            <li><a href="#">SYLPHIASHOP THỦ ĐỨC</a></li>
+            <li><a href="#">SYLPHIASHOP TÂY NINH</a></li>
+            <li><a href="#">SYLPHIASHOP TIỀN GIANG</a></li>
+            <li><a href="#">SYLPHIASHOP LONG AN</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Dòng bản quyền -->
+      <div class="footer-bottom">
+        <p>© 2025 SylphiaShop. All rights reserved.</p>
+        <p>Email: support@sylphiashop.vn | Hotline: 0123-456-789</p>
+      </div>
     </footer>
-</body>
-
+  </body>
 </html>

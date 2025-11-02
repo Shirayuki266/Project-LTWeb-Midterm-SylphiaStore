@@ -48,11 +48,9 @@
         <label for="password">Mật khẩu</label>
         <input type="password" id="password" name="password" required />
 
-        <a href="../../trangchinh/trangquenmatkhau.html" class="forgot-link">
-          Quên mật khẩu?
-        </a>
+        <a href="#" class="forgot-link"> Quên mật khẩu? </a>
 
-        <button type="submit" class="btn primary full">Đăng Nhập</button>
+        <button type="#" class="btn primary full">Đăng Nhập</button>
 
         <div class="social-login">
           <input
@@ -73,7 +71,9 @@
 
         <div class="register-section">
           <span>Bạn chưa có tài khoản?</span>
-          <a href="dangky.html" class="btn secondary small"> Đăng ký ngay </a>
+          <a href="../user/dangky.html" class="btn secondary small">
+            Đăng ký ngay
+          </a>
         </div>
       </form>
     </main>
@@ -111,7 +111,7 @@
       okBtn.addEventListener("click", () => {
         popup.classList.remove("show");
         setTimeout(() => {
-          window.location.href = "/user/trangchu-dangnhap.html";
+          window.location.href = "../user/trangchu-dangnhap.html";
         }, 300);
       });
 
