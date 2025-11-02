@@ -1,72 +1,141 @@
 <!DOCTYPE html>
 <html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng nhập | Sylphia Shop</title>
+    <link rel="stylesheet" href="../css/login.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="../images/logo-web-removebg-preview.png"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Đăng nhập | Sylphia Shop</title>
-  <link rel="stylesheet" href="../css/login.css" />
-  <link rel="icon" type="image/png" href="../images/logo-web-removebg-preview.png" />
-</head>
-
-<body>
-  <!-- HEADER -->
-  <header>
-    <div class="logo">
-      <img src="../images/logo-web-removebg-preview.png" alt="Logo"
-        style="width: 40px; height: 40px; vertical-align: middle; margin-right: 5px" />
-      Sylphia Shop
-    </div>
-    <nav>
-      <a href="trangchu.html">Trang Chủ</a>
-      <a href="sanpham.html">Sản Phẩm</a>
-      <a href="#">Liên Hệ</a>
-      <a href="giohang.html">Giỏ Hàng</a>
-      <a href="dangky.html">Đăng ký</a>
-    </nav>
-  </header>
-
-  <!-- FORM -->
-  <main class="login-container">
-    <form class="login-form" action="#" method="post">
-      <h1>Đăng Nhập</h1>
-
-      <label for="username">Tên đăng nhập</label>
-      <input type="text" id="username" name="username" required />
-
-      <label for="password">Mật khẩu</label>
-      <input type="password" id="password" name="password" required />
-
-      <a href="../../trangchinh/trangquenmatkhau.html" class="forgot-link">
-        Quên mật khẩu?
-      </a>
-
-      <a href="index-user.html" class="btn primary full">
-        Đăng Nhập
-      </a>
-
-      <div class="social-login">
-        <input type="image"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png"
-          alt="Google" title="Đăng nhập Google" />
-        <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png"
-          alt="Facebook" title="Đăng nhập Facebook" />
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="logo">
+        <img
+          src="../images/logo-web-removebg-preview.png"
+          alt="Logo"
+          style="
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+            margin-right: 5px;
+          "
+        />
+        Sylphia Shop
       </div>
+      <nav>
+        <a href="trangchu.html">Trang Chủ</a>
+        <a href="sanpham.html">Sản Phẩm</a>
+        <a href="#">Liên Hệ</a>
+        <a href="giohang.html">Giỏ Hàng</a>
+        <a href="dangky.html">Đăng ký</a>
+      </nav>
+    </header>
 
-      <div class="register-section">
-        <span>Bạn chưa có tài khoản?</span>
-        <a href="dangky.html" class="btn secondary small">
-          Đăng ký ngay
+    <!-- FORM -->
+    <main class="login-container">
+      <form class="login-form" id="loginForm" action="#" method="post">
+        <h1>Đăng Nhập</h1>
+
+        <label for="username">Tên đăng nhập</label>
+        <input type="text" id="username" name="username" required />
+
+        <label for="password">Mật khẩu</label>
+        <input type="password" id="password" name="password" required />
+
+        <a href="../../trangchinh/trangquenmatkhau.html" class="forgot-link">
+          Quên mật khẩu?
         </a>
+
+        <button type="submit" class="btn primary full">Đăng Nhập</button>
+
+        <div class="social-login">
+          <input
+            type="image"
+            id="googleBtn"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png"
+            alt="Google"
+            title="Đăng nhập Google"
+          />
+          <input
+            type="image"
+            id="facebookBtn"
+            src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png"
+            alt="Facebook"
+            title="Đăng nhập Facebook"
+          />
+        </div>
+
+        <div class="register-section">
+          <span>Bạn chưa có tài khoản?</span>
+          <a href="dangky.html" class="btn secondary small"> Đăng ký ngay </a>
+        </div>
+      </form>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>© 2025 SylphiaShop. All rights reserved.</p>
+      <p>Email: support@sylphiashop.vn | Hotline: 0123-456-789</p>
+    </footer>
+
+    <!-- POPUP -->
+    <div class="popup-overlay" id="popup">
+      <div class="popup-box">
+        <h2>🎉 Đăng nhập thành công!</h2>
+        <p id="popupMsg">Chào mừng bạn quay lại!</p>
+        <button id="okBtn">OK</button>
       </div>
-    </form>
-  </main>
+    </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2025 SylphiaShop. All rights reserved.</p>
-    <p>Email: support@sylphiashop.vn | Hotline: 0123-456-789</p>
-  </footer>
-</body>
+    <!-- JS -->
+    <script>
+      const form = document.getElementById("loginForm");
+      const popup = document.getElementById("popup");
+      const popupMsg = document.getElementById("popupMsg");
+      const okBtn = document.getElementById("okBtn");
 
+      const googleBtn = document.getElementById("googleBtn");
+      const facebookBtn = document.getElementById("facebookBtn");
+
+      function showPopup(message) {
+        popupMsg.textContent = message;
+        popup.classList.add("show");
+      }
+
+      okBtn.addEventListener("click", () => {
+        popup.classList.remove("show");
+        setTimeout(() => {
+          window.location.href = "/user/trangchu-dangnhap.html";
+        }, 300);
+      });
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        if (username === "" || password === "") {
+          showPopup("⚠️ Vui lòng nhập đầy đủ thông tin!");
+          return;
+        }
+        showPopup(`Xin chào ${username}! Đăng nhập thành công 💖`);
+      });
+
+      googleBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        showPopup("Đăng nhập bằng Google thành công 🌐");
+      });
+
+      facebookBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        showPopup("Đăng nhập bằng Facebook thành công 👍");
+      });
+    </script>
+  </body>
 </html>
