@@ -76,31 +76,70 @@ nav a:hover {
   display: inline-block;
 }
 
+/* Input */
 .icons input {
   width: 280px;
-  padding: 8px 40px 8px 15px;
+  padding: 8px 40px 8px 40px;
+  /* chừa khoảng cho icon */
   border: 1px solid #ddd;
   border-radius: 20px;
   font-size: 0.95rem;
   outline: none;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
+/* Input focus */
 .icons input:focus {
   border-color: #ff6600;
+  box-shadow: 0 0 5px rgba(255, 102, 0, 0.4);
 }
 
+/* Kính lúp bên trái */
 .icons .search-icon {
   position: absolute;
-  right: 15px;
+  left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  pointer-events: none;
+  cursor: pointer;
+  /* giờ click được */
+  transition: transform 0.2s, stroke 0.3s;
 }
 
-.icons .search-icon img {
-  width: 18px;
-  height: 18px;
+/* Filter bên phải */
+.icons .filter-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  transition: transform 0.2s, stroke 0.3s;
+}
+
+/* Icon SVG */
+.icons .search-icon svg,
+.icons .filter-icon svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+  stroke: #333;
+  /* màu mặc định */
+  transition: stroke 0.3s;
+}
+
+/* Hover input hoặc icon -> đổi màu icon + phóng to */
+.icons input:focus+.filter-icon,
+.icons input:focus+.filter-icon,
+.icons .search-icon:hover svg,
+.icons .filter-icon:hover svg,
+.icons .search-icon:active svg,
+.icons .filter-icon:active svg {
+  stroke: #ff6600;
+}
+
+/* Hiệu ứng phóng to khi hover icon */
+.icons .search-icon:hover,
+.icons .filter-icon:hover {
+  transform: translateY(-50%) scale(1.2);
 }
 
 /* ========== HERO SECTION ========== */
