@@ -1,86 +1,50 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chi Tiết Sản Phẩm - Sylphia Shop</title>
-    <link rel="stylesheet" href="../css/chitietsanpham.css" />
-  </head>
 
-  <body>
-    <header class="header">
-      <div class="logo">
-        <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
-        <span>Sylphia Shop</span>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chi Tiết Sản Phẩm - Sylphia Shop</title>
+  <link rel="stylesheet" href="../css/chitietsanpham.css" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
+      <span>Sylphia Shop</span>
+    </div>
+    <nav class="nav">
+      <a href="index.html">Trang chủ</a>
+      <a href="#">Sản phẩm</a>
+      <a href="#">Liên hệ</a>
+      <a href="cart.html">Giỏ hàng</a>
+    </nav>
+  </header>
+
+  <!-- Khu vực hiển thị sản phẩm -->
+  <main class="product-detail">
+    <div class="product-image">
+      <img id="product-image" src="" alt="Sản phẩm" />
+    </div>
+
+    <div class="product-info">
+      <h1 id="product-name"></h1>
+      <p id="product-price" class="price"></p>
+      <p id="product-desc" class="description"></p>
+      <div class="actions">
+        <input type="number" min="1" value="1" />
+        <button class="add-to-cart">Thêm vào giỏ</button>
       </div>
-      <nav class="nav">
-        <a href="index.html">Trang chủ</a>
-        <a href="#">Sản phẩm</a>
-        <a href="#">Liên hệ</a>
-        <a href="cart.html">Giỏ hàng</a>
-      </nav>
-    </header>
+    </div>
+  </main>
 
-    <!-- Khu vực hiển thị sản phẩm -->
-    <main class="product-detail">
-      <div class="product-image">
-        <img id="product-image" src="" alt="Sản phẩm" />
-      </div>
+  <footer>
+    <p>© 2025 SylphiaShop. All rights reserved.</p>
+    <p>Email: support@sylphiashop.vn | Hotline: 0123-456-789</p>
+  </footer>
 
-      <div class="product-info">
-        <h1 id="product-name"></h1>
-        <p id="product-price" class="price"></p>
-        <p id="product-desc" class="description"></p>
-        <div class="actions">
-          <input type="number" min="1" value="1" />
-          <button class="add-to-cart">Thêm vào giỏ</button>
-        </div>
-      </div>
-    </main>
 
-    <footer>
-      <p>© 2025 SylphiaShop. All rights reserved.</p>
-      <p>Email: support@sylphiashop.vn | Hotline: 0123-456-789</p>
-    </footer>
+</body>
 
-    <!-- Script hiển thị chi tiết -->
-    <script>
-      const products = {
-        iphone17: {
-          name: "Iphone 17 Pro Max",
-          price: "37.250.000đ",
-          desc: "iPhone 17 Pro Max 10 với chip A19, camera 200MP, pin 6000mAh, hiệu năng vượt trội.",
-          image: "../images/iphone-17-pro-max.jpg",
-        },
-        laptopasus: {
-          name: "Laptop Asus",
-          price: "22.890.000đ",
-          desc: "Laptop Asus hiệu năng mạnh, màn hình 15.6 inch Full HD, RAM 16GB, SSD 1TB.",
-          image: "../images/laptop-Asus.png",
-        },
-        banphim: {
-          name: "Bàn Phím Gaming Đời Mới",
-          price: "1.560.000đ",
-          desc: "Bàn phím cơ RGB với switch quang học, phản hồi cực nhanh, thích hợp cho game thủ.",
-          image: "../images/ban-phim-gaming.jpg",
-        },
-      };
-
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get("id");
-
-      if (products[id]) {
-        document.getElementById("product-name").textContent =
-          products[id].name;
-        document.getElementById("product-price").textContent =
-          products[id].price;
-        document.getElementById("product-desc").textContent =
-          products[id].desc;
-        document.getElementById("product-image").src = products[id].image;
-      } else {
-        document.querySelector(".product-detail").innerHTML =
-          "<p>Không tìm thấy sản phẩm.</p>";
-      }
-    </script>
-  </body>
 </html>
