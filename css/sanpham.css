@@ -1,4 +1,3 @@
-/* Toàn trang */
 body {
   font-family: "Segoe UI", sans-serif;
   margin: 0;
@@ -18,13 +17,23 @@ body {
 /* Thanh lọc */
 .filter-bar {
   text-align: right;
-  margin: 0 60px 20px 0;
+  /* Căn phải trong container */
+  margin: 0 60px 20px 0; /* Margin phải 60px để khớp với padding của grid */
+}
+/* Đảm bảo thanh lọc căn giữa trong main-content-wrapper khi cần */
+@media (max-width: 768px) {
+  .filter-bar {
+    text-align: center;
+    margin: 0 auto 20px auto;
+    width: 90%; /* Giới hạn độ rộng của select trong mobile */
+  }
 }
 
 .filter-bar select {
   padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid #ccc;
+  min-width: 150px; /* Đảm bảo độ rộng tối thiểu */
 }
 
 /* Lưới sản phẩm */
@@ -32,7 +41,31 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 30px;
-  padding: 0 60px 50px;
+  padding: 0 60px 50px; /* Padding cho lưới */
+}
+
+/* Điều chỉnh padding cho lưới sản phẩm trong responsive */
+@media (max-width: 992px) {
+  .product-grid {
+    padding: 0 40px 50px;
+    gap: 20px;
+  }
+}
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(180px, 1fr)
+    ); /* Điều chỉnh minwidth cho mobile */
+    padding: 0 20px 40px;
+    gap: 15px;
+  }
+}
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: 1fr; /* Một cột trên mobile rất nhỏ */
+    padding: 0 15px 30px;
+  }
 }
 
 .product-card {
@@ -82,3 +115,4 @@ body {
 }
 
 /* Footer đã có style riêng từ footer.css */
+/* Các style khác từ file style.css gốc của bạn cũng sẽ áp dụng */

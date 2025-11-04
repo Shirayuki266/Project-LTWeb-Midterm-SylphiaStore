@@ -4,6 +4,10 @@
   color: #fff;
   padding: 50px 0 20px;
   font-family: "Poppins", sans-serif;
+
+  width: 100%;
+  position: relative;
+  bottom: 0;
 }
 
 /* Khối chứa các cột */

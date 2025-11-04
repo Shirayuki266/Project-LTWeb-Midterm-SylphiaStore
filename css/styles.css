@@ -127,8 +127,8 @@ nav a:hover {
 }
 
 /* Hover input hoặc icon -> đổi màu icon + phóng to */
-.icons input:focus+.filter-icon,
-.icons input:focus+.filter-icon,
+.icons input:focus + .filter-icon,
+.icons input:focus + .filter-icon,
 .icons .search-icon:hover svg,
 .icons .filter-icon:hover svg,
 .icons .search-icon:active svg,
