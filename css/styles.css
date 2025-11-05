@@ -43,6 +43,11 @@ header {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+header nav a:hover {
+  color: #ff6600;
+  transform: scale(1.12);
+}
+
 .logo {
   font-size: 1.6rem;
   font-weight: bold;
@@ -82,10 +87,11 @@ nav a {
   transition: all 0.6s ease-in-out;
 }
 
-nav a:hover {
+nav a.active {
+  background-color: #fff4ec;
   color: #ff6600;
-  transform: scale(1.12);
-  /* phóng to nhẹ */
+  border-left-color: #ff6600;
+  font-weight: 600;
 }
 
 .icons {
@@ -396,6 +402,8 @@ footer {
   margin-top: 50px;
   /* Đảm bảo footer có khoảng cách với nội dung trước nó */
 }
+
+
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 992px) {
@@ -741,24 +749,6 @@ footer {
     font-size: 0.95rem;
   }
 
-  /* === SERIES NAVIGATION === */
-  .series-navigation {
-    background-color: #000;
-    padding: 10px 0;
-  }
-
-  .series-navigation a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 15px;
-    font-weight: 500;
-    transition: color 0.3s;
-  }
-
-  .series-navigation a:hover {
-    color: #ff9900;
-  }
-
   /* === FEATURE ICONS === */
   .feature-icons {
     background-color: #f9f9f9;
@@ -892,54 +882,5 @@ footer {
 
   .page-dots {
     padding: 0 5px;
-  }
-
-  /* === FOOTER === */
-  .footer {
-    background-color: #111;
-    color: #fff;
-    padding: 40px 0;
-  }
-
-  .footer .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-  .footer-col {
-    flex: 1;
-    min-width: 220px;
-    margin-bottom: 20px;
-  }
-
-  .footer-col h3 {
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-    color: #ff9900;
-  }
-
-  .footer-col p,
-  .footer-col li {
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-  }
-
-  .footer-col a {
-    color: #ddd;
-    text-decoration: none;
-  }
-
-  .footer-col a:hover {
-    color: #fff;
-  }
-
-  .payment-methods img,
-  .momo img {
-    width: 80px;
-    height: auto;
-    line-height: 20px;
-    margin-top: 10px;
-    border-radius: 8px;
   }
 }
