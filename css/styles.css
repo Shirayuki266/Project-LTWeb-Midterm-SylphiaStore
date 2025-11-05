@@ -51,6 +51,21 @@ header {
   align-items: center;
 }
 
+.logo a {
+  text-decoration: none;
+  /* Bỏ gạch chân */
+  color: inherit;
+  /* Giữ nguyên màu cam của chữ */
+  display: flex;
+  align-items: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.logo a:hover {
+  transform: scale(1.08);
+  /* phóng to nhẹ */
+}
+
 .logo img {
   width: 35px;
   height: 35px;
@@ -61,36 +76,40 @@ header {
 nav a {
   text-decoration: none;
   color: #333;
-  margin: 0 15px;
+  margin: 0 10px;
   font-weight: 500;
-  transition: 0.3s;
   font-size: 1rem;
+  transition: all 0.6s ease-in-out;
 }
 
 nav a:hover {
   color: #ff6600;
+  transform: scale(1.12);
+  /* phóng to nhẹ */
 }
 
 .icons {
   position: relative;
   display: inline-block;
+  left: -140px;
 }
 
-/* Input */
+/* Input mặc định */
 .icons input {
   width: 280px;
   padding: 8px 40px 8px 40px;
-  /* chừa khoảng cho icon */
-  border: 1px solid #ddd;
+  border: 1.5px solid #555;
+  /* viền đen */
   border-radius: 20px;
   font-size: 0.95rem;
   outline: none;
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-/* Input focus */
+/* Input khi focus */
 .icons input:focus {
   border-color: #ff6600;
+  /* viền cam khi focus */
   box-shadow: 0 0 5px rgba(255, 102, 0, 0.4);
 }
 
@@ -118,8 +137,8 @@ nav a:hover {
 /* Icon SVG */
 .icons .search-icon svg,
 .icons .filter-icon svg {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   display: block;
   stroke: #333;
   /* màu mặc định */
@@ -127,8 +146,8 @@ nav a:hover {
 }
 
 /* Hover input hoặc icon -> đổi màu icon + phóng to */
-.icons input:focus + .filter-icon,
-.icons input:focus + .filter-icon,
+.icons input:focus+.filter-icon,
+.icons input:focus+.filter-icon,
 .icons .search-icon:hover svg,
 .icons .filter-icon:hover svg,
 .icons .search-icon:active svg,
@@ -139,7 +158,7 @@ nav a:hover {
 /* Hiệu ứng phóng to khi hover icon */
 .icons .search-icon:hover,
 .icons .filter-icon:hover {
-  transform: translateY(-50%) scale(1.2);
+  transform: translateY(-50%) scale(1.1);
 }
 
 /* ========== HERO SECTION ========== */
@@ -160,12 +179,22 @@ nav a:hover {
   padding: 30px 40px;
   border-radius: 12px;
   max-width: 600px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  /* Thêm hiệu ứng mượt */
+}
+
+.hero-content:hover {
+  transform: scale(1.05);
+  /* Phóng to 5% */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  /* Thêm bóng cho nổi bật */
 }
 
 #hero h1 {
   font-size: 2.8rem;
   margin-bottom: 15px;
   line-height: 1.2;
+  color: #f0f4ff
 }
 
 #hero p {
@@ -271,9 +300,11 @@ nav a:hover {
 .product-card img {
   width: 100%;
   height: 250px;
-  object-fit: contain; /* <-- thay cover bằng contain */
+  object-fit: contain;
+  /* <-- thay cover bằng contain */
   border-radius: 12px;
-  background-color: #fff; /* thêm nền trắng để ảnh nhỏ nhìn đẹp hơn */
+  background-color: #fff;
+  /* thêm nền trắng để ảnh nhỏ nhìn đẹp hơn */
 }
 
 .product-card h3 {
