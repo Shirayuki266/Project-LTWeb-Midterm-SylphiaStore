@@ -1,115 +1,112 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chi Tiết Đơn Hàng - Sylphia Shop</title>
-    <!-- Nếu bạn muốn dùng file CSS riêng, hãy đảm bảo đường dẫn đúng -->
-    <link rel="stylesheet" href="../css/styles.css" />
-    <link rel="stylesheet" href="../css/donhangdadat.css" />
-  </head>
-  <body>
-    <div class="main-wrapper">
-      <!--Header-->
-      <header>
-        <div class="logo">
-          <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
-          Sylphia Shop
-        </div>
-        <div class="search-area">
-          <input type="text" placeholder="Tìm kiếm..." />
-          <span class="search-icon">
-            <img src="../images/kinh-lup.png" alt="Tìm kiếm" />
-          </span>
-        </div>
-        <nav>
-          <a href="../user/trangchu-dangnhap.html">Trang Chủ</a>
-          <a href="../user/sanpham-dangnhap.html">Sản Phẩm</a>
-          <a href="../user/donhangdamua.html">Đơn Hàng Đã Mua</a>
-          <a href="giohang.html">Giỏ Hàng</a>
-        </nav>
-        <!-- Trạng thái đơn hàng trong header chỉ hiển thị cho trang này, không phải header chung -->
-        <div class="header-order-status">
-          <img
-            src="https://img.icons8.com/material-outlined/24/28a745/checked--v1.png"
-            alt="Check icon"
-          />
-          <span>Đang Chuẩn Bị Hàng</span>
-          <!-- Nếu muốn có badge "Hoàn thành" thì thêm vào đây -->
-          <!-- <span class="completed-badge">HOÀN THÀNH</span> -->
-        </div>
-      </header>
 
-      <h1>CHI TIẾT ĐƠN HÀNG</h1>
-      <p class="subtitle">Cảm ơn bạn đã mua sắm tại Sylphia Shop!</p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chi Tiết Đơn Hàng - Sylphia Shop</title>
+  <!-- Nếu bạn muốn dùng file CSS riêng, hãy đảm bảo đường dẫn đúng -->
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/donhangdadat.css" />
+</head>
 
-      <div class="section">
-        <div class="section-title">THÔNG TIN GIAO HÀNG</div>
-        <div class="section-content">
-          <p><strong>Người Đặt Hàng</strong></p>
-          <p>Địa chỉ: 123 Lê Duẩn, P. Bến Thành, Q.1, TP.HCM</p>
+<body>
+  <div class="main-wrapper">
+    <!--Header-->
+    <header>
+      <div class="logo">
+        <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
+        Sylphia Shop
+      </div>
+      <div class="search-area">
+        <input type="text" placeholder="Tìm kiếm..." />
+        <span class="search-icon">
+          <img src="../images/kinh-lup.png" alt="Tìm kiếm" />
+        </span>
+      </div>
+      <nav>
+        <a href="trangchu-dangnhap.html">Trang Chủ</a>
+        <a href="sanpham-dangnhap.html">Sản Phẩm</a>
+        <a href="donhangdamua.html">Đơn Hàng Đã Mua</a>
+        <a href="giohang.html">Giỏ Hàng</a>
+      </nav>
+      <!-- Trạng thái đơn hàng trong header chỉ hiển thị cho trang này, không phải header chung -->
+      <div class="header-order-status">
+        <img src="https://img.icons8.com/material-outlined/24/28a745/checked--v1.png" alt="Check icon" />
+        <span>Đang Chuẩn Bị Hàng</span>
+        <!-- Nếu muốn có badge "Hoàn thành" thì thêm vào đây -->
+        <!-- <span class="completed-badge">HOÀN THÀNH</span> -->
+      </div>
+    </header>
+
+    <h1>CHI TIẾT ĐƠN HÀNG</h1>
+    <p class="subtitle">Cảm ơn bạn đã mua sắm tại Sylphia Shop!</p>
+
+    <div class="section">
+      <div class="section-title">THÔNG TIN GIAO HÀNG</div>
+      <div class="section-content">
+        <p><strong>Người Đặt Hàng</strong></p>
+        <p>Địa chỉ: 123 Lê Duẩn, P. Bến Thành, Q.1, TP.HCM</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">THÔNG TIN VẬN CHUYỂN</div>
+      <div class="section-content">
+        <p>
+          Giao hàng nhanh <span class="highlight">25.000đ</span> — Dự kiến
+          giao: 01/12/2025
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">PHƯƠNG THỨC THANH TOÁN</div>
+      <div class="section-content">
+        <p>Nhận hàng rồi thanh toán</p>
+      </div>
+    </div>
+
+    <div class="product-section">
+      <div class="section-title">SẢN PHẨM</div>
+      <div class="product-item">
+        <img src="../images/iphone-17-pro-max.jpg" alt="iPhone 17 Pro Max" />
+        <div class="product-info">
+          <div class="name">iPhone 11 Pro Max 256GB Xanh</div>
+          <div class="category">Phân loại: Chính hãng VN/A</div>
+          <div class="quantity">x1</div>
+        </div>
+        <div class="product-price">8.000.000đ</div>
+      </div>
+      <div class="price-details">
+        <div class="item"><span>Tạm tính:</span><span>8.000.000đ</span></div>
+        <div class="item">
+          <span>Phí vận chuyển:</span><span>25.000đ</span>
+        </div>
+        <div class="item"><span>Mã giảm giá:</span><span>-0đ</span></div>
+        <div class="total-final">
+          <span>Tổng cộng:</span><span>8.025.000đ</span>
         </div>
       </div>
+    </div>
 
-      <div class="section">
-        <div class="section-title">THÔNG TIN VẬN CHUYỂN</div>
-        <div class="section-content">
-          <p>
-            Giao hàng nhanh <span class="highlight">25.000đ</span> — Dự kiến
-            giao: 01/11/2024
-          </p>
-        </div>
+    <div class="action-section">
+      <div class="action-info">
+        <p>Đánh giá sản phẩm trước 30-11-2025</p>
+        <p class="review-bonus">Đánh giá ngay và nhận 200 Xu</p>
       </div>
-
-      <div class="section">
-        <div class="section-title">PHƯƠNG THỨC THANH TOÁN</div>
-        <div class="section-content">
-          <p>Nhận hàng rồi thanh toán</p>
-        </div>
-      </div>
-
-      <div class="product-section">
-        <div class="section-title">SẢN PHẨM</div>
-        <div class="product-item">
-          <img src="../images/iphone-17-pro-max.jpg" alt="iPhone 17 Pro Max" />
-          <div class="product-info">
-            <div class="name">iPhone 11 Pro Max 256GB Xanh</div>
-            <div class="category">Phân loại: Chính hãng VN/A</div>
-            <div class="quantity">x1</div>
-          </div>
-          <div class="product-price">8.000.000đ</div>
-        </div>
-        <div class="price-details">
-          <div class="item"><span>Tạm tính:</span><span>8.000.000đ</span></div>
-          <div class="item">
-            <span>Phí vận chuyển:</span><span>25.000đ</span>
-          </div>
-          <div class="item"><span>Mã giảm giá:</span><span>-0đ</span></div>
-          <div class="total-final">
-            <span>Tổng cộng:</span><span>8.025.000đ</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="action-section">
-        <div class="action-info">
-          <p>Đánh giá sản phẩm trước 30-11-2025</p>
-          <p class="review-bonus">Đánh giá ngay và nhận 200 Xu</p>
-        </div>
-        <a href="#" class="action-button primary">Đánh Giá</a>
-        <a href="#" class="action-button">Yêu Cầu Trả Hàng / Hoàn Tiền</a>
-        <a href="#" class="action-button">
-          Thêm
-          <img
-            src="https://img.icons8.com/material-outlined/24/000000/expand-arrow--v1.png"
-            alt="Dropdown arrow"
-          />
-        </a>
-      </div>
-
-      <a href="../user/trangchu-dangnhap.html" class="back-to-home-button">
-        QUAY LẠI TRANG CHỦ
+      <a href="#" class="action-button primary">Đánh Giá</a>
+      <a href="#" class="action-button">Yêu Cầu Trả Hàng / Hoàn Tiền</a>
+      <a href="#" class="action-button">
+        Thêm
+        <img src="https://img.icons8.com/material-outlined/24/000000/expand-arrow--v1.png" alt="Dropdown arrow" />
       </a>
     </div>
-  </body>
+
+    <a href="trangchu-dangnhap.html" class="back-to-home-button">
+      QUAY LẠI TRANG CHỦ
+    </a>
+  </div>
+</body>
+
 </html>

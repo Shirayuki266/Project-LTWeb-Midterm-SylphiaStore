@@ -1,144 +1,129 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Đơn Hàng Của Tôi - Sylphia Shop</title>
-    <link rel="stylesheet" href="../css/donhangdamua.css" />
-  </head>
-  <body>
-    <div class="main-wrapper">
-      <!-- Header (đã có ở các file trước) -->
-      <header>
-        <div class="logo">
-          <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
-          Sylphia Shop
-        </div>
-        <div class="search-area">
-          <input type="text" placeholder="Tìm kiếm..." />
-          <span class="search-icon">
-            <img src="../images/kinh-lup.png" alt="Tìm kiếm" />
-          </span>
-        </div>
-        <nav>
-          <a href="../user/trangchu-dangnhap.html">Trang Chủ</a>
-          <a href="../user/sanpham-dangnhap.html">Sản Phẩm</a>
-          <a href="#">Liên Hệ</a>
-          <a href="../user/giohang.html">Giỏ Hàng</a>
-        </nav>
-        <div class="header-order-status">
-          <img
-            src="https://img.icons8.com/material-outlined/24/28a745/checked--v1.png"
-            alt="Check icon"
-          />
-          <span>Đang Chuẩn Bị Hàng</span>
-        </div>
-      </header>
 
-      <h1>ĐƠN HÀNG CỦA TÔI</h1>
-      <p class="subtitle">Danh sách các đơn hàng bạn đã đặt</p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đơn Hàng Của Tôi - Sylphia Shop</title>
+  <link rel="stylesheet" href="../css/donhangdamua.css" />
+</head>
 
-      <!-- Order Card 1 -->
-      <div class="order-card">
-        <div class="order-card-header">
-          <div class="order-id">Mã đơn hàng: <span>#SP123456</span></div>
-          <div class="order-date">Ngày đặt: 01/10/2024</div>
-          <div class="order-status-badge completed">Đã giao thành công</div>
-        </div>
+<body>
+  <div class="main-wrapper">
+    <!-- Header (đã có ở các file trước) -->
+    <header>
+      <div class="logo">
+        <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
+        Sylphia Shop
+      </div>
+      <div class="search-area">
+        <input type="text" placeholder="Tìm kiếm..." />
+        <span class="search-icon">
+          <img src="../images/kinh-lup.png" alt="Tìm kiếm" />
+        </span>
+      </div>
+      <nav>
+        <a href="trangchu-dangnhap.html">Trang Chủ</a>
+        <a href="sanpham-dangnhap.html">Sản Phẩm</a>
+        <a href="#">Liên Hệ</a>
+        <a href="giohang-dangnhap.html">Giỏ Hàng</a>
+      </nav>
+      <div class="header-order-status">
+        <img src="https://img.icons8.com/material-outlined/24/28a745/checked--v1.png" alt="Check icon" />
+        <span>Đang Chuẩn Bị Hàng</span>
+      </div>
+    </header>
 
-        <div class="order-item">
-          <img src="../images/iphone-17-pro-max.jpg" alt="iPhone 11 Pro Max" />
-          <div class="order-item-details">
-            <div class="name">iPhone 11 Pro Max 256GB Xanh</div>
-            <div class="quantity">x2</div>
-          </div>
-          <div class="order-item-total">8.000.000đ</div>
-        </div>
-        <div class="order-item">
-          <img src="../images/iphone-17-pro-max.jpg" alt="iPhone 11 Pro Max" />
-          <div class="order-item-details">
-            <div class="name">iPhone 11 Pro Max Xanh</div>
-            <div class="category">Phân loại: Chính hãng VN/A</div>
-            <div class="quantity">x1</div>
-          </div>
-          <div class="order-item-total">8.250.000đ</div>
-        </div>
+    <h1>ĐƠN HÀNG CỦA TÔI</h1>
+    <p class="subtitle">Danh sách các đơn hàng bạn đã đặt</p>
 
-        <div class="order-card-footer">
-          <a
-            href="../user/chitietsanpham-dangnhap.html"
-            class="action-button view-detail"
-            >XEM CHI TIẾT</a
-          >
-          <span class="total-label">Tổng tiền:</span>
-          <span class="total-amount">8.250.000đ</span>
-          <a href="#" class="action-button primary">Đánh Giá</a>
-          <a href="#" class="action-button">Yêu Cầu Trả Hàng / Hoàn Tiền</a>
-          <a href="#" class="action-button">
-            Thêm
-            <img
-              src="https://img.icons8.com/material-outlined/24/000000/expand-arrow--v1.png"
-              alt="Dropdown arrow"
-            />
-          </a>
-        </div>
+    <!-- Order Card 1 -->
+    <div class="order-card">
+      <div class="order-card-header">
+        <div class="order-id">Mã đơn hàng: <span>#SP123456</span></div>
+        <div class="order-date">Ngày đặt: 01/10/2024</div>
+        <div class="order-status-badge completed">Đã giao thành công</div>
       </div>
 
-      <!-- Order Card 2 (Ví dụ thêm một đơn hàng khác) -->
-      <div class="order-card">
-        <div class="order-card-header">
-          <div class="order-id">Mã đơn hàng: <span>#GH789012</span></div>
-          <div class="order-date">Ngày đặt: 05/09/2024</div>
-          <div class="order-status-badge shipping">Đang giao hàng</div>
+      <div class="order-item">
+        <img src="../images/iphone-17-pro-max.jpg" alt="iPhone 11 Pro Max" />
+        <div class="order-item-details">
+          <div class="name">iPhone 11 Pro Max 256GB Xanh</div>
+          <div class="quantity">x2</div>
         </div>
-
-        <div class="order-item">
-          <img src="../images/laptop-asus-tuf-gaming.webp" alt="laptop-Asus" />
-          <!-- Cần thay thế ảnh -->
-          <div class="order-item-details">
-            <div class="name">laptop-Asus</div>
-            <div class="quantity">x1</div>
-          </div>
-          <div class="order-item-total">7.250.000đ</div>
+        <div class="order-item-total">8.000.000đ</div>
+      </div>
+      <div class="order-item">
+        <img src="../images/iphone-17-pro-max.jpg" alt="iPhone 11 Pro Max" />
+        <div class="order-item-details">
+          <div class="name">iPhone 11 Pro Max Xanh</div>
+          <div class="category">Phân loại: Chính hãng VN/A</div>
+          <div class="quantity">x1</div>
         </div>
-        <div class="order-item">
-          <img
-            src="../images/samsung-galaxy-z-fold7.jpg"
-            alt="Samsung Galaxy z-fold7"
-          />
-          <!-- Cần thay thế ảnh -->
-          <div class="order-item-details">
-            <div class="name">Samsung Galaxy z-fold7</div>
-            <div class="quantity">x1</div>
-          </div>
-          <div class="order-item-total">22.000.000đ</div>
-        </div>
-
-        <div class="order-card-footer">
-          <a href="chi-tiet-don-hang.html" class="action-button view-detail"
-            >XEM CHI TIẾT</a
-          >
-          <span class="total-label">Tổng tiền:</span>
-          <span class="total-amount">29.250.000đ</span>
-          <a href="#" class="action-button">Hủy Đơn Hàng</a>
-          <a href="#" class="action-button">
-            Thêm
-            <img
-              src="https://img.icons8.com/material-outlined/24/000000/expand-arrow--v1.png"
-              alt="Dropdown arrow"
-            />
-          </a>
-        </div>
+        <div class="order-item-total">8.250.000đ</div>
       </div>
 
-      <!-- Pagination -->
-      <div class="pagination">
-        <a href="#">Prev</a>
-        <a href="#" class="current-page">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">Next</a>
+      <div class="order-card-footer">
+        <a href="chitietsanpham-dangnhap.html" class="action-button view-detail">XEM CHI TIẾT</a>
+        <span class="total-label">Tổng tiền:</span>
+        <span class="total-amount">8.250.000đ</span>
+        <a href="#" class="action-button primary">Đánh Giá</a>
+        <a href="#" class="action-button">Yêu Cầu Trả Hàng / Hoàn Tiền</a>
+        <a href="#" class="action-button">
+          Thêm
+          <img src="https://img.icons8.com/material-outlined/24/000000/expand-arrow--v1.png" alt="Dropdown arrow" />
+        </a>
       </div>
     </div>
-  </body>
+
+    <!-- Order Card 2 (Ví dụ thêm một đơn hàng khác) -->
+    <div class="order-card">
+      <div class="order-card-header">
+        <div class="order-id">Mã đơn hàng: <span>#GH789012</span></div>
+        <div class="order-date">Ngày đặt: 05/09/2024</div>
+        <div class="order-status-badge shipping">Đang giao hàng</div>
+      </div>
+
+      <div class="order-item">
+        <img src="../images/laptop-asus-tuf-gaming.webp" alt="laptop-Asus" />
+        <!-- Cần thay thế ảnh -->
+        <div class="order-item-details">
+          <div class="name">laptop-Asus</div>
+          <div class="quantity">x1</div>
+        </div>
+        <div class="order-item-total">7.250.000đ</div>
+      </div>
+      <div class="order-item">
+        <img src="../images/samsung-galaxy-z-fold7.jpg" alt="Samsung Galaxy z-fold7" />
+        <!-- Cần thay thế ảnh -->
+        <div class="order-item-details">
+          <div class="name">Samsung Galaxy z-fold7</div>
+          <div class="quantity">x1</div>
+        </div>
+        <div class="order-item-total">22.000.000đ</div>
+      </div>
+
+      <div class="order-card-footer">
+        <a href="chitietsanpham-dangnhap.html" class="action-button view-detail">XEM CHI TIẾT</a>
+        <span class="total-label">Tổng tiền:</span>
+        <span class="total-amount">29.250.000đ</span>
+        <a href="#" class="action-button">Hủy Đơn Hàng</a>
+        <a href="#" class="action-button">
+          Thêm
+          <img src="https://img.icons8.com/material-outlined/24/000000/expand-arrow--v1.png" alt="Dropdown arrow" />
+        </a>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <a href="#">Prev</a>
+      <a href="#" class="current-page">1</a>
+      <a href="#">2</a>
+      <a href="#">3</a>
+      <a href="#">Next</a>
+    </div>
+  </div>
+</body>
+
 </html>
