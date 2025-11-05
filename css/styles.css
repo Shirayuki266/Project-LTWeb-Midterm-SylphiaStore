@@ -270,10 +270,10 @@ nav a:hover {
 
 .product-card img {
   width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 15px;
+  height: 250px;
+  object-fit: contain; /* <-- thay cover bằng contain */
+  border-radius: 12px;
+  background-color: #fff; /* thêm nền trắng để ảnh nhỏ nhìn đẹp hơn */
 }
 
 .product-card h3 {

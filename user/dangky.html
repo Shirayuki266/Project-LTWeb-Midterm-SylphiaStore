@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Đăng ký | Sylphia Shop</title>
     <link rel="stylesheet" href="../css/register.css" />
+    <link rel="stylesheet" href="../css/login.css" />
     <link
       rel="icon"
       type="image/png"
@@ -57,6 +58,23 @@
         <label for="email">Email</label>
         <input type="email" id="email" name="email" required />
 
+        <div class="social-login">
+          <input
+            type="image"
+            id="googleBtn"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png"
+            alt="Google"
+            title="Đăng nhập Google"
+          />
+          <input
+            type="image"
+            id="facebookBtn"
+            src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png"
+            alt="Facebook"
+            title="Đăng nhập Facebook"
+          />
+        </div>
+
         <div class="button-group">
           <a href="../user/dangnhap.html" class="btn secondary"
             >Quay lại đăng nhập</a
@@ -73,5 +91,45 @@
       <p>© 2025 SylphiaShop. All rights reserved.</p>
       <p>Email: support@sylphiashop.vn | Hotline: 0123-456-789</p>
     </footer>
+    <!-- POPUP -->
+    <div class="popup-overlay" id="popup">
+      <div class="popup-box">
+        <h2>🎉 Đăng nhập thành công!</h2>
+        <p id="popupMsg">Chào mừng bạn quay lại!</p>
+        <button id="okBtn">OK</button>
+      </div>
+    </div>
+
+    <!-- JS -->
+    <!-- JS -->
+    <script>
+      const popup = document.getElementById("popup");
+      const popupMsg = document.getElementById("popupMsg");
+      const okBtn = document.getElementById("okBtn");
+      const googleBtn = document.getElementById("googleBtn");
+      const facebookBtn = document.getElementById("facebookBtn");
+
+      function showPopup(message) {
+        popupMsg.textContent = message;
+        popup.classList.add("show");
+      }
+
+      okBtn.addEventListener("click", () => {
+        popup.classList.remove("show");
+        setTimeout(() => {
+          window.location.href = "../user/trangchu-dangnhap.html";
+        }, 300);
+      });
+
+      googleBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        showPopup("Đăng ký nhanh bằng Google thành công 🌐");
+      });
+
+      facebookBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        showPopup("Đăng ký nhanh bằng Facebook thành công 👍");
+      });
+    </script>
   </body>
 </html>
