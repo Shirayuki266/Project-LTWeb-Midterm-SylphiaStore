@@ -47,7 +47,7 @@ header {
 
 /* Nút tìm kiếm */
 .btn-search {
-  background: #007bff;
+  background: #ff6600;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -58,7 +58,7 @@ header {
 }
 
 .btn-search:hover {
-  background: #0056b3;
+  background: #e05500;
 }
 
 /* ==== Khu vực kết quả ==== */
@@ -132,9 +132,12 @@ header {
 
 /* ==== Phân trang ==== */
 .pagination {
-  display: flex;           /* dùng flexbox */
-  justify-content: center; /* căn giữa theo chiều ngang */
-  gap: 10px;               /* khoảng cách giữa các số trang */
+  display: flex;
+  /* dùng flexbox */
+  justify-content: center;
+  /* căn giữa theo chiều ngang */
+  gap: 10px;
+  /* khoảng cách giữa các số trang */
   margin-top: 30px;
 }
 
