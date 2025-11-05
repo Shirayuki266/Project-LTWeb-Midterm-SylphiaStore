@@ -1,105 +1,127 @@
 <!DOCTYPE html>
 <html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thông tin cá nhân | Sylphia Shop</title>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thông tin cá nhân | Sylphia Shop</title>
+    <!-- CSS chính -->
+    <link rel="stylesheet" href="../css/styles.css" />
+    <!-- CSS riêng -->
+    <link rel="stylesheet" href="../css/profile.css" />
 
-  <!-- CSS chính -->
-  <link rel="stylesheet" href="../css/styles.css">
-  <!-- CSS riêng -->
-  <link rel="stylesheet" href="../css/profile.css">
+    <link
+      rel="icon"
+      type="image/png"
+      href="../images/logo-web-removebg-preview.png"
+    />
+  </head>
 
-  <link rel="icon" type="image/png" href="../images/logo-web-removebg-preview.png">
-</head>
-
-<body>
-
-  <!-- Header -->
-  <header>
-    <div class="logo">
-      <img src="../images/logo-web-removebg-preview.png" alt="Logo"
-        style="width: 40px; height: 40px; vertical-align: middle; margin-right: 5px;">
-      Sylphia Shop
-    </div>
-
-    <div class="icons">
-      <span class="search-icon">
-        <!-- SVG kính lúp -->
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-      </span>
-
-      <input type="text" placeholder="Tìm kiếm..." />
-
-      <span class="filter-icon">
-        <!-- SVG phễu -->
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 3h18L13 14v7H11v-7L3 3z" />
-        </svg>
-      </span>
-    </div>
-
-    <nav>
-      <a href="trangchu-dangnhap.html">Trang Chủ</a>
-      <a href="sanpham-dangnhap.html">Sản Phẩm</a>
-      <a href="#">Liên Hệ</a>
-      <a href="giohang.html">Giỏ Hàng</a>
-      <a href="trangcanhan.html">Thông Tin Cá Nhân</a>
-      <a href="trangchu.html">Đăng Xuất</a>
-    </nav>
-  </header>
-
-  <!-- Nội dung chính -->
-  <main class="profile-wrapper">
-
-    <!-- Khung avatar -->
-    <div class="avatar-box">
-      <img src="../images/avatar.jpg" alt="Ảnh đại diện" class="avatar">
-      <p class="avatar-label">Ảnh đại diện</p>
-    </div>
-
-    <!-- Khung thông tin -->
-    <div class="profile-container">
-      <h2>Thông tin cá nhân</h2>
-
-      <div class="info">
-        <label>Họ và tên:</label>
-        <p>Nguyễn Văn A</p>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="logo">
+        <img
+          src="../images/logo-web-removebg-preview.png"
+          alt="Logo"
+          style="
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+            margin-right: 5px;
+          "
+        />
+        Sylphia Shop
       </div>
 
-      <div class="info">
-        <label>Email:</label>
-        <p>nguyenvana@example.com</p>
+      <div class="icons">
+        <span class="search-icon">
+          <!-- SVG kính lúp -->
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#333"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </span>
+
+        <input type="text" placeholder="Tìm kiếm..." />
+
+        <span class="filter-icon">
+          <!-- SVG phễu -->
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#333"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M3 3h18L13 14v7H11v-7L3 3z" />
+          </svg>
+        </span>
       </div>
 
-      <div class="info">
-        <label>Số điện thoại:</label>
-        <p>0123 456 789</p>
+      <nav>
+        <a href="../user/trangchu-dangnhap.html">Trang Chủ</a>
+        <a href="../user/sanpham-dangnhap.html">Sản Phẩm</a>
+        <a href="#">Liên Hệ</a>
+        <a href="../user/giohang-dangnhap.html">Giỏ Hàng</a>
+        <a href="../user/dangnhap.html">Đăng Xuất</a>
+      </nav>
+    </header>
+
+    <!-- Nội dung chính -->
+    <main class="profile-wrapper">
+      <!-- Khung avatar -->
+      <div class="avatar-box">
+        <img src="../images/avatar.jpg" alt="Ảnh đại diện" class="avatar" />
+        <p class="avatar-label">Ảnh đại diện</p>
       </div>
 
-      <div class="info">
-        <label>Địa chỉ:</label>
-        <p>123 Đường ABC, Quận 1, TP.HCM</p>
+      <!-- Khung thông tin -->
+      <div class="profile-container">
+        <h2>Thông tin cá nhân</h2>
+
+        <div class="info">
+          <label>Họ và tên:</label>
+          <p>Nguyễn Văn A</p>
+        </div>
+
+        <div class="info">
+          <label>Email:</label>
+          <p>nguyenvana@example.com</p>
+        </div>
+
+        <div class="info">
+          <label>Số điện thoại:</label>
+          <p>0123 456 789</p>
+        </div>
+
+        <div class="info">
+          <label>Địa chỉ:</label>
+          <p>123 Đường ABC, Quận 1, TP.HCM</p>
+        </div>
+
+        <div class="repair-inf4">
+          <span>Chỉnh sửa</span>
+        </div>
       </div>
+    </main>
 
-      <div class="repair-inf4">
-        <span>Chỉnh sửa</span>
-      </div>
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 SylphiaShop. All rights reserved.</p>
-    <p>Email: support@sylphiashop.vn | Hotline: 0123-456-789</p>
-  </footer>
-
-</body>
-
+    <!-- Footer -->
+    <footer>
+      <p>© 2025 SylphiaShop. All rights reserved.</p>
+      <p>Email: support@sylphiashop.vn | Hotline: 0123-456-789</p>
+    </footer>
+  </body>
 </html>
