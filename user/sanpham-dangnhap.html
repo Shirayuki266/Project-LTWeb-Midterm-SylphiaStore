@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="../css/footer.css" />
     <link rel="stylesheet" href="../css/sanpham.css" />
+    <link rel="stylesheet" href="../css/timkiem.css" />
   </head>
 
   <body>
@@ -72,16 +73,71 @@
     <main class="product-page">
       <h1>TẤT CẢ SẢN PHẨM</h1>
 
-      <!-- Bộ lọc -->
-      <div class="filter-bar">
-        <label for="sort">Sắp xếp theo:</label>
-        <select id="sort">
-          <option value="default">Mặc định</option>
-          <option value="price-asc">Giá tăng dần</option>
-          <option value="price-desc">Giá giảm dần</option>
-          <option value="name">Tên sản phẩm (A-Z)</option>
-        </select>
-      </div>
+      <!-- Form tìm kiếm nâng cao -->
+<section class="search-section">
+  <form class="search-form" method="get" action="#">
+
+    <!-- Ô tìm kiếm có icon -->
+    <div style="position: relative; display: inline-block;">
+      <!-- Icon kính lúp -->
+      <span class="search-icon" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+          stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </span>
+
+      <!-- Ô nhập -->
+      <input
+        type="text"
+        name="keyword"
+        placeholder="Nhập tên sản phẩm cần tìm..."
+        class="search-input"
+        style="padding-left: 35px; padding-right: 35px;"
+      />
+
+      <!-- Icon phễu -->
+      <a href="../user/trang-timkiem-nc.html" class="filter-icon"
+        title="Tìm kiếm nâng cao"
+        style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+          stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3h18L13 14v7H11v-7L3 3z" />
+        </svg>
+      </a>
+    </div>
+
+    <!-- Các tùy chọn -->
+    <select class="category-select" name="category">
+      <option value="">Chọn phân loại</option>
+      <option value="phone">Điện thoại</option>
+      <option value="laptop">Laptop</option>
+      <option value="phukien">Phụ kiện</option>
+    </select>
+
+    <div class="price-range">
+      <input type="number" name="price_min" placeholder="Giá từ (VNĐ)" />
+      <span>-</span>
+      <input type="number" name="price_max" placeholder="Giá đến (VNĐ)" />
+    </div>
+
+    <!-- Nút tìm kiếm -->
+    <button type="submit" class="btn-search">Tìm kiếm</button>
+
+    <!-- Bộ lọc sắp xếp -->
+    <div class="filter-bar">
+      <label for="sort">Sắp xếp theo:</label>
+      <select id="sort" name="sort">
+        <option value="default">Mặc định</option>
+        <option value="price-asc">Giá tăng dần</option>
+        <option value="price-desc">Giá giảm dần</option>
+        <option value="name">Tên sản phẩm (A-Z)</option>
+      </select>
+    </div>
+
+  </form>
+</section>
 
       <!-- Lưới sản phẩm -->
       <div class="product-grid">
@@ -192,6 +248,11 @@
             >Xem chi tiết</a
           >
         </div>
+      </div>
+      <div class="pagination">
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
       </div>
     </main>
 
