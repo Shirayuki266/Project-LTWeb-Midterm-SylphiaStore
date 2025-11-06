@@ -9,26 +9,28 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
   font-family: var(--font-main);
   background-color: var(--background-light);
   color: #333;
   line-height: 1.6;
-  margin: 0;
-  padding: 0;
 }
 
-/* --- CONTAINER CHUNG --- */
+/* --- MAIN CONTAINER --- */
 .profile-container {
+  flex-grow: 1;
   max-width: 1200px;
-  margin: 40px auto;
+  margin: 0 auto;
   padding: 20px;
 }
 
-/* --- BỐ CỤC 2 CỘT --- */
 .profile-content {
   display: flex;
   gap: 30px;
-  background-color: var(--card-background);
+  background: var(--card-background);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 20px;
@@ -39,7 +41,7 @@ body {
   flex: 0 0 280px;
   padding: 20px;
   border-right: 1px solid var(--border-color);
-  background-color: var(--background-light);
+  background: var(--background-light);
   border-radius: 12px 0 0 12px;
 }
 
@@ -53,9 +55,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* cắt vừa tròn */
   border-radius: 50%;
-  /* vẫn giữ hình tròn */
 }
 
 .avatar-area h2 {
@@ -69,10 +69,6 @@ body {
 }
 
 /* --- MENU --- */
-.user-menu {
-  padding-top: 20px;
-}
-
 .user-menu ul {
   list-style: none;
   padding: 0;
@@ -93,7 +89,7 @@ body {
 
 .user-menu a:hover,
 .user-menu li.active a {
-  background-color: var(--primary-color);
+  background: var(--primary-color);
   color: #fff;
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(255, 102, 0, 0.2);
@@ -128,7 +124,7 @@ body {
 }
 
 .edit-btn {
-  background-color: var(--primary-color);
+  background: var(--primary-color);
   color: #fff;
   border: none;
   padding: 8px 15px;
@@ -140,7 +136,7 @@ body {
 }
 
 .edit-btn:hover {
-  background-color: #e05500;
+  background: #e05500;
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(255, 102, 0, 0.2);
 }
@@ -156,14 +152,13 @@ body {
   width: 160px;
 }
 
-/* --- DISPLAY AREA --- */
+/* --- DISPLAY AREA & ORDERS --- */
 .display-area h3 {
   border-left: 5px solid var(--primary-color);
   padding-left: 10px;
   margin-bottom: 20px;
 }
 
-/* --- ORDER STATUS --- */
 .order-item {
   padding: 15px;
   border: 1px solid var(--border-color);
@@ -187,12 +182,12 @@ body {
 }
 
 .order-status.processing {
-  background-color: #fff3cd;
+  background: #fff3cd;
   color: #856404;
 }
 
 .order-status.shipping {
-  background-color: #d1ecf1;
+  background: #d1ecf1;
   color: #0c5460;
 }
 

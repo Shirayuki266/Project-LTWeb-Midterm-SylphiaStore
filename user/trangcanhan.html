@@ -7,112 +7,109 @@
   <title>Sylphia Shop</title>
   <link rel="stylesheet" href="../css/footer.css" />
   <link rel="stylesheet" href="../css/profile.css" />
-  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/header.css" />
   <link rel="icon" type="image/png" href="../images/logo-web-removebg-preview.png" />
 </head>
 
 <body>
-  <div class="main-content-wrapper">
-    <!--Header-->
-    <header>
-      <div class="logo">
-        <a href="trangchu-dangnhap.html" class="logo">
-          <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
-          Sylphia Shop
-        </a>
-      </div>
 
-      <div class="icons">
+  <!--Header-->
+  <header>
+    <div class="logo">
+      <a href="trangchu-dangnhap.html" class="logo">
+        <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
+        Sylphia Shop
+      </a>
+    </div>
+
+    <div class="icons">
+      <form action="trang-timkiem-cs.html" method="get">
         <span class="search-icon">
-          <form action="trang-timkiem-cs.html" method="get">
-            <span class="search-icon">
-              <!-- SVG kính lúp -->
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-            </span>
+          <!-- SVG kính lúp -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </span>
 
-            <input type="text" name="keyword" placeholder="Tìm kiếm..." />
+        <input type="text" name="keyword" placeholder="Tìm kiếm..." />
 
-            <span class="filter-icon">
-              <!-- SVG phễu -->
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 3h18L13 14v7H11v-7L3 3z" />
-              </svg>
-            </span>
-          </form>
-      </div>
+        <span class="filter-icon">
+          <!-- SVG phễu -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3h18L13 14v7H11v-7L3 3z" />
+          </svg>
+        </span>
+      </form>
+    </div>
 
-      <nav>
-        <a href="trangchu-dangnhap.html">Trang Chủ</a>
-        <a href="sanpham-dangnhap.html">Sản Phẩm</a>
-        <a href="#lienhe">Liên Hệ</a>
-        <a href="giohang-dangnhap.html">Giỏ Hàng</a>
-        <a href="trangcanhan.html" class="active">Thông Tin Cá Nhân</a>
-        <a href="dangnhap.html">Đăng Xuất</a>
-      </nav>
-    </header>
+    <nav>
+      <a href="trangchu-dangnhap.html">Trang Chủ</a>
+      <a href="sanpham-dangnhap.html">Sản Phẩm</a>
+      <a href="#lienhe">Liên Hệ</a>
+      <a href="giohang-dangnhap.html">Giỏ Hàng</a>
+      <a href="trangcanhan.html">Thông Tin Cá Nhân</a>
+      <a href="dangnhap.html">Đăng Xuất</a>
+    </nav>
+  </header>
+  <!-- Nội dung chính -->
+  <main class="profile-container">
+    <div class="profile-content">
 
-    <!-- Nội dung chính -->
-    <main class="profile-container">
-
-      <div class="profile-content">
-
-        <section class="profile-sidebar">
-          <div class="avatar-area">
-            <div class="avatar-circle">
-              <img src="../images/avatar.jpg" alt="Avatar">
-            </div>
-            <h2>Nguyễn Văn A</h2>
-            <p class="member-since">Thành viên từ 10/2023</p>
+      <section class="profile-sidebar">
+        <div class="avatar-area">
+          <div class="avatar-circle">
+            <img src="../images/avatar.jpg" alt="Avatar">
           </div>
+          <h2>Nguyễn Văn A</h2>
+          <p class="member-since">Thành viên từ 10/2023</p>
+        </div>
 
-          <nav class="user-menu">
-            <ul>
-              <li><a href="#">Đơn hàng hiện tại</a></li>
-              <li><a href="giohang-dangnhap.html">Giỏ hàng</a></li>
-              <li><a href="#">Lịch sử mua hàng</a></li>
-              <li><a href="#">Đánh giá của tôi</a></li>
-            </ul>
-          </nav>
-        </section>
+        <nav class="user-menu">
+          <ul>
+            <li><a href="#">Đơn hàng hiện tại</a></li>
+            <li><a href="giohang-dangnhap.html">Giỏ hàng</a></li>
+            <li><a href="#">Lịch sử mua hàng</a></li>
+            <li><a href="#">Đánh giá của tôi</a></li>
+          </ul>
+        </nav>
+      </section>
 
-        <section class="profile-main">
+      <section class="profile-main">
 
-          <div class="info-card">
-            <div class="info-header">
-              <h3>Thông tin cá nhân</h3>
-              <button class="edit-btn">
-                <span class="icon-edit"></span>Chỉnh sửa
-              </button>
-            </div>
-            <div class="info-details">
-              <p><strong>Email:</strong> nguyena@example.com</p>
-              <p><strong>Số điện thoại:</strong> 0309364235</p>
-              <p><strong>Địa chỉ mặc định:</strong> 123 An Dương Vương, Phường Chợ Quán, TP.HCM</p>
-            </div>
+        <div class="info-card">
+          <div class="info-header">
+            <h3>Thông tin cá nhân</h3>
+            <button class="edit-btn">
+              <span class="icon-edit"></span>Chỉnh sửa
+            </button>
           </div>
+          <div class="info-details">
+            <p><strong>Email:</strong> nguyena@example.com</p>
+            <p><strong>Số điện thoại:</strong> 0309364235</p>
+            <p><strong>Địa chỉ mặc định:</strong> 123 An Dương Vương, Phường Chợ Quán, TP.HCM</p>
+          </div>
+        </div>
 
-          <div class="display-area" id="current-orders">
-            <h3>Đơn hàng hiện tại</h3>
-            <div class="order-list">
-              <div class="order-item">
-                <p><strong>Mã Đơn hàng: #DH12345</strong></p>
-                <p class="order-status processing">Đang xử lý</p>
-              </div>
-              <div class="order-item">
-                <p><strong>Mã Đơn hàng: #DH12344</strong></p>
-                <p class="order-status shipping">Đang giao hàng</p>
-              </div>
+        <div class="display-area" id="current-orders">
+          <h3>Đơn hàng hiện tại</h3>
+          <div class="order-list">
+            <div class="order-item">
+              <p><strong>Mã Đơn hàng: #DH12345</strong></p>
+              <p class="order-status processing">Đang xử lý</p>
+            </div>
+            <div class="order-item">
+              <p><strong>Mã Đơn hàng: #DH12344</strong></p>
+              <p class="order-status shipping">Đang giao hàng</p>
             </div>
           </div>
-        </section>
-      </div>
-    </main>
-  </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
   <!-- Footer Section -->
   <footer class="footer" id="lienhe">
     <div class="container">
