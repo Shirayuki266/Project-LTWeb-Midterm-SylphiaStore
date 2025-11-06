@@ -5,6 +5,9 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 *,
@@ -22,6 +25,7 @@ body {
   border-radius: 8px;
   padding: 30px;
   display: flex;
+  flex: 1;
   gap: 30px;
   flex-wrap: wrap;
   /* Cho phép xuống dòng nếu container nhỏ */
@@ -159,7 +163,7 @@ body {
 
 /* === INPUT GROUPS === */
 .input-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .input-group label {
