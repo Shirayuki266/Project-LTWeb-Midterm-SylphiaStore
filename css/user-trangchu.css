@@ -16,6 +16,19 @@ body {
     font-size: 16px;
 }
 
+.main-content-wrapper {
+    flex-grow: 1;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f0f0f0;
+    /* tối hơn một chút so với #f8f8f8 */
+    padding: 20px 0;
+    /* thêm khoảng cách trên dưới */
+    border-radius: 12px;
+    /* tuỳ chọn, tạo bo góc nhẹ */
+}
+
 /* ============ SECTION HERO ============ */
 #hero {
     background: url("../images/halloween.webp") center/cover no-repeat;
@@ -202,7 +215,6 @@ body {
     text-align: center;
     padding: 60px 20px;
     margin-top: 60px;
-    margin-bottom: -100px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -236,7 +248,7 @@ body {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     gap: 5px;
 }
 

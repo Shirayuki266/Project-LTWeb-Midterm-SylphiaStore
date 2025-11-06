@@ -4,7 +4,6 @@
   color: #fff;
   padding: 50px 0 20px;
   font-family: "Poppins", sans-serif;
-
   width: 100%;
   position: relative;
   bottom: 0;
@@ -26,6 +25,7 @@
   min-width: 250px;
 }
 
+/* Tiêu đề cột */
 .footer-col h3 {
   font-size: 1.2rem;
   margin-bottom: 15px;
@@ -33,6 +33,7 @@
   text-transform: uppercase;
 }
 
+/* Nội dung văn bản */
 .footer-col p {
   font-size: 0.9rem;
   margin-bottom: 8px;
@@ -68,14 +69,30 @@
   color: #fff;
 }
 
-/* Ảnh thanh toán */
-.payment-methods img,
-.momo img {
+/* ==== CHỈNH CỘT 3 (HÌNH THANH TOÁN & MOMO) ==== */
+.footer-col:nth-child(3) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* căn giữa tất cả nội dung */
+}
+
+.footer-col .payment-methods,
+.footer-col .momo {
+  width: 100%;
+  text-align: center;
+  /* vẫn giữ an toàn */
+  margin: 5px 0;
+}
+
+.footer-col .payment-methods img,
+.footer-col .momo img {
   width: 60px;
-  margin-top: 10px;
+  margin: 10px 0;
   border-radius: 8px;
   background-color: #fff;
   padding: 5px;
+  display: inline-block;
 }
 
 /* Dòng bản quyền cuối */
@@ -93,5 +110,11 @@
   .footer .container {
     flex-direction: column;
     text-align: center;
+  }
+
+  /* Cột 3 vẫn căn giữa ảnh */
+  .footer-col:nth-child(3) {
+    align-items: center;
+    margin-bottom: 20px;
   }
 }
