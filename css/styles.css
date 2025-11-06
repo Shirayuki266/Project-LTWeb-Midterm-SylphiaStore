@@ -517,10 +517,6 @@ footer {
   #promotion p {
     font-size: 1rem;
   }
-
-  footer {
-    padding: 20px 10px;
-  }
 }
 
 @media (max-width: 480px) {
