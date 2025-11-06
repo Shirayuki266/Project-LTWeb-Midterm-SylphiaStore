@@ -8,65 +8,12 @@
 /* ======= BODY ======= */
 body {
   font-family: "Segoe UI", Arial, sans-serif;
-  background-color: #f8f8f8;
+  /* gradient hình tròn, nhạt dần về trung tâm */
+  background: radial-gradient(circle, #ff9966 0%, #ff6600 100%);
   color: #333;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-/* ======= HEADER ======= */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: white;
-  padding: 15px 5%;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.logo {
-  font-size: 1.6rem;
-  font-weight: bold;
-  color: #ff6600;
-  display: flex;
-  align-items: center;
-}
-
-.logo a {
-  text-decoration: none;
-  /* Bỏ gạch chân */
-  color: inherit;
-  /* Giữ nguyên màu cam của chữ */
-  display: flex;
-  align-items: center;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.logo img {
-  width: 35px;
-  height: 35px;
-  vertical-align: middle;
-  margin-right: 8px;
-}
-
-nav a {
-  text-decoration: none;
-  color: #333;
-  margin: 0 10px;
-  font-weight: 500;
-  font-size: 1rem;
-  transition: all 0.6s ease-in-out;
-}
-
-nav a.active {
-  background-color: #fff4ec;
-  color: #ff6600;
-  border-left-color: #ff6600;
-  font-weight: 600;
 }
 
 /* ======= FORM ======= */

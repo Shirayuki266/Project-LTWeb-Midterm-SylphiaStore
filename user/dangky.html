@@ -1,126 +1,115 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Đăng ký | Sylphia Shop</title>
-    <link rel="stylesheet" href="../css/register.css" />
-    <link rel="stylesheet" href="../css/login.css" />
-    <link
-      rel="icon"
-      type="image/png"
-      href="../images/logo-web-removebg-preview.png"
-    />
-  </head>
 
-  <body>
-    <!-- Header giữ phong cách trang chủ -->
-    <header>
-      <div class="logo">
-        <a href="trangchu.html">
-          <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
-          Sylphia Shop
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng ký | Sylphia Shop</title>
+  <link rel="stylesheet" href="../css/register.css" />
+  <link rel="stylesheet" href="../css/login.css" />
+  <link rel="stylesheet" href="../css/header.css" />
+  <link rel="icon" type="image/png" href="../images/logo-web-removebg-preview.png" />
+</head>
+
+<body>
+  <!-- Header giữ phong cách trang chủ -->
+  <header>
+    <div class="logo">
+      <a href="trangchu.html">
+        <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
+        Sylphia Shop
+      </a>
+    </div>
+    <nav>
+      <a href="trangchu.html">Trang Chủ</a>
+      <a href="#">Liên Hệ</a>
+      <a href="dangnhap.html">Đăng nhập</a>
+    </nav>
+  </header>
+
+  <!-- Form đăng ký -->
+  <main class="register-container">
+    <form class="register-form" action="#" method="post">
+      <h1>Đăng Ký Tài Khoản</h1>
+
+      <label for="username">Tên đăng ký</label>
+      <input type="text" id="username" name="username" required />
+
+      <label for="number-phone">Số điện thoại</label>
+      <input type="text" id="number-phone" name="number-phone" required />
+
+      <label for="password">Mật khẩu</label>
+      <input type="password" id="password" name="password" required />
+
+      <label for="password2">Xác nhận mật khẩu</label>
+      <input type="password" id="password2" name="password2" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required />
+
+      <div class="social-login">
+        <input type="image" id="googleBtn"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png"
+          alt="Google" title="Đăng nhập Google" />
+        <input type="image" id="facebookBtn"
+          src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook"
+          title="Đăng nhập Facebook" />
+      </div>
+
+      <div class="button-group">
+        <a href="../user/dangnhap.html" class="btn secondary">Quay lại đăng nhập</a>
+        <a href="../user/trangchu-dangnhap.html" class="btn primary">
+          Hoàn tất đăng ký
         </a>
       </div>
-      <nav>
-        <a href="trangchu.html">Trang Chủ</a>
-        <a href="#">Liên Hệ</a>
-        <a href="dangnhap.html">Đăng nhập</a>
-      </nav>
-    </header>
+    </form>
+  </main>
 
-    <!-- Form đăng ký -->
-    <main class="register-container">
-      <form class="register-form" action="#" method="post">
-        <h1>Đăng Ký Tài Khoản</h1>
-
-        <label for="username">Tên đăng ký</label>
-        <input type="text" id="username" name="username" required />
-
-        <label for="number-phone">Số điện thoại</label>
-        <input type="text" id="number-phone" name="number-phone" required />
-
-        <label for="password">Mật khẩu</label>
-        <input type="password" id="password" name="password" required />
-
-        <label for="password2">Xác nhận mật khẩu</label>
-        <input type="password" id="password2" name="password2" required />
-
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required />
-
-        <div class="social-login">
-          <input
-            type="image"
-            id="googleBtn"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png"
-            alt="Google"
-            title="Đăng nhập Google"
-          />
-          <input
-            type="image"
-            id="facebookBtn"
-            src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png"
-            alt="Facebook"
-            title="Đăng nhập Facebook"
-          />
-        </div>
-
-        <div class="button-group">
-          <a href="../user/dangnhap.html" class="btn secondary"
-            >Quay lại đăng nhập</a
-          >
-          <a href="../user/trangchu-dangnhap.html" class="btn primary">
-            Hoàn tất đăng ký
-          </a>
-        </div>
-      </form>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-      <p>© 2025 SylphiaShop. All rights reserved.</p>
-      <p>Email: support@sylphiashop.vn | Hotline: 0123-456-789</p>
-    </footer>
-    <!-- POPUP -->
-    <div class="popup-overlay" id="popup">
-      <div class="popup-box">
-        <h2>🎉 Đăng nhập thành công!</h2>
-        <p id="popupMsg">Chào mừng bạn quay lại!</p>
-        <button id="okBtn">OK</button>
-      </div>
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 SylphiaShop. All rights reserved.</p>
+    <p>Email: support@sylphiashop.vn | Hotline: 0123-456-789</p>
+  </footer>
+  <!-- POPUP -->
+  <div class="popup-overlay" id="popup">
+    <div class="popup-box">
+      <h2>🎉 Đăng nhập thành công!</h2>
+      <p id="popupMsg">Chào mừng bạn quay lại!</p>
+      <button id="okBtn">OK</button>
     </div>
+  </div>
 
-    <!-- JS -->
-    <!-- JS -->
-    <script>
-      const popup = document.getElementById("popup");
-      const popupMsg = document.getElementById("popupMsg");
-      const okBtn = document.getElementById("okBtn");
-      const googleBtn = document.getElementById("googleBtn");
-      const facebookBtn = document.getElementById("facebookBtn");
+  <!-- JS -->
+  <!-- JS -->
+  <script>
+    const popup = document.getElementById("popup");
+    const popupMsg = document.getElementById("popupMsg");
+    const okBtn = document.getElementById("okBtn");
+    const googleBtn = document.getElementById("googleBtn");
+    const facebookBtn = document.getElementById("facebookBtn");
 
-      function showPopup(message) {
-        popupMsg.textContent = message;
-        popup.classList.add("show");
-      }
+    function showPopup(message) {
+      popupMsg.textContent = message;
+      popup.classList.add("show");
+    }
 
-      okBtn.addEventListener("click", () => {
-        popup.classList.remove("show");
-        setTimeout(() => {
-          window.location.href = "../user/trangchu-dangnhap.html";
-        }, 300);
-      });
+    okBtn.addEventListener("click", () => {
+      popup.classList.remove("show");
+      setTimeout(() => {
+        window.location.href = "../user/trangchu-dangnhap.html";
+      }, 300);
+    });
 
-      googleBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        showPopup("Đăng ký nhanh bằng Google thành công 🌐");
-      });
+    googleBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      showPopup("Đăng ký nhanh bằng Google thành công 🌐");
+    });
 
-      facebookBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        showPopup("Đăng ký nhanh bằng Facebook thành công 👍");
-      });
-    </script>
-  </body>
+    facebookBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      showPopup("Đăng ký nhanh bằng Facebook thành công 👍");
+    });
+  </script>
+</body>
+
 </html>
