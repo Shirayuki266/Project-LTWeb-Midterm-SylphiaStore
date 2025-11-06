@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
   <meta charset="UTF-8" />
@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="../css/thanhtoan.css" />
   <link rel="stylesheet" href="../css/header.css" />
   <link rel="stylesheet" href="../css/footer.css" />
-  <link rel="icon" type="image/png" href="../images/logo-web-removebg-preview.png" />
+  <link rel="icon" type="images/png" href="../images/logo-web-removebg-preview.png" />
 </head>
 
 <body>
@@ -53,8 +53,7 @@
     </nav>
   </header>
 
-
-  <div class="container">
+  <div class="containers">
     <div class="left-panel">
       <div class="card">
         <div class="card-title">HOÀN TẤT ĐƠN HÀNG</div>
@@ -133,8 +132,7 @@
       <div class="card">
         <div class="card-title">THÔNG TIN GIAO HÀNG</div>
         <div class="address-tabs">
-          <div class="address-tab active">Tên Người Dùng</div>
-          <div class="address-tab">Customer</div>
+          <p> Người Dùng: Nguyễn Văn A </p>
         </div>
         <div class="address-content">
           <p>Địa chỉ: 123 Lê Duẩn, Q.1, TP.HCM</p>
@@ -167,34 +165,101 @@
           <textarea id="delivery_note" class="note-textarea" placeholder="Nội dung ghi chú"></textarea>
         </div>
 
-        <div class="checkout-pay">
-          <p class="pay-section-title">Phương Thức Thanh Toán</p>
+        <div class="payment-method-2">
+          <p class="section-title">Phương Thức Thanh Toán</p>
 
-          <label class="pay-option">
+          <label class="payment-option">
             <input type="radio" name="payment" checked />
-            <span class="pay-radio"></span>
-            <span class="pay-label">Nhận hàng mới thanh toán (COD)</span>
+            <span class="custom-radio"></span>
+            <span class="method-label">Nhận hàng mới thanh toán (COD)</span>
           </label>
 
-          <label class="pay-option">
+          <label class="payment-option">
             <input type="radio" name="payment" />
-            <span class="pay-radio"></span>
-            <span class="pay-label">Thanh toán bằng MoMo</span>
-            <img src="../images/momo.png" alt="MoMo" class="pay-icon" />
+            <span class="custom-radio"></span>
+            <span class="method-label">Thanh toán bằng MoMo</span>
+            <img src="../images/momo.png" alt="MoMo" class="payment-icon" />
           </label>
 
-          <label class="pay-option">
+          <label class="payment-option">
             <input type="radio" name="payment" />
-            <span class="pay-radio"></span>
-            <span class="pay-label">Thanh toán bằng Visa</span>
-            <img src="../images/visa.png" alt="Visa" class="pay-icon" />
+            <span class="custom-radio"></span>
+            <span class="method-label">Thanh toán bằng Visa</span>
+            <img src="../images/visa.png" alt="Visa" class="payment-icon" />
           </label>
         </div>
-
-
       </div>
     </div>
   </div>
+  <!-- Footer Section -->
+  <footer class="footer" id="lienhe">
+    <div class="container">
+      <!-- Cột 1 -->
+      <div class="footer-col">
+        <h3>SYLPHIASHOP</h3>
+        <p class="hotline">HOTLINE: 0917 997 997</p>
+        <p class="store-address">
+          Store 1: 01 Quang Trung, P.1, Q.Gò Vấp, TP.HCM - 0913.846535
+        </p>
+        <p class="store-address">
+          Store 2: 02 Lê Hồng Phong, Q.10 TP.HCM - 0913.846535
+        </p>
+        <p class="store-address">
+          Store 3: 03 Trần Quang Khải, Q.1 TP.HCM - 0913.846535
+        </p>
+        <p class="store-address">
+          Store 4: 04 Võ Văn Ngân, P.Bình Thọ, Thủ Đức - 0913.846535
+        </p>
+        <p class="store-address">
+          Store 5: 05 Nguyễn Văn Rập, Trảng Bàng, Tây Ninh - 0913.846535
+        </p>
+      </div>
+
+      <!-- Cột 2 -->
+      <div class="footer-col">
+        <h3>QUY ĐỊNH & CHÍNH SÁCH</h3>
+        <ul>
+          <li><a href="#">Quy định hình thức thanh toán</a></li>
+          <li><a href="#">Chính sách vận chuyển hàng</a></li>
+          <li><a href="#">Chính sách bảo hành</a></li>
+          <li><a href="#">Chính sách đổi trả</a></li>
+          <li><a href="#">Chính sách kiểm hàng</a></li>
+          <li><a href="#">Chính sách bảo mật</a></li>
+        </ul>
+      </div>
+
+      <!-- Cột 3 -->
+      <div class="footer-col">
+        <h3>HÌNH THỨC THANH TOÁN</h3>
+        <div class="payment-methods">
+          <img src="../images/visa.png" alt="Visa" class="payment-icon" />
+        </div>
+        <div class="momo">
+          <img src="../images/momo.png" alt="MOMO" />
+        </div>
+      </div>
+
+      <!-- Cột 4 -->
+      <div class="footer-col">
+        <h3>HỆ THỐNG FANPAGE</h3>
+        <ul>
+          <li><a href="#">SYLPHIASHOP GÒ VẤP</a></li>
+          <li><a href="#">SYLPHIASHOP QUẬN 10</a></li>
+          <li><a href="#">SYLPHIASHOP QUẬN 1</a></li>
+          <li><a href="#">SYLPHIASHOP THỦ ĐỨC</a></li>
+          <li><a href="#">SYLPHIASHOP TÂY NINH</a></li>
+          <li><a href="#">SYLPHIASHOP TIỀN GIANG</a></li>
+          <li><a href="#">SYLPHIASHOP LONG AN</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Dòng bản quyền -->
+    <div class="footer-bottom">
+      <p>© 2025 SylphiaShop. All rights reserved.</p>
+      <p>Email: support@sylphiashop.vn | Hotline: 0123-456-789</p>
+    </div>
+  </footer>
 </body>
 
 </html>
