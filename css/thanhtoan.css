@@ -8,76 +8,6 @@ body {
   align-items: center;
 }
 
-.header {
-  width: 100%;
-  background-color: #fff;
-  padding: 15px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-}
-
-.header .logo {
-  display: flex;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #ff6600;
-}
-
-.header .logo img {
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
-}
-
-.header .search-bar {
-  position: relative;
-  width: 300px;
-}
-
-.header .search-bar input {
-  width: 100%;
-  padding: 10px 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-.header .search-bar .search-icon {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #aaa;
-}
-
-.header nav a {
-  text-decoration: none;
-  color: #333;
-  margin: 0 15px;
-  font-size: 16px;
-  padding: 5px 0;
-  position: relative;
-}
-
-.header nav a.active {
-  color: #ff6600;
-  font-weight: bold;
-}
-
-.header nav a.active::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -5px;
-  width: 100%;
-  height: 2px;
-  background-color: #ff6600;
-}
-
 .container {
   width: 90%;
   max-width: 1200px;
@@ -119,72 +49,22 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 15px;
 }
 
 .radio-item {
   display: flex;
   align-items: center;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  cursor: pointer;
+  gap: 10px;
 }
 
-.radio-item input[type="radio"] {
+.radio-item input {
   margin-right: 10px;
-  accent-color: #ff6600;
-}
-
-.radio-item .label {
-  font-weight: bold;
-  margin-bottom: 20px; /* cách dưới 20px */
-}
-
-.radio-item .description {
-  font-size: 14px;
-  color: #666;
-  margin-left: 5px;
-}
-
-.delivery-options {
-  display: flex;
-  gap: 15px;
-  margin-top: 15px;
-}
-
-.delivery-option {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  text-align: center;
-  cursor: pointer;
-}
-
-.delivery-option.selected {
-  border-color: #ff6600;
-  background-color: #fff4e5;
 }
 
 .input-group {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 15px;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 14px;
-  color: #555;
-}
-
-.input-group input,
-.input-group select {
-  width: calc(100% - 22px);
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
 }
 
 .input-group.inline {
@@ -192,160 +72,45 @@ body {
   gap: 10px;
 }
 
-.input-group.inline .half-width {
+.half-width {
   flex: 1;
 }
-/* --- PHẦN TỔNG TIỀN & NÚT ĐẶT HÀNG --- */
-.total-section {
-  display: flex;
-  justify-content: space-between; /* "Thanh Toán" bên trái, giá bên phải */
-  align-items: center;
-  margin-top: 25px;
-  padding-top: 15px;
-  border-top: 1px solid #eee;
+
+input[type="text"],
+select,
+textarea {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  width: 100%;
 }
 
-/* Nút Tiến Hành Đặt Hàng */
+.total-section {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-top: 15px;
+  font-size: 16px;
+}
+
 .confirm-button {
   display: inline-block;
-  margin-top: 25px; /* 👉 Cách phần Thanh Toán ra 25px */
-  background-color: #ff6600; /* Màu cam chủ đạo Sylphia */
-  color: #fff;
-  font-weight: bold;
-  font-size: 18px;
-  padding: 15px 35px;
-  border: none;
-  border-radius: 10px; /* Bo góc mềm mại */
   text-decoration: none;
   text-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3); /* Bóng nhẹ để nổi bật */
+  background-color: #ff6600;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-top: 15px;
 }
 
 .confirm-button:hover {
-  background-color: #e65c00; /* Màu đậm hơn khi hover */
-  transform: translateY(-2px); /* Hiệu ứng nổi nhẹ khi rê chuột */
+  background-color: #e55a00;
 }
 
-.address-tabs {
-  display: flex;
-  margin-bottom: 15px;
-  border-bottom: 1px solid #eee;
-}
-
-.address-tab {
-  padding: 10px 15px;
-  cursor: pointer;
-  color: #666;
-  font-weight: bold;
-  position: relative;
-}
-
-.address-tab.active {
-  color: #ff6600;
-}
-
-.address-tab.active::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -1px;
-  width: 100%;
-  height: 2px;
-  background-color: #ff6600;
-}
-
-.address-content {
-  padding: 10px 0;
-  color: #333;
-}
-
-.address-content p {
-  margin: 5px 0;
-}
-
-.delivery-method-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  margin-top: 15px;
-}
-
-.delivery-method-item {
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.delivery-method-item.selected {
-  border-color: #ff6600;
-  background-color: #fff4e5;
-}
-
-.delivery-method-item input[type="radio"] {
-  margin-right: 10px;
-  accent-color: #ff6600;
-}
-
-.delivery-method-item .info {
-  flex-grow: 1;
-}
-
-.delivery-method-item .info strong {
-  display: block;
-  margin-bottom: 5px;
-  color: #333;
-}
-
-.delivery-method-item .info span {
-  font-size: 13px;
-  color: #666;
-}
-
-.delivery-method-item .price {
-  font-weight: bold;
-  color: #ff6600;
-}
-
-.promo-code-input {
-  display: flex;
-  margin-top: 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-.promo-code-input input {
-  flex-grow: 1;
-  border: none;
-  padding: 10px;
-  font-size: 16px;
-}
-
-.promo-code-input button {
-  background-color: #eee;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  font-weight: bold;
-  color: #555;
-}
-
-.note-textarea {
-  width: calc(100% - 22px);
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
-  min-height: 80px;
-  resize: vertical;
-}
-/* === PHẦN PHƯƠNG THỨC THANH TOÁN === */
-.payment-method {
+/* === PHẦN THANH TOÁN === */
+.checkout-pay {
   margin-top: 25px;
   background-color: #fffaf5;
   border: 1px solid #ffe0cc;
@@ -355,15 +120,14 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-.payment-method .section-title {
+.checkout-pay .pay-section-title {
   font-weight: bold;
   font-size: 17px;
   margin-bottom: 10px;
   color: #ff6600;
 }
 
-/* Mỗi dòng phương thức thanh toán */
-.payment-option {
+.checkout-pay .pay-option {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -376,18 +140,16 @@ body {
   margin-bottom: 10px;
 }
 
-.payment-option:hover {
+.checkout-pay .pay-option:hover {
   background-color: #fff4e8;
   border-color: #ff6600;
 }
 
-/* Ẩn radio mặc định */
-.payment-option input[type="radio"] {
+.checkout-pay .pay-option input[type="radio"] {
   display: none;
 }
 
-/* Tạo chấm tròn tuỳ chỉnh */
-.custom-radio {
+.checkout-pay .pay-radio {
   width: 18px;
   height: 18px;
   border: 2px solid #ff6600;
@@ -396,8 +158,7 @@ body {
   position: relative;
 }
 
-/* Khi được chọn: chấm tròn màu cam ở giữa */
-.payment-option input[type="radio"]:checked + .custom-radio::after {
+.checkout-pay .pay-option input[type="radio"]:checked+.pay-radio::after {
   content: "";
   position: absolute;
   top: 3px;
@@ -408,16 +169,14 @@ body {
   border-radius: 50%;
 }
 
-/* Văn bản */
-.method-label {
+.checkout-pay .pay-label {
   flex-grow: 1;
   font-size: 15px;
   color: #444;
-  margin-top: 15px;
+  margin-top: 3px;
 }
 
-/* Icon MoMo / Visa */
-.payment-icon {
+.checkout-pay .pay-icon {
   width: 35px;
   height: auto;
   margin-left: auto;
