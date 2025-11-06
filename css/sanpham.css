@@ -1,13 +1,24 @@
 /* ==== Tổng thể trang sản phẩm ==== */
 body {
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
   margin: 0;
   padding: 0;
   background: #fff;
   color: #222;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* đảm bảo body chiếm toàn viewport */
 }
 
 /* ==== Tiêu đề ==== */
+main.product-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .product-page h1 {
   text-align: center;
   font-size: 28px;
@@ -24,7 +35,8 @@ body {
 .search-form {
   display: flex;
   justify-content: center;
-  align-items: center; /* căn giữa theo chiều dọc */
+  align-items: center;
+  /* căn giữa theo chiều dọc */
   flex-wrap: wrap;
   gap: 15px;
 }
@@ -66,14 +78,17 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  justify-content: center; /* căn giữa theo chiều ngang */
-  margin-top: 10px; /* cách phần tìm kiếm một chút */
+  justify-content: center;
+  /* căn giữa theo chiều ngang */
+  margin-top: 10px;
+  /* cách phần tìm kiếm một chút */
 }
 
 .filter-bar label {
   font-size: 15px;
   color: #333;
-  white-space: nowrap; /* không xuống dòng */
+  white-space: nowrap;
+  /* không xuống dòng */
 }
 
 .filter-bar select {
@@ -99,6 +114,7 @@ body {
     gap: 20px;
   }
 }
+
 @media (max-width: 768px) {
   .product-grid {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -106,6 +122,7 @@ body {
     gap: 15px;
   }
 }
+
 @media (max-width: 480px) {
   .product-grid {
     grid-template-columns: 1fr;
@@ -159,32 +176,3 @@ body {
 .buy-btn:hover {
   background: #e05500;
 }
-
-/* ==== Phân trang ==== */
-.pagination {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 30px;
-}
-
-.pagination a {
-  display: inline-block;
-  padding: 8px 14px;
-  background: #ddd;
-  border-radius: 5px;
-  text-decoration: none;
-  color: black;
-  transition: 0.2s;
-}
-
-.pagination a:hover {
-  background: #007bff;
-  color: white;
-}
-
-.pagination a.active {
-  background: #007bff;
-  color: white;
-}
-

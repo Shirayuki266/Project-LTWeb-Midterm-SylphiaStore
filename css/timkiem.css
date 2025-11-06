@@ -1,18 +1,16 @@
 /* ==== Tổng thể trang ==== */
 body {
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
   background-color: #f5f6fa;
   margin: 0;
   padding: 0;
-}
 
-/* ==== Tiêu đề trang ==== */
-header {
-  text-align: center;
-  background: #f9f9f9;
-  color: white;
-  padding: 20px 0;
-  font-size: 22px;
+  display: flex;
+  /* xếp theo cột */
+  flex-direction: column;
+  /* header → main → footer */
+  min-height: 100vh;
+  /* body cao tối thiểu bằng viewport */
 }
 
 /* ==== Khu vực tìm kiếm ==== */
@@ -130,36 +128,6 @@ header {
   background: #e05500;
 }
 
-/* ==== Phân trang ==== */
-.pagination {
-  display: flex;
-  /* dùng flexbox */
-  justify-content: center;
-  /* căn giữa theo chiều ngang */
-  gap: 10px;
-  /* khoảng cách giữa các số trang */
-  margin-top: 30px;
-}
-
-.pagination a {
-  display: inline-block;
-  padding: 8px 14px;
-  background: #ddd;
-  border-radius: 5px;
-  text-decoration: none;
-  color: black;
-  transition: 0.2s;
-}
-
-.pagination a:hover {
-  background: #007bff;
-  color: white;
-}
-
-.pagination a.active {
-  background: #007bff;
-  color: white;
-}
 
 /* ==== Bộ lọc sắp xếp ==== */
 .filter-bar {
