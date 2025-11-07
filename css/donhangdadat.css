@@ -229,6 +229,7 @@ h1 {
 
 }
 
+
 .back-to-home-button {
   display: block;
   background-color: #ff6600;
@@ -392,6 +393,11 @@ h1 {
   color: #ff6600;
   margin-right: 20px;
   /* Khoảng cách với nút */
+}
+
+.order-card-footer .action-button.view-detail {
+  margin-right: auto;
+  /* đẩy nút này sang trái */
 }
 
 /* Responsive */

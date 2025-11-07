@@ -54,11 +54,110 @@
   </header>
 
   <div class="containers">
+    <!-------------------------------------------->
     <div class="left-panel">
+      <!-------------------------------------------->
       <div class="card">
-        <div class="card-title">HOÀN TẤT ĐƠN HÀNG</div>
+        <div class="card-title">THÔNG TIN GIAO HÀNG</div>
+        <div class="address-tabs">
+          <p> Người Dùng: Nguyễn Văn A </p>
+        </div>
+        <div class="address-content">
+          <p>Số Điện Thoại: 0376239875</p>
+        </div>
+      </div>
+      <!---------------------------------------------->
+      <div class="card">
+        <div class="card-title">Thông Tin Sản Phẩm</div>
 
-        <!-- Thong Tin Giao Hang -->
+        <!-- Bắt đầu section sản phẩm -->
+        <div class="product-section">
+          <div class="product-item">
+            <img src="../images/iphone-17-pro-max.jpg" alt="iPhone 17 Pro Max" />
+            <div class="product-info">
+              <div class="name">iPhone 11 Pro Max 256GB Xanh</div>
+              <div class="category">Phân loại: Chính hãng VN/A</div>
+              <div class="quantity">x1</div>
+            </div>
+            <div class="product-price">37.000.000đ</div>
+          </div>
+          <div class="product-item">
+            <img src="../images/ban-phim-gaming.jpg" alt="Bàn Phím Gaming Thế Hệ Mới" />
+            <div class="product-info">
+              <div class="name">Bàn Phím Gaming Thế Hệ Mới</div>
+              <div class="category">Phân loại: Chính hãng VN/A</div>
+              <div class="quantity">x1</div>
+            </div>
+            <div class="product-price">2.500.000đ</div>
+          </div>
+        </div>
+        <!-- Kết thúc section sản phẩm -->
+
+      </div>
+      <!---------------------------------------------->
+      <div class="card">
+        <div class="card-title">Địa Chỉ Giao Hàng</div>
+        <div class="radio-group address-choice">
+          <label class="radio-item">
+            <input type="radio" name="address_choice" checked />
+            <div>Địa chỉ 1: 193 An Dương Vương, Phường Chợ Quán, Quận 5, TP.HCM</div>
+          </label>
+
+          <label class="radio-item">
+            <input type="radio" name="address_choice" />
+            <div>Địa chỉ 2: 105 Bà Huyện Thanh Quan, Phường Xuân Hòa, Quận 3, TP. Hồ Chí Minh</div>
+          </label>
+
+          <label class="radio-item">
+            <input type="radio" name="address_choice" />
+            <div>Địa chỉ 3: Khác</div>
+          </label>
+
+          <!-- Đưa ra ngoài, cùng cấp với label -->
+          <div class="other-address">
+            <div class="input-group">
+              <label for="province">Tỉnh / Thành Phố</label>
+              <select id="province" name="province">
+                <option value="">Chọn Tỉnh/Thành Phố</option>
+                <option value="hcm">TP. Hồ Chí Minh</option>
+                <option value="hn">Hà Nội</option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <label for="district">Quận / Huyện</label>
+              <select id="district" name="district">
+                <option value="">Chọn Quận/Huyện</option>
+                <option value="q5">Quận 5</option>
+                <option value="q3">Quận 3</option>
+                <option value="q1">Quận 1</option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <label for="district">Chọn Phường</label>
+              <select id="district" name="district">
+                <option value="">Chọn Phường</option>
+                <option value="q5">Phường Chợ Quán</option>
+                <option value="q3">Phường 1</option>
+                <option value="q1">Phường 2</option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <label for="address">Địa Chỉ Cụ Thể</label>
+              <input type="text" id="address" name="address" placeholder="Ví dụ: 254 Nguyễn Trãi, P. Bến Thành, Q.1" />
+            </div>
+          </div>
+          <!------------------------------------------>
+
+
+        </div>
+      </div>
+    </div>
+    <!------------------------------------->
+    <div class="right-panel">
+      <div class="card">
         <div class="card-title">Thông Tin Giao Hàng</div>
         <div class="radio-group">
           <label class="radio-item">
@@ -78,49 +177,6 @@
             </div>
           </label>
         </div>
-        <p style="font-size: 13px; color: #888; margin-top: -5px">
-
-        </p>
-
-        <!-- Thong Tin Nhan Hang -->
-        <div class="card-title" style="margin-top: 20px">
-          Thông Tin Nhận Hàng
-        </div>
-        <div class="input-group">
-          <label for="province">Tỉnh / Thành Phố</label>
-          <select id="province">
-            <option value="">Chọn Tỉnh/Thành Phố</option>
-            <option value="hcm">TP. Hồ Chí Minh</option>
-            <option value="hn">Hà Nội</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label for="district">Quận / Huyện</label>
-          <select id="district">
-            <option value="">Chọn Quận/Huyện</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label for="address">Địa Chỉ Cụ Thể</label>
-          <input type="text" id="address" placeholder="Ví dụ: 254 Nguyễn Trãi, P. Bến Thành, Q.1" />
-        </div>
-        <div class="total-section">
-          <div class="label">Thanh Toán</div>
-          <div class="amount">1.000.000.000</div>
-        </div>
-        <a href="donhangdat.html" class="confirm-button">Tiến Hành Đặt Hàng</a>
-      </div>
-    </div>
-
-    <div class="right-panel">
-      <div class="card">
-        <div class="card-title">THÔNG TIN GIAO HÀNG</div>
-        <div class="address-tabs">
-          <p> Người Dùng: Nguyễn Văn A </p>
-        </div>
-        <div class="address-content">
-          <p>Địa chỉ: 123 Lê Duẩn, Q.1, TP.HCM</p>
-        </div>
       </div>
 
       <div class="card">
@@ -129,7 +185,7 @@
           <label class="delivery-method-item selected">
             <input type="radio" name="delivery_method" checked />
             <div class="info">
-              <strong>Giao hàng nhanh 25000đ</strong>
+              <strong>Giao hàng nhanh</strong>
               <span>Dự kiến giao hàng 01/11/2024</span>
             </div>
             <div class="price">25.000đ</div>
@@ -137,7 +193,7 @@
           <label class="delivery-method-item">
             <input type="radio" name="delivery_method" />
             <div class="info">
-              <strong>Giao hàng tiết kiệm 15000đ</strong>
+              <strong>Giao hàng tiết kiệm</strong>
               <span>Dự kiến giao hàng 03/11/2024</span>
             </div>
             <div class="price">15.000đ</div>
@@ -150,12 +206,13 @@
         </div>
 
         <div class="payment-method-2">
-          <p class="section-title">Phương Thức Thanh Toán</p>
+          <p class="card-title">Phương Thức Thanh Toán</p>
 
           <label class="payment-option">
             <input type="radio" name="payment" checked />
             <span class="custom-radio"></span>
-            <span class="method-label">Nhận hàng mới thanh toán (COD)</span>
+            <span class="method-label">Thanh Toán Bằng Tiền Mặt</span>
+            <img src="../images/money.jpg" alt="MoMo" class="payment-icon" />
           </label>
 
           <label class="payment-option">
@@ -171,6 +228,19 @@
             <span class="method-label">Thanh toán bằng Visa</span>
             <img src="../images/visa.png" alt="Visa" class="payment-icon" />
           </label>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card">
+          <div class="section">
+            <div class="price-details">
+              <div class="item"><span>Tạm tính:</span><span>39.500.000đ</span></div>
+              <div class="item"><span>Phí vận chuyển:</span><span>25.000đ</span></div>
+              <div class="item"><span>Mã giảm giá:</span><span>-0đ</span></div>
+              <div class="total-final"><span>Tổng cộng:</span><span>39.525.000đ</span></div>
+            </div>
+          </div>
+          <a href="donhangdat.html" class="confirm-button">Tiến Hành Đặt Hàng</a>
         </div>
       </div>
     </div>
