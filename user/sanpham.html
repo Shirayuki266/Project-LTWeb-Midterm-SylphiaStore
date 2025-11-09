@@ -107,10 +107,18 @@
         </select>
 
         <div class="price-range">
-          <input type="number" name="price_min" placeholder="Giá từ (VNĐ)" />
-          <span>-</span>
-          <input type="number" name="price_max" placeholder="Giá đến (VNĐ)" />
-        </div>
+        <label for="price-select">Khoảng giá:</label>
+        <select name="price" id="price-select" class="price-select">
+          <option value="">Chọn khoảng giá</option>
+          <option value="0-1000000">Dưới 1 triệu</option>
+          <option value="1000000-5000000">1 triệu - 5 triệu</option>
+          <option value="5000000-10000000">5 triệu - 10 triệu</option>
+          <option value="10000000-20000000">10 triệu - 20 triệu</option>
+          <option value="20000000-50000000">20 triệu - 50 triệu</option>
+          <option value="50000000-">Trên 50 triệu</option>
+        </select>
+      </div>
+
 
         <!-- Nút tìm kiếm -->
         <button type="submit" class="btn-search">Tìm kiếm</button>

@@ -43,19 +43,37 @@ main.product-page {
 
 .search-input,
 .category-select,
-.price-range input {
+.price-range {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center; /* căn giữa */
+  margin: 10px 0;
+}
+
+.price-range label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+}
+
+.price-range .price-select {
   padding: 10px 14px;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 15px;
   min-width: 180px;
+  cursor: pointer;
+  transition: border 0.2s, box-shadow 0.2s;
 }
 
-.price-range {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+.price-range .price-select:focus {
+  outline: none;
+  border-color: #ff6600;
+  box-shadow: 0 0 3px rgba(255, 102, 0, 0.5);
 }
+
 
 /* ==== Nút tìm kiếm ==== */
 .btn-search {
