@@ -27,6 +27,7 @@ main.product-page {
 }
 
 /* ==== Thanh tìm kiếm & lọc ==== */
+/* ==== Thanh tìm kiếm & lọc ==== */
 .search-section {
   text-align: center;
   margin: 40px 0;
@@ -34,87 +35,72 @@ main.product-page {
 
 .search-form {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  /* căn giữa theo chiều dọc */
-  flex-wrap: wrap;
+  justify-content: center;     /* Căn giữa toàn bộ form */
+  align-items: center;         /* Căn giữa theo chiều dọc */
+  flex-wrap: nowrap;           /* Giữ trên cùng 1 hàng */
   gap: 15px;
+  background: #f9f9f9;
+  padding: 15px 25px;
+  border-radius: 12px;
+  width: fit-content;
+  margin: 0 auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.search-input,
-.category-select,
-.price-range {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  justify-content: center; /* căn giữa */
-  margin: 10px 0;
+/* Bỏ label cho gọn hàng */
+.search-form label {
+  display: none;
 }
 
-.price-range label {
-  font-size: 15px;
-  font-weight: 500;
-  color: #333;
-  white-space: nowrap;
-}
-
-.price-range .price-select {
+/* Các ô chọn và nút tìm kiếm */
+.category-select select,
+.price-range select,
+.filter-bar select,
+.btn-search {
   padding: 10px 14px;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 15px;
-  min-width: 180px;
+  min-width: 170px;
   cursor: pointer;
-  transition: border 0.2s, box-shadow 0.2s;
+  transition: 0.2s;
+  background-color: #fff;
 }
 
-.price-range .price-select:focus {
-  outline: none;
+/* Hiệu ứng hover */
+.search-form select:hover,
+.search-form select:focus {
   border-color: #ff6600;
-  box-shadow: 0 0 3px rgba(255, 102, 0, 0.5);
+  box-shadow: 0 0 5px rgba(255, 102, 0, 0.3);
 }
 
-
-/* ==== Nút tìm kiếm ==== */
+/* Nút tìm kiếm */
 .btn-search {
-  background: #007bff;
-  color: white;
+  background: #ff6600;
+  color: #fff;
   border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-  font-size: 15px;
+  font-weight: 500;
 }
-
 .btn-search:hover {
-  background: #0056b3;
+  background: #e95b00;
 }
 
-/* ==== Bộ lọc sắp xếp ==== */
+/* Bố cục từng nhóm */
+.category-select,
+.price-range,
 .filter-bar {
   display: flex;
   align-items: center;
-  gap: 8px;
-  justify-content: center;
-  /* căn giữa theo chiều ngang */
-  margin-top: 10px;
-  /* cách phần tìm kiếm một chút */
+  gap: 10px;
+  margin: 0;
 }
 
-.filter-bar label {
-  font-size: 15px;
-  color: #333;
-  white-space: nowrap;
-  /* không xuống dòng */
-}
-
-.filter-bar select {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 15px;
-  min-width: 150px;
+/* Responsive: Tự động xuống hàng khi màn hình nhỏ */
+@media (max-width: 768px) {
+  .search-form {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
 }
 
 /* ==== Lưới sản phẩm ==== */
