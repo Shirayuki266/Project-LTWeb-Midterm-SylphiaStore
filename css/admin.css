@@ -221,7 +221,7 @@ body {
 
 .panel h2 {
   margin-bottom: 15px;
-  color: #333;
+  color: #ff6600;
   font-size: 1.2rem;
 }
 
@@ -326,9 +326,10 @@ tbody tr:hover {
 .manage-panel {
   background: white;
   border-radius: 10px;
-  padding: 25px;
-  margin: 30px;
+  padding: 20px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+  /* tạo khoảng cách giữa các panel */
 }
 
 .manage-panel h2 {
@@ -418,6 +419,18 @@ tbody tr:hover {
   color: white;
 }
 
+/* Tăng cường CSS cho phiếu nhập */
+.manage-form button.edit-btn {
+  display: none;
+  /* Ẩn nút chỉnh sửa trong form */
+}
+
+.action-buttons button.disabled {
+  background: #ccc !important;
+  cursor: not-allowed;
+  color: #666 !important;
+}
+
 /* ======= FORM THÊM / SỬA ======= */
 .manage-form {
   background: #fff8f3;
@@ -436,7 +449,7 @@ tbody tr:hover {
 
 .manage-form input,
 .manage-form select {
-  width: 100%;
+  width: 98%;
   padding: 8px 10px;
   margin-bottom: 15px;
   border: 1px solid #ddd;

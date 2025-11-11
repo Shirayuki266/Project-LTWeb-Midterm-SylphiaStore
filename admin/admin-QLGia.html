@@ -5,8 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quản Lý Giá Bán | Sylphia Shop</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../fontawesome-free-7.1.0-web/css/all.min.css" />
     <link rel="stylesheet" href="../css/admin.css" />
 </head>
 
@@ -21,10 +20,11 @@
             <ul class="sidebar-menu">
                 <li><a href="admin-TongQuan.html"><i class="fas fa-home"></i>Tổng Quan</a></li>
                 <li><a href="admin-QLSP.html"><i class="fas fa-box"></i>Sản phẩm</a></li>
+                <li><a href="admin-QLPhieuNH.html"><i class="fas fa-receipt"></i>Nhập Hàng</a></li>
                 <li><a href="admin-QLKH.html"><i class="fas fa-users"></i>Khách hàng</a></li>
                 <li><a href="admin-QLGia.html" class="active"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
                 <li><a href="admin-QLDonHang.html"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
-                <li><a href="admin-QLKho.html"><i class="fas fa-box"></i>Tồn kho</a></li>
+                <li><a href="admin-QLKho.html"><i class="fas fa-warehouse"></i>Tồn kho</a></li>
                 <li><a href="admin-DangNhap.html"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
             </ul>
         </aside>
@@ -45,9 +45,25 @@
 
             <div class="dashboard">
                 <h1>Quản lý giá bán</h1>
+                <div class="stats-grid">
+                    <div class="card">
+                        <i class="fas fa-tags"></i>
+                        <div>
+                            <h3>12,5%</h3>
+                            <p>Tỉ Lệ Phần Trăm Trung Bình Lợi Nhuận Theo Loại Sản Phẩm</p>
+                        </div>
+                    </div>
 
+                    <div class="card">
+                        <i class="fa-solid fa-money-bill"></i>
+                        <div>
+                            <h3>2,850,000 VNĐ</h3>
+                            <p>Trung Bình Lợi Nhuận Mỗi Đơn Hàng</p>
+                        </div>
+                    </div>
+                </div>
                 <div class="manage-panel">
-                    <h2>Tỉ lệ % lợi nhuận theo loại sản phẩm</h2>
+                    <h2>Tỉ lệ Phần Trăm lợi nhuận theo loại sản phẩm</h2>
                     <table class="manage-table">
                         <thead>
                             <tr>
@@ -59,17 +75,28 @@
                         <tbody>
                             <tr>
                                 <td>Điện thoại</td>
-                                <td>20%</td>
+                                <td>10%</td>
                                 <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
                             </tr>
                             <tr>
                                 <td>Laptop</td>
+                                <td>12%</td>
+                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>Bàn Phím</td>
                                 <td>15%</td>
+                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>Chuột</td>
+                                <td>13%</td>
                                 <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
                             </tr>
                         </tbody>
                     </table>
-
+                </div>
+                <div class="manage-panel">
                     <h2>Giá bán & lợi nhuận theo sản phẩm</h2>
                     <table class="manage-table">
                         <thead>
@@ -78,28 +105,183 @@
                                 <th>Giá vốn</th>
                                 <th>% Lợi nhuận</th>
                                 <th>Giá bán</th>
+                                <th>Lợi Nhuận</th>
                                 <th>Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>iPhone 14</td>
-                                <td>20,000,000</td>
-                                <td>20%</td>
-                                <td>24,000,000</td>
+                                <td>iPhone 17 Pro Max</td>
+                                <td>30,000,000</td>
+                                <td>10%</td>
+                                <td>33,000,000</td>
+                                <td>3,000,000</td>
                                 <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
                             </tr>
                             <tr>
-                                <td>MacBook Pro</td>
-                                <td>35,000,000</td>
-                                <td>15%</td>
-                                <td>40,250,000</td>
+                                <td>iPhone 17 Mini</td>
+                                <td>25,000,000</td>
+                                <td>10%</td>
+                                <td>27,500,000</td>
+                                <td>2,500,000</td>
                                 <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
                             </tr>
+                            <tr>
+                                <td>Asus ROG Zephyrus G14</td>
+                                <td>45,000,000</td>
+                                <td>12%</td>
+                                <td>50,400,000</td>
+                                <td>5,400,000</td>
+                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>Asus TUF Gaming F15</td>
+                                <td>30,500,000</td>
+                                <td>12%</td>
+                                <td>34,160,000</td>
+                                <td>3,660,000</td>
+                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>MacBook Air M2</td>
+                                <td>27,500,000</td>
+                                <td>12%</td>
+                                <td>30,800,000</td>
+                                <td>3,300,000</td>
+                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>MacBook Pro M1</td>
+                                <td>39,000,000</td>
+                                <td>12%</td>
+                                <td>43,680,000</td>
+                                <td>4,680,000</td>
+                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>Bàn phím cơ RK61</td>
+                                <td>1,500,000</td>
+                                <td>15%</td>
+                                <td>1,725,000</td>
+                                <td>225,000</td>
+                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>Bàn phím cơ GK61</td>
+                                <td>1,200,000</td>
+                                <td>15%</td>
+                                <td>1,380,000</td>
+                                <td>180,000</td>
+                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>Chuột Logitech G502</td>
+                                <td>950,000</td>
+                                <td>13%</td>
+                                <td>1,073,500</td>
+                                <td>123,500</td>
+                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>Chuột Razer DeathAdder V2</td>
+                                <td>1,200,000</td>
+                                <td>13%</td>
+                                <td>1,356,000</td>
+                                <td>156,000</td>
+                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>Asus ZenBook 14</td>
+                                <td>28,000,000</td>
+                                <td>12%</td>
+                                <td>31,360,000</td>
+                                <td>3,360,000</td>
+                                <td><button class="btn edit"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>Asus VivoBook S15</td>
+                                <td>20,000,000</td>
+                                <td>12%</td>
+                                <td>22,400,000</td>
+                                <td>2,400,000</td>
+                                <td><button class="btn edit"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>iPhone 16 Pro</td>
+                                <td>28,500,000</td>
+                                <td>10%</td>
+                                <td>31,350,000</td>
+                                <td>2,850,000</td>
+                                <td><button class="btn edit"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>Asus ROG Strix G15</td>
+                                <td>42,000,000</td>
+                                <td>12%</td>
+                                <td>47,040,000</td>
+                                <td>5,040,000</td>
+                                <td><button class="btn edit"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>Bàn phím cơ HyperX Alloy</td>
+                                <td>1,400,000</td>
+                                <td>15%</td>
+                                <td>1,610,000</td>
+                                <td>210,000</td>
+                                <td><button class="btn edit"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>Asus ExpertBook B9</td>
+                                <td>35,000,000</td>
+                                <td>12%</td>
+                                <td>39,200,000</td>
+                                <td>4,200,000</td>
+                                <td><button class="btn edit"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>Asus ZenBook Flip 13</td>
+                                <td>32,000,000</td>
+                                <td>12%</td>
+                                <td>35,840,000</td>
+                                <td>3,840,000</td>
+                                <td><button class="btn edit"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>MacBook Air M3</td>
+                                <td>29,000,000</td>
+                                <td>12%</td>
+                                <td>32,480,000</td>
+                                <td>3,480,000</td>
+                                <td><button class="btn edit"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>Chuột SteelSeries Rival 3</td>
+                                <td>700,000</td>
+                                <td>13%</td>
+                                <td>791,000</td>
+                                <td>91,000</td>
+                                <td><button class="btn edit"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>Chuột Logitech MX Master 3</td>
+                                <td>1,700,000</td>
+                                <td>13%</td>
+                                <td>1,921,000</td>
+                                <td>221,000</td>
+                                <td><button class="btn edit"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>Asus VivoBook 15</td>
+                                <td>21,000,000</td>
+                                <td>12%</td>
+                                <td>23,520,000</td>
+                                <td>2,520,000</td>
+                                <td><button class="btn edit"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
                         </tbody>
+
                     </table>
                 </div>
-
             </div>
         </div>
     </div>

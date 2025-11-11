@@ -5,8 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quản Lý Tồn Kho | Sylphia Shop</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../fontawesome-free-7.1.0-web/css/all.min.css" />
     <link rel="stylesheet" href="../css/admin.css" />
 </head>
 
@@ -21,10 +20,11 @@
             <ul class="sidebar-menu">
                 <li><a href="admin-TongQuan.html"><i class="fas fa-home"></i>Tổng Quan</a></li>
                 <li><a href="admin-QLSP.html"><i class="fas fa-box"></i>Sản phẩm</a></li>
+                <li><a href="admin-QLPhieuNH.html"><i class="fas fa-receipt"></i>Nhập Hàng</a></li>
                 <li><a href="admin-QLKH.html"><i class="fas fa-users"></i>Khách hàng</a></li>
                 <li><a href="admin-QLGia.html"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
                 <li><a href="admin-QLDonHang.html"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
-                <li><a href="admin-QLKho.html" class="active"><i class="fas fa-box"></i>Tồn kho</a></li>
+                <li><a href="admin-QLKho.html" class="active"><i class="fas fa-warehouse"></i>Tồn kho</a></li>
                 <li><a href="admin-DangNhap.html"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
             </ul>
         </aside>
@@ -45,35 +45,52 @@
 
             <div class="dashboard">
                 <h1>Quản lý tồn kho</h1>
+                <div class="stats-grid">
+                    <div class="card">
+                        <i class="fas fa-box"></i>
+                        <div>
+                            <h3>2,280</h3>
+                            <p>Tổng Sản phẩm</p>
+                        </div>
+                    </div>
 
-                <table class="manage-table">
-                    <thead>
-                        <tr>
-                            <th>Sản phẩm</th>
-                            <th>Loại</th>
-                            <th>Số lượng tồn</th>
-                            <th>Cảnh báo</th>
-                            <th>Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>iPhone 14</td>
-                            <td>Điện thoại</td>
-                            <td>15</td>
-                            <td><span class="status active">Đầy đủ</span></td>
-                            <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
-                        </tr>
-                        <tr>
-                            <td>MacBook Pro</td>
-                            <td>Laptop</td>
-                            <td>2</td>
-                            <td><span class="status locked">Sắp hết</span></td>
-                            <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-
+                    <div class="card">
+                        <i class="fas fa-shopping-cart"></i>
+                        <div>
+                            <h3>345</h3>
+                            <p>Tổng Đơn hàng</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <table class="manage-table">
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Loại</th>
+                                <th>Số lượng tồn</th>
+                                <th>Cảnh báo</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>iPhone 14</td>
+                                <td>Điện thoại</td>
+                                <td>15</td>
+                                <td><span class="status active">Đầy đủ</span></td>
+                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                            <tr>
+                                <td>MacBook Pro</td>
+                                <td>Laptop</td>
+                                <td>2</td>
+                                <td><span class="status locked">Sắp hết</span></td>
+                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

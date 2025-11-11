@@ -6,22 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quản lý nhập sản phẩm | Sylphia Shop</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../fontawesome-free-7.1.0-web/css/all.min.css" />
     <link rel="stylesheet" href="../css/admin.css" />
-    <style>
-        /* Tăng cường CSS cho phiếu nhập */
-        .manage-form button.edit-btn {
-            display: none;
-            /* Ẩn nút chỉnh sửa trong form */
-        }
-
-        .action-buttons button.disabled {
-            background: #ccc !important;
-            cursor: not-allowed;
-            color: #666 !important;
-        }
-    </style>
 </head>
 
 <body>
@@ -35,11 +21,11 @@
             <ul class="sidebar-menu">
                 <li><a href="admin-TongQuan.html"><i class="fas fa-home"></i>Tổng Quan</a></li>
                 <li><a href="admin-QLSP.html"><i class="fas fa-box"></i>Sản phẩm</a></li>
-                <li><a href="admin-QLPhieuNH.html" class="active"><i class="fa-file-invoice"></i>Nhập Hàng</a></li>
+                <li><a href="admin-QLPhieuNH.html" class="active"><i class="fas fa-receipt"></i>Nhập Hàng</a></li>
                 <li><a href="admin-QLKH.html"><i class="fas fa-users"></i>Khách hàng</a></li>
                 <li><a href="admin-QLGia.html"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
                 <li><a href="admin-QLDonHang.html"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
-                <li><a href="admin-QLKho.html"><i class="fas fa-box"></i>Tồn kho</a></li>
+                <li><a href="admin-QLKho.html"><i class="fas fa-warehouse"></i>Tồn kho</a></li>
                 <li><a href="admin-DangNhap.html"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
             </ul>
         </aside>
@@ -60,7 +46,31 @@
 
             <div class="dashboard">
                 <h1>Quản lý phiếu nhập sản phẩm</h1>
+                <div class="stats-grid">
+                    <div class="card">
+                        <i class="fas fa-receipt"></i>
+                        <div>
+                            <h3>156</h3>
+                            <p>Tổng Phiếu Nhập Hàng</p>
+                        </div>
+                    </div>
 
+                    <div class="card">
+                        <i class="fas fa-box"></i>
+                        <div>
+                            <h3>2,971</h3>
+                            <p>Tổng Sản Phẩm Đã Nhập Hàng</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <i class="fas fa-shopping-cart"></i>
+                        <div>
+                            <h3>204</h3>
+                            <p>Tổng Sản Phẩm Đang Nhập Hàng</p>
+                        </div>
+                    </div>
+                </div>
                 <div class="panel">
                     <h2><i class="fas fa-file-invoice"></i> Danh sách phiếu nhập</h2>
 
