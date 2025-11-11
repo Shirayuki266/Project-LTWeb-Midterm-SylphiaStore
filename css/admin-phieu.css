@@ -1,0 +1,245 @@
+/* ======= Tổng thể ======= */
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    background-color: #f6f7f9;
+    color: #333;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: white;
+    padding: 20px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    /* ✅ chặn phóng to vượt ra ngoài */
+    transform-origin: center;
+    /* ✅ để khi icons phóng to, nó to đều hai bên, không lệch */
+}
+
+/* ============ 1) LOGO ========== */
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #ff6600;
+}
+
+/* Liên kết logo */
+.logo a {
+    display: flex;
+    /* giúp phóng to mượt mà */
+    align-items: center;
+    text-decoration: none;
+    /* bỏ gạch chân */
+    color: inherit;
+    /* giữ màu cam */
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Khi rê chuột vào logo */
+.logo a:hover {
+    transform: scale(1.1);
+    /* phóng to nhẹ */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* tạo hiệu ứng nổi nhẹ */
+    border-radius: 8px;
+    /* bo góc mềm mại khi hover */
+}
+
+/* Hình ảnh logo */
+.logo img {
+    width: 35px;
+    height: 35px;
+    vertical-align: middle;
+    margin-right: 8px;
+    transition: transform 0.4s ease;
+    /* mượt khi logo phóng to */
+}
+
+/* Thanh tìm kiếm */
+.search-bar {
+    flex: 1;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    background: #f3f3f3;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 0 40px;
+}
+
+.search-bar i {
+    color: #888;
+    margin-right: 8px;
+}
+
+.search-bar input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    color: #333;
+}
+
+/* User profile (chuông + avatar) */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.notifications i {
+    font-size: 24px;
+    color: #555;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.notifications i:hover {
+    color: #ff6600;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #ff6600;
+    object-fit: cover;
+}
+
+/* ======= Panel trung tâm ======= */
+.center-panel {
+    max-width: 600px;
+    margin: 50px auto;
+    /* căn giữa trang, cách 2 bên */
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+}
+
+.center-panel h2 {
+    text-align: center;
+    color: #ff6600;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+}
+
+/* ======= Form ======= */
+.product-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #444;
+}
+
+.product-form input,
+.product-form select,
+.product-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+    font-size: 15px;
+    transition: border 0.25s, box-shadow 0.25s;
+}
+
+.product-form input:focus,
+.product-form select:focus,
+.product-form textarea:focus {
+    border-color: #ff6600;
+    box-shadow: 0 0 5px rgba(255, 102, 0, 0.4);
+}
+
+/* ======= Nút ======= */
+.product-form button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.25s;
+    border: none;
+}
+
+/* Nút thêm hình ảnh */
+.btn-image {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-image:hover {
+    background-color: #0056b3;
+}
+
+/* Nút submit */
+.btn-submit {
+    background-color: #ff6600;
+    color: white;
+}
+
+.btn-submit:hover {
+    background-color: #e65500;
+}
+
+/* Căn 2 nút cùng hàng về phải */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.form-actions a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    /* giống button gốc */
+    font-weight: 600;
+    border-radius: 6px;
+    background-color: #ff6600;
+    color: white;
+    text-decoration: none;
+    /* bỏ gạch chân */
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+/* Responsive cho panel và form */
+@media (max-width: 768px) {
+    .center-panel {
+        margin: 30px 20px;
+        padding: 20px;
+    }
+}
+
+textarea {
+    font-family: inherit;
+    /* kế thừa font từ body */
+    font-size: 14px;
+    /* có thể chỉnh theo body */
+    color: inherit;
+    /* kế thừa màu chữ */
+    line-height: 1.5;
+    /* nếu muốn */
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    resize: vertical;
+    /* cho phép thay đổi chiều cao */
+    outline: none;
+}

@@ -1,6 +1,6 @@
 /* ======= Tổng thể ======= */
 body {
-  font-family: "Inter", "Segoe UI", sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
   margin: 0;
   background-color: #f6f7f9;
   color: #333;
@@ -302,6 +302,7 @@ tbody tr:hover {
   color: white;
 }
 
+
 /* Trạng thái khách hàng */
 .status {
   font-weight: 600;
@@ -438,6 +439,8 @@ tbody tr:hover {
   border-radius: 10px;
   padding: 20px;
   margin-top: 25px;
+  text-align: center;
+  /* ⬅ Thêm dòng này */
 }
 
 .manage-form label {
@@ -473,6 +476,27 @@ tbody tr:hover {
   cursor: pointer;
   font-weight: 600;
   transition: 0.25s;
+}
+
+.manage-form a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  /* giống button gốc */
+  font-weight: 600;
+  border-radius: 6px;
+  background-color: #ff6600;
+  color: white;
+  text-decoration: none;
+  /* bỏ gạch chân */
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.manage-form a:hover {
+  background-color: #e65500;
+  /* hover giống button gốc */
 }
 
 .manage-form button:hover {

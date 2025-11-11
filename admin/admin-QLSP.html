@@ -66,12 +66,11 @@
                 </div>
                 <!-- LOẠI SẢN PHẨM -->
                 <div class="manage-panel">
-                    <h2><i class="fas fa-tags"></i> Loại sản phẩm</h2>
+                    <h2><i class="fas fa-tags"></i>Loại sản phẩm</h2>
                     <form class="manage-form">
                         <input type="text" placeholder="Mã loại" required />
                         <input type="text" placeholder="Tên loại" required />
                         <button type="submit" class="btn"><i class="fas fa-plus"></i> Thêm</button>
-                        <button type="reset" class="btn"><i class="fas fa-sync-alt"></i> Làm mới</button>
                     </form>
 
                     <table class="manage-table">
@@ -131,12 +130,23 @@
                 <div class="manage-panel">
                     <h2><i class="fas fa-box"></i> Sản phẩm</h2>
                     <form class="manage-form">
+                        <select required>
+                            <option value="">-- Chọn loại sản phẩm --</option>
+                            <option value="Điện Thoại">Điện thoại</option>
+                            <option value="Máy Tính">Máy tính bảng</option>
+                            <option value="Bàn Phím">Phụ kiện</option>
+                            <option value="Thẻ Cào/Sim">Khác</option>
+                            <option value="Chuột">Khác</option>
+                        </select>
                         <input type="text" placeholder="Mã sản phẩm" required />
                         <input type="text" placeholder="Tên sản phẩm" required />
+                        <input type="text" placeholder="Mô Tả sản phẩm" required />
                         <input type="text" placeholder="Giá" required />
-                        <input type="text" placeholder="Loại" required />
-                        <button type="submit" class="btn"><i class="fas fa-plus"></i> Thêm</button>
-                        <button type="reset" class="btn"><i class="fas fa-sync-alt"></i> Làm mới</button>
+                        <a href="admin-phieu-sp.html" class="btn-add">
+                            <i class="fas fa-plus"></i> Thêm
+                        </a>
+                        <button type="submit" class="btn"><i class="fas fa-search"></i> Tìm Kiếm</button>
+
                     </form>
 
                     <table class="manage-table">
@@ -155,16 +165,23 @@
                                 <td>Iphone 17 Pro Max</td>
                                 <td>39.000.000₫</td>
                                 <td>Điện thoại</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a>
+                                    <button class="btn lock"><i class="fas fa-trash"></i></button>
+                                </td>
+
                             </tr>
                             <tr>
                                 <td>SP02</td>
                                 <td>Iphone 17 Mini</td>
                                 <td>31.000.000₫</td>
                                 <td>Điện thoại</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
 
                             <tr>
@@ -172,48 +189,66 @@
                                 <td>Asus ROG Zephyrus G14</td>
                                 <td>45.000.000₫</td>
                                 <td>Laptop</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>SP04</td>
                                 <td>Asus TUF Gaming F15</td>
                                 <td>30.500.000₫</td>
                                 <td>Laptop</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>SP05</td>
                                 <td>Asus VivoBook S15</td>
                                 <td>20.000.000₫</td>
                                 <td>Laptop</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>SP06</td>
                                 <td>Asus ZenBook 14</td>
                                 <td>28.000.000₫</td>
                                 <td>Laptop</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>SP07</td>
                                 <td>MacBook Air M2</td>
                                 <td>27.500.000₫</td>
                                 <td>Laptop</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>SP08</td>
                                 <td>MacBook Pro M1</td>
                                 <td>39.000.000₫</td>
                                 <td>Laptop</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
 
                             <tr>
@@ -221,16 +256,22 @@
                                 <td>Bàn phím cơ RK61</td>
                                 <td>1.500.000₫</td>
                                 <td>Bàn Phím</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>SP10</td>
                                 <td>Bàn phím cơ GK61</td>
                                 <td>1.200.000₫</td>
                                 <td>Bàn Phím</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
 
                             <tr>
@@ -238,32 +279,44 @@
                                 <td>Chuột Logitech G502</td>
                                 <td>950.000₫</td>
                                 <td>Chuột</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>SP12</td>
                                 <td>Chuột Razer DeathAdder V2</td>
                                 <td>1.200.000₫</td>
                                 <td>Chuột</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>SP13</td>
                                 <td>Chuột SteelSeries Rival 3</td>
                                 <td>700.000₫</td>
                                 <td>Chuột</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>SP14</td>
                                 <td>Chuột Logitech MX Master 3</td>
                                 <td>1.700.000₫</td>
                                 <td>Chuột</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
 
                             <tr>
@@ -271,48 +324,66 @@
                                 <td>Asus ExpertBook B9</td>
                                 <td>35.000.000₫</td>
                                 <td>Laptop</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>SP16</td>
                                 <td>Asus ROG Strix G15</td>
                                 <td>42.000.000₫</td>
                                 <td>Laptop</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>SP17</td>
                                 <td>Iphone 16 Pro</td>
                                 <td>28.500.000₫</td>
                                 <td>Điện thoại</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>SP18</td>
                                 <td>Asus ZenBook Flip 13</td>
                                 <td>32.000.000₫</td>
                                 <td>Laptop</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>SP19</td>
                                 <td>Bàn phím cơ HyperX Alloy</td>
                                 <td>1.400.000₫</td>
                                 <td>Bàn Phím</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>SP20</td>
                                 <td>Asus VivoBook 15</td>
                                 <td>21.000.000₫</td>
                                 <td>Laptop</td>
-                                <td><button class="btn info"><i class="fas fa-edit"></i></button><button
-                                        class="btn lock"><i class="fas fa-trash"></i></button></td>
+                                <td>
+                                    <a href="admin-SuaPhieu-sp.html"><button class="btn info"><i
+                                                class="fas fa-edit"></i></button></a><button class="btn lock"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
                         </tbody>
 
