@@ -29,15 +29,21 @@ main.product-page {
 /* ==== Thanh tìm kiếm & lọc ==== */
 /* ==== Thanh tìm kiếm & lọc ==== */
 .search-section {
-  text-align: center;
+  position: absolute; /* Cố định vị trí */
+  top: 100px; /* Cách mép trên 10px */
+  right: 59px; /* Cách mép phải 10px */
+  transform: scale(0.8); /* Thu nhỏ kích thước còn 80% */
+  transform-origin: top right; /* Thu nhỏ từ góc trên bên phải */
+  text-align: right;
   margin: 40px 0;
+  padding-top: 50px;
 }
 
 .search-form {
   display: flex;
-  justify-content: center;     /* Căn giữa toàn bộ form */
-  align-items: center;         /* Căn giữa theo chiều dọc */
-  flex-wrap: nowrap;           /* Giữ trên cùng 1 hàng */
+  justify-content: center; /* Căn giữa toàn bộ form */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  flex-wrap: nowrap; /* Giữ trên cùng 1 hàng */
   gap: 15px;
   background: #f9f9f9;
   padding: 15px 25px;
@@ -108,7 +114,7 @@ main.product-page {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 30px;
-  padding: 0 60px 50px;
+  padding: 60px 60px 50px;
 }
 
 /* Responsive cho grid */
