@@ -22,7 +22,15 @@ body {
   max-width: 1200px;
   margin: 0 auto;
 }
-
+.buy-btn {
+  display: inline-block;
+  background: #ff6600;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
 /* ========== PRODUCT DETAIL PAGE SPECIFIC STYLES ========== */
 .product-detail {
   display: flex;
