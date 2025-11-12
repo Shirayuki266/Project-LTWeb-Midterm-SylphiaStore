@@ -116,18 +116,21 @@ body {
   flex-wrap: wrap;
   gap: 25px;
 }
-
 .cat-card {
-  background-color: white;
+  display: inline-block; /* Allows setting padding, border, etc. */
+  padding: 10px 15px; /* Same padding as the select boxes */
+  border: 1px solid #ccc; /* Default light grey border */
+  border-radius: 8px; /* Rounded corners */
+  font-size: 20px; /* Same font size */
   width: 220px;
-  padding: 35px 0;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  font-weight: bold;
-  color: #333;
-  transition: 0.3s;
+  height: 60px;
+  color: #333; /* Default text color */
+  text-decoration: none; /* Remove underline */
+  background-color: #fff; /* White background */
   cursor: pointer;
-  font-size: 1.1rem;
+  margin-right: 10px; /* Space between sorting options */
+  /* Add transition for smooth hover effects */
+  transition: all 0.3s ease;
 }
 
 .cat-card:hover {

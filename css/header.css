@@ -1,230 +1,229 @@
 /* ========== HEADER ========== */
 header {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background: white;
-    padding: 20px 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    /* ✅ chặn phóng to vượt ra ngoài */
-    transform-origin: center;
-    /* ✅ để khi icons phóng to, nó to đều hai bên, không lệch */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white;
+  padding: 20px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  /* ✅ chặn phóng to vượt ra ngoài */
+  transform-origin: center;
+  /* ✅ để khi icons phóng to, nó to đều hai bên, không lệch */
 }
 
 /* ============ 1) LOGO ========== */
 .logo {
-    display: flex;
-    align-items: center;
-    font-size: 1.6rem;
-    font-weight: bold;
-    color: #ff6600;
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #ff6600;
 }
 
 /* Liên kết logo */
 .logo a {
-    display: flex;
-    /* giúp phóng to mượt mà */
-    align-items: center;
-    text-decoration: none;
-    /* bỏ gạch chân */
-    color: inherit;
-    /* giữ màu cam */
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  display: flex;
+  /* giúp phóng to mượt mà */
+  align-items: center;
+  text-decoration: none;
+  /* bỏ gạch chân */
+  color: inherit;
+  /* giữ màu cam */
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 /* Khi rê chuột vào logo */
 .logo a:hover {
-    transform: scale(1.1);
-    /* phóng to nhẹ */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    /* tạo hiệu ứng nổi nhẹ */
-    border-radius: 8px;
-    /* bo góc mềm mại khi hover */
+  transform: scale(1.1);
+  /* phóng to nhẹ */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  /* tạo hiệu ứng nổi nhẹ */
+  border-radius: 8px;
+  /* bo góc mềm mại khi hover */
 }
 
 /* Hình ảnh logo */
 .logo img {
-    width: 35px;
-    height: 35px;
-    vertical-align: middle;
-    margin-right: 8px;
-    transition: transform 0.4s ease;
-    /* mượt khi logo phóng to */
+  width: 35px;
+  height: 35px;
+  vertical-align: middle;
+  margin-right: 8px;
+  transition: transform 0.4s ease;
+  /* mượt khi logo phóng to */
 }
-
 
 /* ========== 2) nav a ============ */
 
 nav a {
-    display: inline-block;
-    text-decoration: none;
-    color: #333;
-    margin: 0 10px;
-    font-weight: 500;
-    font-size: 1rem;
-    transition: all 0.3s ease-in-out;
+  display: inline-block;
+  text-decoration: none;
+  color: #333;
+  margin: 0 10px;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
 }
 
 /* Khi link đang được chọn (active) */
 nav a.active {
-    background-color: #fff4ec;
-    color: #ff6600;
-    border-left-color: #ff6600;
-    font-weight: 600;
+  background-color: #fff4ec;
+  color: #ff6600;
+  border-left-color: #ff6600;
+  font-weight: 600;
 }
 
 /* Khi rê chuột vào */
 nav a:hover {
-    color: #ff6600;
-    /* chữ đổi sang cam */
-    transform: scale(1.1);
-    /* phóng to nhẹ */
+  color: #ff6600;
+  /* chữ đổi sang cam */
+  transform: scale(1.1);
+  /* phóng to nhẹ */
 }
 
 /* ============ 3) icons ========== */
 .icons {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 0 0 auto;
-    width: 300px;
-    max-width: 40vw;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 300px;
+  max-width: 40vw;
 }
 
 .icons form {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 }
 
 /* input chừa chỗ 40px 2 bên cho icon */
 .icons input {
-    width: 100%;
-    padding: 8px 40px;
-    /* padding-left/right bằng kích thước icon + khoảng cách */
-    border: 1.5px solid #555;
-    border-radius: 20px;
-    outline: none;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    box-sizing: border-box;
-    /* luôn tính padding vào width */
+  width: 100%;
+  padding: 8px 40px;
+  /* padding-left/right bằng kích thước icon + khoảng cách */
+  border: 1.5px solid #555;
+  border-radius: 20px;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  box-sizing: border-box;
+  /* luôn tính padding vào width */
 }
 
 /* icon luôn nằm trong input */
 .icons .search-icon,
 .icons .filter-icon {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-    pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
 }
 
 .icons .search-icon {
-    left: 12px;
+  left: 12px;
 }
 
 .icons .filter-icon {
-    right: 12px;
+  right: 12px;
 }
 
 /* hover & focus */
 .icons input:hover,
 .icons input:focus {
-    border-color: #ff6600;
-    box-shadow: 0 0 5px rgba(255, 102, 0, 0.4);
+  border-color: #ff6600;
+  box-shadow: 0 0 5px rgba(255, 102, 0, 0.4);
 }
 
 /* icon svg */
 .icons svg {
-    width: 18px;
-    height: 18px;
-    stroke: #333;
-    transition: stroke 0.3s, transform 0.2s ease;
+  width: 18px;
+  height: 18px;
+  stroke: #333;
+  transition: stroke 0.3s, transform 0.2s ease;
 }
 
 .icons .search-icon:hover svg,
 .icons .filter-icon:hover svg {
-    stroke: #ff6600;
-    transform: scale(1.15);
+  stroke: #ff6600;
+  transform: scale(1.15);
 }
 
 /* Khi hover cả khối icons -> icon phóng to và đổi màu */
 .icons:hover .search-icon svg,
 .icons:hover .filter-icon svg {
-    stroke: #ff6600;
-    transform: scale(1.15);
+  stroke: #ff6600;
+  transform: scale(1.15);
 }
 
 /* Khi input focus -> icon đổi màu */
 .icons:focus-within .search-icon svg,
 .icons:focus-within .filter-icon svg {
-    stroke: #ff6600;
+  stroke: #ff6600;
 }
 
 /* ========== RESPONSIVE (tự động điều chỉnh giao diện khi màn hình nhỏ) ========== */
 @media (max-width: 992px) {
-    .main-content-wrapper {
-        width: 95%;
-    }
+  .main-content-wrapper {
+    width: 95%;
+  }
 
-    header {
-        padding: 15px 0;
-        /* Đã điều chỉnh padding */
-    }
+  header {
+    padding: 15px 0;
+    /* Đã điều chỉnh padding */
+  }
 
-    .icons {
-        width: 90%;
-        /* chiếm 90% header */
-        max-width: 250px;
-        /* không quá to */
-    }
+  .icons {
+    width: 90%;
+    /* chiếm 90% header */
+    max-width: 250px;
+    /* không quá to */
+  }
 
-    .icons input {
-        width: 100%;
-        /* luôn chiếm hết khung */
-        max-width: none;
-    }
+  .icons input {
+    width: 100%;
+    /* luôn chiếm hết khung */
+    max-width: none;
+  }
 
-    nav a {
-        margin: 0 10px;
-    }
+  nav a {
+    margin: 0 10px;
+  }
 }
 
 @media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
 
-    .icons {
-        width: 100%;
-        /* co giãn tối đa */
-        max-width: none;
-        padding: 0 10px;
-    }
+  .icons {
+    width: 100%;
+    /* co giãn tối đa */
+    max-width: none;
+    padding: 0 10px;
+  }
 
-    .icons .search-icon svg,
-    .icons .filter-icon svg {
-        width: 16px;
-        height: 16px;
-    }
+  .icons .search-icon svg,
+  .icons .filter-icon svg {
+    width: 16px;
+    height: 16px;
+  }
 
-    nav {
-        width: 100%;
-        text-align: center;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
+  nav {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
-    nav a {
-        margin: 5px 10px;
-    }
+  nav a {
+    margin: 5px 10px;
+  }
 }

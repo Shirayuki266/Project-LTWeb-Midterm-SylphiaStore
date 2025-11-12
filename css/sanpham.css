@@ -186,3 +186,26 @@ main.product-page {
 .buy-btn:hover {
   background: #e05500;
 }
+/* Styling for the select box */
+.category-select,
+.price-select {
+  display: inline-block; /* Allows setting padding, border, etc. */
+  padding: 10px 14px; /* Same padding as the select boxes */
+  border: 1px solid #ccc; /* Default light grey border */
+  border-radius: 8px; /* Rounded corners */
+  font-size: 15px; /* Same font size */
+  color: #333; /* Default text color */
+  text-decoration: none; /* Remove underline */
+  background-color: #fff; /* White background */
+  cursor: pointer;
+  margin-right: 10px;
+  min-width: 170px; /* Space between sorting options */
+  /* Add transition for smooth hover effects */
+  transition: 0.2s;
+}
+.category-select:focus,
+.price-select:focus .category-select:hover,
+.price-select:hover {
+  border-color: #ff6600;
+  box-shadow: 0 0 5px rgba(255, 102, 0, 0.3);
+}
