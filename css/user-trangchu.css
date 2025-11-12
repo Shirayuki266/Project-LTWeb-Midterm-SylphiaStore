@@ -121,6 +121,7 @@ body {
   padding: 10px 15px; /* Same padding as the select boxes */
   border: 1px solid #ccc; /* Default light grey border */
   border-radius: 8px; /* Rounded corners */
+  font-weight: 200px;
   font-size: 20px; /* Same font size */
   width: 220px;
   height: 60px;

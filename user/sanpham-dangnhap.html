@@ -83,7 +83,11 @@
 
       <!-- Form tìm kiếm nâng cao -->
       <section class="search-section">
-        <form class="search-form" method="get" action="#">
+        <form
+          class="search-form"
+          method="get"
+          action="../user/sanphamipcao.html"
+        >
           <!-- Chọn phân loại -->
           <select class="category-select" name="category">
             <option value="">Chọn phân loại</option>
@@ -106,19 +110,16 @@
             </select>
           </div>
 
-          <!-- Bộ lọc sắp xếp -->
-          <div class="filter-bar">
-            <label for="sort">Sắp xếp theo:</label>
-            <select id="sort" name="sort">
-              <option value="default">Mặc định</option>
-              <option value="price-asc">Giá tăng dần</option>
-              <option value="price-desc">Giá giảm dần</option>
-              <option value="name">Tên sản phẩm (A-Z)</option>
-            </select>
-          </div>
-
+          <label for="sort-select">Sắp xếp:</label>
+          <a href="../user/sanphamip.html" class="price-select">Mặc định</a>
+          <a href="../user/sanphamipthap.html" class="price-select"
+            >Giá tăng dần</a
+          >
+          <a href="../user/sanphamipcao.html" class="price-select"
+            >Giá giảm dần</a
+          >
           <!-- Nút tìm kiếm -->
-          <button type="submit" class="btn-search">Tìm kiếm</button>
+          <button type="" class="btn-search">Tìm kiếm</button>
         </form>
       </section>
 
