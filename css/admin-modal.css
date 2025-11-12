@@ -1,0 +1,163 @@
+.filter-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.filter-box label {
+    font-weight: bold;
+}
+
+.filter-box select {
+    padding: 6px 8px;
+    border: 1px solid #ff7b00;
+    border-radius: 5px;
+    background-color: #fff3e0;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-box select:hover {
+    border-color: #e46f00;
+    background-color: #ffe0b2;
+}
+
+.filter-box button {
+    background-color: #ff7b00;
+    color: #fff;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.filter-box button:hover {
+    background-color: #e46f00;
+}
+
+/* Popup CSS */
+.modal-toggle {
+    display: none;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modal-box {
+    background: #fff;
+    width: 450px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal h2 {
+    color: #ff7b00;
+    margin-bottom: 10px;
+}
+
+.modal label.close {
+    float: right;
+    cursor: pointer;
+    color: #555;
+}
+
+.modal-toggle:checked+.modal {
+    display: flex;
+}
+
+.modal p {
+    margin: 6px 0;
+}
+
+.btn {
+    background-color: #ff7b00;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background-color: #e46f00;
+}
+
+.modal select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 8px;
+    border-radius: 5px;
+    border: 1px solid #ff7b00;
+    background-color: #fff3e0;
+    color: #333;
+}
+
+.modal button {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.disabled-select {
+    pointer-events: none;
+    background-color: #e0e0e0;
+    color: #888;
+}
+
+.time-filters input {
+    display: none;
+}
+
+/* Ẩn tất cả bảng mặc định */
+.tables table {
+    display: none;
+}
+
+/* Hiển thị bảng tương ứng khi radio được chọn */
+#today:checked~.tables .table-today {
+    display: table;
+}
+
+#week:checked~.tables .table-week {
+    display: table;
+}
+
+#month:checked~.tables .table-month {
+    display: table;
+}
+
+#year:checked~.tables .table-year {
+    display: table;
+}
+
+
+/* Label cho đẹp */
+.time-filters label {
+    margin-right: 10px;
+    padding: 4px 8px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.time-filters input:checked+label {
+    background: #ff6600;
+    /* đổi màu khi chọn */
+    color: #fff;
+    border-color: #ff6600;
+}
