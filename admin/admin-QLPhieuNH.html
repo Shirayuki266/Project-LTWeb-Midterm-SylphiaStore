@@ -72,8 +72,6 @@
                     </div>
                 </div>
                 <div class="panel">
-                    <h2><i class="fas fa-file-invoice"></i> Danh sách phiếu nhập</h2>
-
                     <!-- Form Thêm phiếu nhập -->
                     <form class="form-grid manage-form">
                         <div class="form-group">
@@ -81,24 +79,20 @@
                             <input type="text" placeholder="VD: PN01" />
                         </div>
                         <div class="form-group">
-                            <label>Ngày nhập:</label>
+                            <label>Ngày nhập Từ:</label>
                             <input type="date" />
                         </div>
                         <div class="form-group">
-                            <label>Sản phẩm:</label>
-                            <input type="text" placeholder="VD: Samsung Galaxay X Max">
+                            <label> Đến Ngày nhập:</label>
+                            <input type="date" />
                         </div>
-                        <div class="form-group">
-                            <label>Số lượng:</label>
-                            <input type="number" placeholder="VD: 10" min="0" />
-                        </div>
-                        <div class="form-group">
-                            <label>Giá nhập:</label>
-                            <input type="number" placeholder="VD: 25,000,000" min="0" />
-                        </div>
-                        <button type="button" class="btn"><i class="fas fa-plus"></i> Thêm phiếu nhập</button>
+                        <a href="admin-phieu-nh.html" class="btn-add">
+                            <i class="fas fa-plus"></i> Thêm
+                        </a>
+                        <button type="button" class="btn"><i class="fas fa-search"></i> Tìm Kiếm</button>
                     </form>
-
+                    <h2><i class="fas fa-file-invoice"></i> Danh sách phiếu nhập</h2>
+                    <h3>Lưu ý: Phiếu Chỉ Ở trạng thái hoàn thành sau khi admin nhấn nút hoàn thành</h3>
                     <!-- Bảng phiếu nhập -->
                     <table class="manage-table">
                         <thead>
@@ -121,7 +115,10 @@
                                 <td>25,000,000</td>
                                 <td><span class="status active">Chưa hoàn thành</span></td>
                                 <td class="action-buttons">
-                                    <button class="btn info"><i class="fas fa-edit"></i></button>
+                                    <button class="btn info"> <a href="admin-SuaPhieu-nh.html">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </button>
                                     <button class="btn lock"><i class="fas fa-check"></i></button>
                                 </td>
                             </tr>

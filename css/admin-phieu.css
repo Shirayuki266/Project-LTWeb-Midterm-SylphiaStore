@@ -145,7 +145,7 @@ header {
 .product-form input,
 .product-form select,
 .product-form textarea {
-    width: 100%;
+    width: 95%;
     padding: 12px 14px;
     margin-bottom: 15px;
     border: 1px solid #ddd;
@@ -242,4 +242,12 @@ textarea {
     resize: vertical;
     /* cho phép thay đổi chiều cao */
     outline: none;
+}
+
+.divider {
+    border: none;
+    height: 2px;
+    background-color: #ff8330;
+    margin: 25px 0;
+    border-radius: 1px;
 }
