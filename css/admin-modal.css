@@ -123,7 +123,12 @@
     display: none;
 }
 
+.status-filters input {
+    display: none;
+}
+
 /* Ẩn tất cả bảng mặc định */
+.tables table,
 .tables table {
     display: none;
 }
@@ -145,6 +150,23 @@
     display: table;
 }
 
+.status-filters .tables table {
+    display: none;
+    /* ẩn hết trước */
+}
+
+#full:checked~.tables .table-full {
+    display: table;
+}
+
+#Almost-Empty:checked~.tables .table-Almost-Empty {
+    display: table;
+}
+
+#Empty:checked~.tables .table-Empty {
+    display: table;
+}
+
 
 /* Label cho đẹp */
 .time-filters label {
@@ -160,4 +182,47 @@
     /* đổi màu khi chọn */
     color: #fff;
     border-color: #ff6600;
+}
+
+.status-filters label {
+    margin-right: 10px;
+    padding: 4px 8px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.status-filters input:checked+label {
+    background: #ff6600;
+    color: #fff;
+    border-color: #ff6600;
+}
+
+/* Nút xem chung trong bảng */
+.manage-table .btn,
+.tables .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-weight: 600;
+    border-radius: 6px;
+    background-color: #ff7b00;
+    /* màu nền bạn muốn */
+    color: #fff;
+    /* màu chữ */
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    font-size: 14px;
+}
+
+.tables .btn i {
+    color: #fff;
+    /* màu icon */
+}
+
+/* Hover effect nếu muốn */
+.tables .btn:hover {
+    background-color: #e06a00;
 }
