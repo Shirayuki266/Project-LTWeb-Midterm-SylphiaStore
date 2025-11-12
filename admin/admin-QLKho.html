@@ -55,38 +55,78 @@
                     </div>
 
                     <div class="card">
-                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-exclamation-triangle"></i>
                         <div>
-                            <h3>345</h3>
-                            <p>Tổng Đơn hàng</p>
+                            <h3>15</h3>
+                            <p>Cảnh Báo</p>
                         </div>
                     </div>
                 </div>
                 <div class="panel">
+                    <div class="manage-form">
+                        <h2>Tra Cứu Tồn Kho</h2>
+                        <label>Tên Sản Phẩm</label>
+                        <input type="text" placeholder="Tìm kiếm loại sản phẩm..." id="searchProductType" />
+                        <label>Loại Sản Phẩm</label>
+                        <select required>
+                            <option value="">-- Chọn loại sản phẩm --</option>
+                            <option value="Điện Thoại">Điện thoại</option>
+                            <option value="Máy Tính">Máy tính bảng</option>
+                            <option value="Bàn Phím">Bàn Phím</option>
+                            <option value="Thẻ Cào/Sim">Thẻ Cào/Sim</option>
+                        </select>
+                        <label>Thời Gian Hoạt Động</label>
+                        <select required>
+                            <option value="">-- Chọn thời gian --</option>
+                            <option value="time">Mới Nhất</option>
+                            <option value="time">Ngày Này</option>
+                            <option value="time">Tuần Này</option>
+                            <option value="time">Tháng Này</option>
+                            <option value="time">Năm Này</option>
+                            <option value="time">Cũ Nhất</option>
+                        </select>
+                        <label>Trạng Thái Sản Phẩm</label>
+                        <select required>
+                            <option value="">-- Chọn trạng thái --</option>
+                            <option value="time">Đầy Đủ</option>
+                            <option value="time">Sắp Hết</option>
+                            <option value="time">Đã hết</option>
+                        </select>
+                        <button type="button" class="btn"><i class="fas fa-search"></i> Tìm Kiếm</button>
+                    </div>
                     <table class="manage-table">
                         <thead>
                             <tr>
+                                <th>Mã Sản Phẩm</th>
                                 <th>Sản phẩm</th>
                                 <th>Loại</th>
                                 <th>Số lượng tồn</th>
-                                <th>Cảnh báo</th>
+                                <th>Trạng Thái</th>
                                 <th>Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
+                                <td>SP24</td>
                                 <td>iPhone 14</td>
                                 <td>Điện thoại</td>
                                 <td>15</td>
                                 <td><span class="status active">Đầy đủ</span></td>
-                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                                <td><a href="admin-phieu-kho.html" class="btn">
+                                        <i class="fas fa-exclamation-circle"></i> Thông Tin
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
+                                <td>SP13</td>
                                 <td>MacBook Pro</td>
                                 <td>Laptop</td>
                                 <td>2</td>
                                 <td><span class="status locked">Sắp hết</span></td>
-                                <td><button class="btn"><i class="fas fa-edit"></i> Sửa</button></td>
+                                <td><a href="admin-phieu-kho.html" class="btn">
+                                        <i class="fas fa-exclamation-circle"></i> Thông Tin
+                                    </a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

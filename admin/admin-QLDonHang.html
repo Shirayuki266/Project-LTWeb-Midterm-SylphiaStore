@@ -2,48 +2,171 @@
 <html lang="vi">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản Lý Đơn Hàng | Sylphia Shop</title>
-    <link rel="stylesheet" href="../fontawesome-free-7.1.0-web/css/all.min.css" />
-    <link rel="stylesheet" href="../css/admin.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quản Lý Đơn Hàng | Sylphia Shop</title>
+  <link rel="stylesheet" href="../fontawesome-free-7.1.0-web/css/all.min.css" />
+  <link rel="stylesheet" href="../css/admin.css" />
+  <style>
+    
+    .filter-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .filter-box label {
+      font-weight: bold;
+    }
+
+    .filter-box select {
+      padding: 6px 8px;
+      border: 1px solid #ff7b00;
+      border-radius: 5px;
+      background-color: #fff3e0;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-box select:hover {
+      border-color: #e46f00;
+      background-color: #ffe0b2;
+    }
+
+    .filter-box button {
+      background-color: #ff7b00;
+      color: #fff;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .filter-box button:hover {
+      background-color: #e46f00;
+    }
+
+    /* Popup CSS */
+    .modal-toggle {
+      display: none;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .modal-box {
+      background: #fff;
+      width: 450px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal h2 {
+      color: #ff7b00;
+      margin-bottom: 10px;
+    }
+
+    .modal label.close {
+      float: right;
+      cursor: pointer;
+      color: #555;
+    }
+
+    .modal-toggle:checked+.modal {
+      display: flex;
+    }
+
+    .modal p {
+      margin: 6px 0;
+    }
+
+    .btn {
+      background-color: #ff7b00;
+      color: white;
+      padding: 6px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background-color: #e46f00;
+    }
+
+    .modal select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+      border-radius: 5px;
+      border: 1px solid #ff7b00;
+      background-color: #fff3e0;
+      color: #333;
+    }
+
+    .modal button {
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .disabled-select {
+      pointer-events: none;
+      background-color: #e0e0e0;
+      color: #888;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="admin-layout">
-        <!-- SIDEBAR -->
-        <aside class="sidebar">
-            <div class="logo">
-                <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
-                Sylphia Shop
-            </div>
-            <ul class="sidebar-menu">
-                <li><a href="admin-TongQuan.html"><i class="fas fa-home"></i>Tổng Quan</a></li>
-                <li><a href="admin-QLSP.html"><i class="fas fa-box"></i>Sản phẩm</a></li>
-                <li><a href="admin-QLPhieuNH.html"><i class="fas fa-receipt"></i>Nhập Hàng</a></li>
-                <li><a href="admin-QLKH.html"><i class="fas fa-users"></i>Khách hàng</a></li>
-                <li><a href="admin-QLGia.html"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
-                <li><a href="admin-QLDonHang.html" class="active"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
-                <li><a href="admin-QLKho.html"><i class="fas fa-warehouse"></i>Tồn kho</a></li>
-                <li><a href="admin-DangNhap.html"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
-            </ul>
-        </aside>
+  <div class="admin-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
+        Sylphia Shop
+      </div>
+      <ul class="sidebar-menu">
+        <li><a href="admin-TongQuan.html"><i class="fas fa-home"></i>Tổng Quan</a></li>
+        <li><a href="admin-QLSP.html"><i class="fas fa-box"></i>Sản phẩm</a></li>
+        <li><a href="admin-QLPhieuNH.html"><i class="fas fa-receipt"></i>Nhập Hàng</a></li>
+        <li><a href="admin-QLKH.html"><i class="fas fa-users"></i>Khách hàng</a></li>
+        <li><a href="admin-QLGia.html"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
+        <li><a href="admin-QLDonHang.html" class="active"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
+        <li><a href="admin-QLKho.html"><i class="fas fa-warehouse"></i>Tồn kho</a></li>
+        <li><a href="admin-DangNhap.html"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
+      </ul>
+    </aside>
 
-        <!-- MAIN CONTENT -->
-        <div class="main-content">
-            <div class="top-nav">
-                <div class="search-bar">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Tìm kiếm..." />
-                </div>
-                <div class="user-profile">
-                    <div class="notifications"><i class="fas fa-bell"></i></div>
-                    <img src="../images/avatar.jpg" alt="Admin" class="avatar" />
-                    <span class="admin-name">Admin</span>
-                </div>
-            </div>
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <div class="top-nav">
+        <div class="search-bar">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Tìm kiếm..." />
+        </div>
+        <div class="user-profile">
+          <div class="notifications"><i class="fas fa-bell"></i></div>
+          <img src="../images/avatar.jpg" alt="Admin" class="avatar" />
+          <span class="admin-name">Admin</span>
+        </div>
+      </div>
 
-            <div class="dashboard">
+      <div class="dashboard">
                 <h1>Quản lý đơn hàng</h1>
                 <div class="stats-grid">
                     <div class="card">
@@ -62,45 +185,218 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel">
-                    <div class="manage-actions">
-                        <input type="text" placeholder="Tìm kiếm theo ngày hoặc tình trạng..." />
-                    </div>
 
-                    <table class="manage-table">
-                        <thead>
-                            <tr>
-                                <th>ID Đơn</th>
-                                <th>Khách hàng</th>
-                                <th>Ngày đặt</th>
-                                <th>Tình trạng</th>
-                                <th>Hành động</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>#1001</td>
-                                <td>Minh</td>
-                                <td>01/11/2025</td>
-                                <td>Mới đặt</td>
-                                <td>
-                                    <button class="btn"><i class="fas fa-eye"></i> Xem</button>
-                                    <button class="btn"><i class="fas fa-edit"></i> Cập nhật</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#1002</td>
-                                <td>Trang</td>
-                                <td>02/11/2025</td>
-                                <td>Đã giao</td>
-                                <td><button class="btn"><i class="fas fa-eye"></i> Xem</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="panel">
+          <!-- Bộ lọc đơn hàng -->
+          <div class="filter-box">
+            <label>Từ ngày:</label>
+            <select>
+              <option>--Ngày--</option>
+              <!-- 1-31 -->
+              <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+              <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+              <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
+              <option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
+              <option>21</option><option>22</option><option>23</option><option>24</option><option>25</option>
+              <option>26</option><option>27</option><option>28</option><option>29</option><option>30</option>
+              <option>31</option>
+            </select>
+            <select>
+              <option>--Tháng--</option>
+              <!-- 1-12 -->
+              <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+              <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+              <option>11</option><option>12</option>
+            </select>
+            <select>
+              <option>--Năm--</option>
+              <option>2023</option>
+              <option>2024</option>
+              <option>2025</option>
+            </select>
+
+            <label>Đến ngày:</label>
+            <select>
+              <option>--Ngày--</option>
+              <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+              <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+              <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
+              <option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
+              <option>21</option><option>22</option><option>23</option><option>24</option><option>25</option>
+              <option>26</option><option>27</option><option>28</option><option>29</option><option>30</option>
+              <option>31</option>
+            </select>
+            <select>
+              <option>--Tháng--</option>
+              <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+              <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+              <option>11</option><option>12</option>
+            </select>
+            <select>
+              <option>--Năm--</option>
+              <option>2023</option>
+              <option>2024</option>
+              <option>2025</option>
+            </select>
+
+            <label>Tình trạng:</label>
+            <select>
+              <option>--Tất cả--</option>
+              <option>Mới đặt</option>
+              <option>Đã xử lý</option>
+              <option>Đã giao</option>
+              <option>Đã hủy</option>
+            </select>
+            <button>Tra cứu</button>
+          </div>
+
+          <table class="manage-table">
+            <thead>
+              <tr>
+                <th>ID Đơn</th>
+                <th>Khách hàng</th>
+                <th>Ngày đặt</th>
+                <th>Tình trạng</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#1001</td>
+                <td> Lê Đức Anh </td>
+                <td>01/11/2025</td>
+                <td>Mới đặt</td>
+                <td>
+                  <label for="view1" class="btn"><i class="fas fa-eye"></i> Xem</label>
+                  <label for="update1" class="btn"><i class="fas fa-edit"></i> Cập nhật</label>
+                </td>
+              </tr>
+              <tr>
+                <td>#1002</td>
+                <td> Nguyễn Thế Bảo </td>
+                <td>02/11/2025</td>
+                <td>Đã giao</td>
+                <td>
+                  <label for="view2" class="btn"><i class="fas fa-eye"></i> Xem</label>
+                  <button class="btn disabled-select"><i class="fas fa-edit"></i> Cập nhật</button>
+                </td>
+              </tr>
+              <tr>
+                <td>#1003</td>
+                <td>Huỳnh Khánh Duy </td>
+                <td>03/11/2025</td>
+                <td>Đã hủy</td>
+                <td>
+                  <label for="view3" class="btn"><i class="fas fa-eye"></i> Xem</label>
+                  <button class="btn disabled-select"><i class="fas fa-edit"></i> Cập nhật</button>
+                </td>
+              </tr>
+              <tr>
+                <td>#1004</td>
+                <td>Võ Đồng Gia Bảo </td>
+                <td>04/11/2025</td>
+                <td>Mới đặt</td>
+                <td>
+                  <label for="view4" class="btn"><i class="fas fa-eye"></i> Xem</label>
+                  <label for="update4" class="btn"><i class="fas fa-edit"></i> Cập nhật</label>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </div>
     </div>
-</body>
+  </div>
 
+  <!-- ===== POPUP XEM CHI TIẾT ===== -->
+  <input type="checkbox" id="view1" class="modal-toggle" />
+  <div class="modal">
+    <div class="modal-box">
+      <label for="view1" class="close"><i class="fas fa-times"></i></label>
+      <h2>Chi tiết đơn #1001</h2>
+      <p><b>Khách hàng:</b> Lê Đức Anh </p>
+      <p><b>Ngày đặt:</b>01/11/2025</p>
+      <p><b>Tình trạng:</b> Mới đặt</p>
+      <p><b>Sản phẩm:</b> iPhone 16 Pro Max</p>
+      <p><b>Tổng tiền:</b> 32.000.000đ</p>
+    </div>
+  </div>
+
+  <input type="checkbox" id="view2" class="modal-toggle" />
+  <div class="modal">
+    <div class="modal-box">
+      <label for="view2" class="close"><i class="fas fa-times"></i></label>
+      <h2>Chi tiết đơn #1002</h2>
+      <p><b>Khách hàng:</b> Nguyễn Thế Bảo </p>
+      <p><b>Ngày đặt:</b>02/11/2025</p>
+      <p><b>Tình trạng:</b> Đã giao</p>
+      <p><b>Sản phẩm:</b> Laptop Dell XPS</p>
+      <p><b>Tổng tiền:</b> 15.000.000đ</p>
+    </div>
+  </div>
+
+  <input type="checkbox" id="view3" class="modal-toggle" />
+  <div class="modal">
+    <div class="modal-box">
+      <label for="view3" class="close"><i class="fas fa-times"></i></label>
+      <h2>Chi tiết đơn #1003</h2>
+      <p><b>Khách hàng:</b> Huỳnh Khánh Duy </p>
+      <p><b>Ngày đặt:</b>03/11/2025</p>
+      <p><b>Tình trạng:</b> Đã hủy</p>
+      <p><b>Sản phẩm:</b> iPhone 14 Pro</p>
+      <p><b>Tổng tiền:</b> 20.000.000đ</p>
+    </div>
+  </div>
+
+  <input type="checkbox" id="view4" class="modal-toggle" />
+  <div class="modal">
+    <div class="modal-box">
+      <label for="view4" class="close"><i class="fas fa-times"></i></label>
+      <h2>Chi tiết đơn #1004</h2>
+      <p><b>Khách hàng:</b> VÕ Đồng Gia Bảo</p>
+      <p><b>Ngày đặt:</b>04/11/2025</p>
+      <p><b>Tình trạng:</b> Mới đặt</p>
+      <p><b>Sản phẩm:</b> Laptop MacBook Air M2</p>
+      <p><b>Tổng tiền:</b> 35.000.000đ</p>
+    </div>
+  </div>
+
+  <!-- ===== POPUP CẬP NHẬT ===== -->
+  <input type="checkbox" id="update1" class="modal-toggle" />
+  <div class="modal">
+    <div class="modal-box">
+      <label for="update1" class="close"><i class="fas fa-times"></i></label>
+      <h2>Cập nhật đơn #1001</h2>
+      <form action="admin-QLDonHang.html">
+        <p>Chọn tình trạng mới:</p>
+        <select>
+          <option>Mới đặt</option>
+          <option>Đã xử lý</option>
+          <option>Đã giao</option>
+          <option>Đã hủy</option>
+        </select>
+        <button class="btn" type="submit">Lưu</button>
+      </form>
+    </div>
+  </div>
+
+  <input type="checkbox" id="update4" class="modal-toggle" />
+  <div class="modal">
+    <div class="modal-box">
+      <label for="update4" class="close"><i class="fas fa-times"></i></label>
+      <h2>Cập nhật đơn #1004</h2>
+      <form action="admin-QLDonHang.html">
+        <p>Chọn tình trạng mới:</p>
+        <select>
+          <option>Mới đặt</option>
+          <option>Đã xử lý</option>
+          <option>Đã giao</option>
+          <option>Đã hủy</option>
+        </select>
+        <button class="btn" type="submit">Lưu</button>
+      </form>
+    </div>
+  </div>
+
+</body>
 </html>
