@@ -503,7 +503,8 @@ tbody tr:hover {
   transition: 0.25s;
 }
 
-.manage-form a {
+.manage-form a,
+.manage-table a {
   display: inline-flex;
   align-items: center;
   gap: 6px;
