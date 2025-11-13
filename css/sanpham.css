@@ -29,11 +29,16 @@ main.product-page {
 /* ==== Thanh tìm kiếm & lọc ==== */
 /* ==== Thanh tìm kiếm & lọc ==== */
 .search-section {
-  position: absolute; /* Cố định vị trí */
-  top: 100px; /* Cách mép trên 10px */
-  right: 59px; /* Cách mép phải 10px */
-  transform: scale(0.8); /* Thu nhỏ kích thước còn 80% */
-  transform-origin: top right; /* Thu nhỏ từ góc trên bên phải */
+  position: absolute;
+  /* Cố định vị trí */
+  top: 100px;
+  /* Cách mép trên 10px */
+  right: 59px;
+  /* Cách mép phải 10px */
+  transform: scale(0.8);
+  /* Thu nhỏ kích thước còn 80% */
+  transform-origin: top right;
+  /* Thu nhỏ từ góc trên bên phải */
   text-align: right;
   margin: 40px 0;
   padding-top: 50px;
@@ -41,9 +46,12 @@ main.product-page {
 
 .search-form {
   display: flex;
-  justify-content: center; /* Căn giữa toàn bộ form */
-  align-items: center; /* Căn giữa theo chiều dọc */
-  flex-wrap: nowrap; /* Giữ trên cùng 1 hàng */
+  justify-content: center;
+  /* Căn giữa toàn bộ form */
+  align-items: center;
+  /* Căn giữa theo chiều dọc */
+  flex-wrap: nowrap;
+  /* Giữ trên cùng 1 hàng */
   gap: 15px;
   background: #f9f9f9;
   padding: 15px 25px;
@@ -87,6 +95,7 @@ main.product-page {
   border: none;
   font-weight: 500;
 }
+
 .btn-search:hover {
   background: #e95b00;
 }
@@ -186,26 +195,77 @@ main.product-page {
 .buy-btn:hover {
   background: #e05500;
 }
+
 /* Styling for the select box */
 .category-select,
 .price-select {
-  display: inline-block; /* Allows setting padding, border, etc. */
-  padding: 10px 14px; /* Same padding as the select boxes */
-  border: 1px solid #ccc; /* Default light grey border */
-  border-radius: 8px; /* Rounded corners */
-  font-size: 15px; /* Same font size */
-  color: #333; /* Default text color */
-  text-decoration: none; /* Remove underline */
-  background-color: #fff; /* White background */
+  display: inline-block;
+  /* Allows setting padding, border, etc. */
+  padding: 10px 14px;
+  /* Same padding as the select boxes */
+  border: 1px solid #ccc;
+  /* Default light grey border */
+  border-radius: 8px;
+  /* Rounded corners */
+  font-size: 15px;
+  /* Same font size */
+  color: #333;
+  /* Default text color */
+  text-decoration: none;
+  /* Remove underline */
+  background-color: #fff;
+  /* White background */
   cursor: pointer;
   margin-right: 10px;
-  min-width: 170px; /* Space between sorting options */
+  min-width: 170px;
+  /* Space between sorting options */
   /* Add transition for smooth hover effects */
   transition: 0.2s;
 }
+
 .category-select:focus,
 .price-select:focus .category-select:hover,
 .price-select:hover {
   border-color: #ff6600;
   box-shadow: 0 0 5px rgba(255, 102, 0, 0.3);
+}
+
+.fake-select {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.selected {
+  background: #fff3e0;
+  border: 1px solid #ff7b00;
+  padding: 6px 10px;
+  border-radius: 5px;
+  color: #333;
+}
+
+.options {
+  display: none;
+  position: absolute;
+  background: #fff;
+  border: 1px solid #ff7b00;
+  border-radius: 5px;
+  margin-top: 2px;
+  width: 150px;
+}
+
+.fake-select:hover .options {
+  display: block;
+}
+
+.options a {
+  display: block;
+  padding: 8px;
+  color: #333;
+  text-decoration: none;
+}
+
+.options a:hover {
+  background: #ffecd0;
 }
