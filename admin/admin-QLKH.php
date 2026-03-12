@@ -19,15 +19,15 @@
             </div>
 
             <ul class="sidebar-menu">
-                <li><a href="admin-TongQuan.html"><i class="fas fa-home"></i>Tổng Quan</a></li>
-                <li><a href="admin-QLSP.html"><i class="fas fa-box"></i>Sản phẩm</a></li>
-                <li><a href="admin-QLPhieuNH.html"><i class="fas fa-receipt"></i>Nhập Hàng</a></li>
-                <li><a href="admin-QLKH.html" class="active"><i class="fas fa-users"></i>Khách hàng</a></li>
-                <li><a href="admin-QLGia.html"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
-                <li><a href="admin-QLDonHang.html"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
-                <li><a href="admin-QLKho.html"><i class="fas fa-warehouse"></i>Tồn kho</a></li>
-                <li><a href="../user/trangchu.html"><i class="fas fa-house-user"></i>Trang Chủ</a></li>
-                <li><a href="admin-DangNhap.html"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
+                <li><a href="admin-TongQuan.php"><i class="fas fa-home"></i>Tổng Quan</a></li>
+                <li><a href="admin-QLSP.php"><i class="fas fa-box"></i>Sản phẩm</a></li>
+                <li><a href="admin-QLPhieuNH.php"><i class="fas fa-receipt"></i>Nhập Hàng</a></li>
+                <li><a href="admin-QLKH.php" class="active"><i class="fas fa-users"></i>Khách hàng</a></li>
+                <li><a href="admin-QLGia.php"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
+                <li><a href="admin-QLDonHang.php"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
+                <li><a href="admin-QLKho.php"><i class="fas fa-warehouse"></i>Tồn kho</a></li>
+                <li><a href="../user/trangchu.php"><i class="fas fa-house-user"></i>Trang Chủ</a></li>
+                <li><a href="admin-DangNhap.php"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
             </ul>
         </aside>
 

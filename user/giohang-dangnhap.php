@@ -15,13 +15,13 @@
   <!-- HEADER -->
   <header>
     <div class="logo">
-      <a href="trangchu-dangnhap.html">
+      <a href="trangchu-dangnhap.php">
         <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
         Sylphia Shop
       </a>
     </div>
     <div class="icons">
-      <form action="sanphamip.html" method="get">
+      <form action="sanphamip.php" method="get">
         <span class="search-icon">
           <!-- SVG kính lúp -->
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
@@ -44,12 +44,12 @@
     </div>
 
     <nav>
-      <a href="trangchu-dangnhap.html">Trang Chủ</a>
-      <a href="sanpham-dangnhap.html">Sản Phẩm</a>
+      <a href="trangchu-dangnhap.php">Trang Chủ</a>
+      <a href="sanpham-dangnhap.php">Sản Phẩm</a>
       <a href="#lienhe">Liên Hệ</a>
-      <a href="giohang-dangnhap.html">Giỏ Hàng</a>
-      <a href="trangcanhan.html">Thông Tin Cá Nhân</a>
-      <a href="trangchu.html">Đăng Xuất</a>
+      <a href="giohang-dangnhap.php">Giỏ Hàng</a>
+      <a href="trangcanhan.php">Thông Tin Cá Nhân</a>
+      <a href="trangchu.php">Đăng Xuất</a>
     </nav>
   </header>
   <div class="page-wrapper">
@@ -112,8 +112,8 @@
           <strong>Tổng cộng:</strong>
           <span class="total-price">60.140.000đ</span>
         </p>
-        <a href="sanpham-dangnhap.html" class="checkout-btn">Mua Sắm Tiếp</a>
-        <a href="thanhtoan.html" class="checkout-btn">Thanh Toán</a>
+        <a href="sanpham-dangnhap.php" class="checkout-btn">Mua Sắm Tiếp</a>
+        <a href="thanhtoan.php" class="checkout-btn">Thanh Toán</a>
       </div>
     </main>
   </div>

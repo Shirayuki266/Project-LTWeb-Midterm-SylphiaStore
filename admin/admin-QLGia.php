@@ -19,29 +19,29 @@
       </div>
       <ul class="sidebar-menu">
         <li>
-          <a href="admin-TongQuan.html"><i class="fas fa-home"></i>Tổng Quan</a>
+          <a href="admin-TongQuan.php"><i class="fas fa-home"></i>Tổng Quan</a>
         </li>
         <li>
-          <a href="admin-QLSP.html"><i class="fas fa-box"></i>Sản phẩm</a>
+          <a href="admin-QLSP.php"><i class="fas fa-box"></i>Sản phẩm</a>
         </li>
         <li>
-          <a href="admin-QLPhieuNH.html"><i class="fas fa-receipt"></i>Nhập Hàng</a>
+          <a href="admin-QLPhieuNH.php"><i class="fas fa-receipt"></i>Nhập Hàng</a>
         </li>
         <li>
-          <a href="admin-QLKH.html"><i class="fas fa-users"></i>Khách hàng</a>
+          <a href="admin-QLKH.php"><i class="fas fa-users"></i>Khách hàng</a>
         </li>
         <li>
-          <a href="admin-QLGia.html" class="active"><i class="fas fa-tags"></i>Quản lý giá bán</a>
+          <a href="admin-QLGia.php" class="active"><i class="fas fa-tags"></i>Quản lý giá bán</a>
         </li>
         <li>
-          <a href="admin-QLDonHang.html"><i class="fas fa-shopping-cart"></i>Đơn hàng</a>
+          <a href="admin-QLDonHang.php"><i class="fas fa-shopping-cart"></i>Đơn hàng</a>
         </li>
         <li>
-          <a href="admin-QLKho.html"><i class="fas fa-warehouse"></i>Tồn kho</a>
+          <a href="admin-QLKho.php"><i class="fas fa-warehouse"></i>Tồn kho</a>
         </li>
-        <li><a href="../user/trangchu.html"><i class="fas fa-house-user"></i>Trang Chủ</a></li>
+        <li><a href="../user/trangchu.php"><i class="fas fa-house-user"></i>Trang Chủ</a></li>
         <li>
-          <a href="admin-DangNhap.html"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a>
+          <a href="admin-DangNhap.php"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a>
         </li>
       </ul>
     </aside>
@@ -85,7 +85,7 @@
           <h2>Tỉ lệ Phần Trăm lợi nhuận theo loại sản phẩm</h2>
           <div class="manage-form">
             <input type="text" placeholder="Tìm kiếm loại sản phẩm..." id="searchProductType" />
-            <a href="admin-phieu-gia.html" class="btn">
+            <a href="admin-phieu-gia.php" class="btn">
               <i class="fas fa-plus"></i> Thêm
             </a>
             <button type="button" class="btn"><i class="fas fa-search"></i> Tìm Kiếm</button>
@@ -104,7 +104,7 @@
                 <td>Điện thoại</td>
                 <td class="profit-percent">10%</td>
                 <td>
-                  <a href="admin-SuaPhieu-gia.html" class="btn">
+                  <a href="admin-SuaPhieu-gia.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -113,7 +113,7 @@
                 <td>Laptop</td>
                 <td class="profit-percent">12%</td>
                 <td>
-                  <a href="admin-SuaPhieu-gia.html" class="btn">
+                  <a href="admin-SuaPhieu-gia.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -122,7 +122,7 @@
                 <td>Bàn Phím</td>
                 <td class="profit-percent">15%</td>
                 <td>
-                  <a href="admin-SuaPhieu-gia.html" class="btn">
+                  <a href="admin-SuaPhieu-gia.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -131,7 +131,7 @@
                 <td>Chuột</td>
                 <td class="profit-percent">13%</td>
                 <td>
-                  <a href="admin-SuaPhieu-gia.html" class="btn">
+                  <a href="admin-SuaPhieu-gia.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -157,7 +157,7 @@
           <div class="manage-form">
             <input type="text" placeholder="Tìm kiếm sản phẩm..." id="searchProduct" />
 
-            <a href="admin-phieu-giasp.html" class="btn">
+            <a href="admin-phieu-giasp.php" class="btn">
               <i class="fas fa-plus"></i> Thêm
             </a>
             <button type="button" class="btn"><i class="fas fa-search"></i> Tìm Kiếm</button>
@@ -181,7 +181,7 @@
                 <td class="selling-price">33,000,000</td>
                 <td class="profit-amount">3,000,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -193,7 +193,7 @@
                 <td class="selling-price">27,500,000</td>
                 <td class="profit-amount">2,500,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -205,7 +205,7 @@
                 <td class="selling-price">50,400,000</td>
                 <td class="profit-amount">5,400,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -217,7 +217,7 @@
                 <td class="selling-price">34,160,000</td>
                 <td class="profit-amount">3,660,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -229,7 +229,7 @@
                 <td class="selling-price">30,800,000</td>
                 <td class="profit-amount">3,300,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -241,7 +241,7 @@
                 <td class="selling-price">43,680,000</td>
                 <td class="profit-amount">4,680,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -253,7 +253,7 @@
                 <td class="selling-price">1,725,000</td>
                 <td class="profit-amount">225,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -265,7 +265,7 @@
                 <td class="selling-price">1,380,000</td>
                 <td class="profit-amount">180,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -277,7 +277,7 @@
                 <td class="selling-price">1,073,500</td>
                 <td class="profit-amount">123,500</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -289,7 +289,7 @@
                 <td class="selling-price">1,356,000</td>
                 <td class="profit-amount">156,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -301,7 +301,7 @@
                 <td class="selling-price">31,360,000</td>
                 <td class="profit-amount">3,360,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -313,7 +313,7 @@
                 <td class="selling-price">22,400,000</td>
                 <td class="profit-amount">2,400,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -325,7 +325,7 @@
                 <td class="selling-price">31,350,000</td>
                 <td class="profit-amount">2,850,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -337,7 +337,7 @@
                 <td class="selling-price">47,040,000</td>
                 <td class="profit-amount">5,040,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -349,7 +349,7 @@
                 <td class="selling-price">1,610,000</td>
                 <td class="profit-amount">210,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -361,7 +361,7 @@
                 <td class="selling-price">39,200,000</td>
                 <td class="profit-amount">4,200,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -373,7 +373,7 @@
                 <td class="selling-price">35,840,000</td>
                 <td class="profit-amount">3,840,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -385,7 +385,7 @@
                 <td class="selling-price">32,480,000</td>
                 <td class="profit-amount">3,480,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -397,7 +397,7 @@
                 <td class="selling-price">791,000</td>
                 <td class="profit-amount">91,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -409,7 +409,7 @@
                 <td class="selling-price">1,921,000</td>
                 <td class="profit-amount">221,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>
@@ -421,7 +421,7 @@
                 <td class="selling-price">23,520,000</td>
                 <td class="profit-amount">2,520,000</td>
                 <td>
-                  <a href="admin-SuaPhieu-giasp.html" class="btn">
+                  <a href="admin-SuaPhieu-giasp.php" class="btn">
                     <i class="fas fa-edit"></i> Sửa
                   </a>
                 </td>

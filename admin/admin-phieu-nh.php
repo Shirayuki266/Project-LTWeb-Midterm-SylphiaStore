@@ -13,7 +13,7 @@
 <body>
     <header class="main-header">
         <div class="logo">
-            <a href="admin-TongQuan.html">
+            <a href="admin-TongQuan.php">
                 <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
                 <span class="shop-name">Sylphia Shop</span>
             </a>
@@ -81,7 +81,7 @@
             </div>
             <hr class="divider" />
             <div class="form-actions">
-                <a href="admin-QLPhieuNH.html" class="btn-add">
+                <a href="admin-QLPhieuNH.php" class="btn-add">
                     <i class="fas fa-check"></i> Xong
                 </a>
             </div>

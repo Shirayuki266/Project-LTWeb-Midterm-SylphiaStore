@@ -14,14 +14,14 @@
 <body>
   <header>
     <div class="logo">
-      <a href="trangchu-dangnhap.html" class="logo">
+      <a href="trangchu-dangnhap.php" class="logo">
         <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
         Sylphia Shop
       </a>
     </div>
 
     <div class="icons">
-      <form action="sanphamip.html" method="get">
+      <form action="sanphamip.php" method="get">
         <span class="search-icon">
           <!-- SVG kính lúp -->
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
@@ -44,12 +44,12 @@
     </div>
 
     <nav>
-      <a href="trangchu-dangnhap.html">Trang Chủ</a>
-      <a href="sanpham-dangnhap.html">Sản Phẩm</a>
+      <a href="trangchu-dangnhap.php">Trang Chủ</a>
+      <a href="sanpham-dangnhap.php">Sản Phẩm</a>
       <a href="#lienhe">Liên Hệ</a>
-      <a href="giohang-dangnhap.html">Giỏ Hàng</a>
-      <a href="trangcanhan.html">Thông Tin Cá Nhân</a>
-      <a href="trangchu.html">Đăng Xuất</a>
+      <a href="giohang-dangnhap.php">Giỏ Hàng</a>
+      <a href="trangcanhan.php">Thông Tin Cá Nhân</a>
+      <a href="trangchu.php">Đăng Xuất</a>
     </nav>
   </header>
   <div class="main-wrapper">
@@ -83,7 +83,7 @@
       </div>
 
       <div class="order-card-footer">
-        <a href="donhangdat.html" class="action-button view-detail">XEM CHI TIẾT</a>
+        <a href="donhangdat.php" class="action-button view-detail">XEM CHI TIẾT</a>
         <span class="total-label">Tổng tiền:</span>
         <span class="total-amount">8.250.000đ</span>
         <a href="#" class="action-button primary">Đánh Giá</a>
@@ -119,7 +119,7 @@
       </div>
 
       <div class="order-card-footer">
-        <a href="donhangdat.html" class="action-button view-detail">XEM CHI TIẾT</a>
+        <a href="donhangdat.php" class="action-button view-detail">XEM CHI TIẾT</a>
         <span class="total-label">Tổng tiền:</span>
         <span class="total-amount">29.250.000đ</span>
         <a href="#" class="action-button">Hủy Đơn Hàng</a>

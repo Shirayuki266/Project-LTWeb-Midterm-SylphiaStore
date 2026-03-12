@@ -19,14 +19,14 @@
   <!-- Header -->
   <header>
     <div class="logo">
-      <a href="trangchu.html" class="logo">
+      <a href="trangchu.php" class="logo">
         <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
         Sylphia Shop
       </a>
     </div>
 
     <div class="icons">
-      <form action="sanphamip-chuadangnhap.html" method="get">
+      <form action="sanphamip-chuadangnhap.php" method="get">
         <span class="search-icon">
           <!-- SVG kính lúp -->
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
@@ -49,12 +49,12 @@
     </div>
 
     <nav>
-      <a href="trangchu.html">Trang Chủ</a>
-      <a href="sanpham.html">Sản Phẩm</a>
+      <a href="trangchu.php">Trang Chủ</a>
+      <a href="sanpham.php">Sản Phẩm</a>
       <a href="#lienhe">Liên Hệ</a>
-      <a href="dangnhap.html">Giỏ Hàng</a>
-      <a href="dangnhap.html">Đăng nhập</a>
-      <a href="dangky.html">Đăng Ký</a>
+      <a href="dangnhap.php">Giỏ Hàng</a>
+      <a href="dangnhap.php">Đăng nhập</a>
+      <a href="dangky.php">Đăng Ký</a>
     </nav>
   </header>
 
@@ -69,9 +69,9 @@
         <div class="fake-select">
           <div class="selected">Chọn phân loại ▾</div>
           <div class="options">
-            <a href="sanphamip-chuadangnhap.html">Điện thoại</a>
-            <a href="sanpham-laptopchdangnhap.html">Laptop</a>
-            <a href="sanphamphukien-chuadangnhap.html">Phụ kiện</a>
+            <a href="sanphamip-chuadangnhap.php">Điện thoại</a>
+            <a href="sanpham-laptopchdangnhap.php">Laptop</a>
+            <a href="sanphamphukien-chuadangnhap.php">Phụ kiện</a>
           </div>
         </div>
 
@@ -90,9 +90,9 @@
         </div>
 
         <label for="sort-select">Sắp xếp:</label>
-        <a href="../user/sanphamip-chuadangnhap.html" class="price-select">Mặc định</a>
-        <a href="../user/sanphamipthap-chuadangnhap.html" class="price-select">Giá tăng dần</a>
-        <a href="../user/sanphamipcao-chuadangnhap.html" class="price-select">Giá giảm dần</a>
+        <a href="../user/sanphamip-chuadangnhap.php" class="price-select">Mặc định</a>
+        <a href="../user/sanphamipthap-chuadangnhap.php" class="price-select">Giá tăng dần</a>
+        <a href="../user/sanphamipcao-chuadangnhap.php" class="price-select">Giá giảm dần</a>
         <!-- Nút tìm kiếm -->
         <button type="" class="btn-search">Tìm kiếm</button>
       </form>
@@ -103,61 +103,61 @@
         <img src="../images/ban-phim-gaming.jpg" alt="Bàn phím gaming" />
         <h3>Bàn phím gaming</h3>
         <p class="price">1.560.000đ</p>
-        <a href="chitietsanpham.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php" class="buy-btn">Xem chi tiết</a>
       </div>
       <div class="product-card">
         <img src="../images/tainghe.webp" alt="Tai nghe Bluetooth chụp tai Marshall Major 5" />
         <h3>Tai nghe Bluetooth chụp tai Marshall Major 5</h3>
         <p class="price">4.220.000đ</p>
-        <a href="chitietsanpham.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php" class="buy-btn">Xem chi tiết</a>
       </div>
       <div class="product-card">
         <img src="../images/taingheapple.webp" alt="Tai nghe Bluetooth Apple AirPods Pro 3 2025 Type-C" />
         <h3>Tai nghe Bluetooth Apple AirPods Pro 3 2025 Type-C</h3>
         <p class="price">6.790.000đ</p>
-        <a href="chitietsanpham.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php" class="buy-btn">Xem chi tiết</a>
       </div>
       <div class="product-card">
         <img src="../images/tainghebluetooth.webp" alt="Tai nghe bluetooth" />
         <h3>Tai nghe Bluetooth True Wireless JBL Live Pro 2</h3>
         <p class="price">2.150.000đ</p>
-        <a href="chitietsanpham.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php" class="buy-btn">Xem chi tiết</a>
       </div>
       <div class="product-card">
         <img src="../images/tainghegamingsony.png" alt="Tai nghe không dây Gaming Sony INZONE Buds" />
         <h3>Tai nghe không dây Gaming Sony INZONE Buds</h3>
         <p class="price">3.650.000đ</p>
-        <a href="chitietsanpham.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php" class="buy-btn">Xem chi tiết</a>
       </div>
       <div class="product-card">
         <img src="../images/banphimco.webp" alt="Bàn phím cơ không dây AULA F75 trắng xanh dương gradient" />
         <h3>Bàn phím cơ không dây AULA F75 trắng xanh dương gradient</h3>
         <p class="price">1.490.000đ</p>
-        <a href="chitietsanpham.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php" class="buy-btn">Xem chi tiết</a>
       </div>
       <div class="product-card">
         <img src="../images/sacnhanh20w.webp" alt="Sạc nhanh Apple 20w USB-C chính hãng Apple Việt Nam" />
         <h3>Sạc nhanh Apple 20w USB-C chính hãng Apple Việt Nam</h3>
         <p class="price">520.000đ</p>
-        <a href="chitietsanpham.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php" class="buy-btn">Xem chi tiết</a>
       </div>
       <div class="product-card">
         <img src="../images/desackhongday.webp" alt="Đế sạc không dây Aukey Magfushion 1X LC-MC111 Qi2.2 25W" />
         <h3>Đế sạc không dây Aukey Magfushion 1X LC-MC111 Qi2.2 25W</h3>
         <p class="price">890.000đ</p>
-        <a href="chitietsanpham.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php" class="buy-btn">Xem chi tiết</a>
       </div>
       <div class="product-card">
         <img src="../images/flycam.webp" alt="Flycam DJI Mini 2 SE" />
         <h3>Flycam DJI Mini 2 SE</h3>
         <p class="price">7.425.000đ</p>
-        <a href="chitietsanpham.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php" class="buy-btn">Xem chi tiết</a>
       </div>
       <div class="product-card">
         <img src="../images/chuotkhongday.webp" alt="Chuột không dây Logitech MX Master 2S" />
         <h3>Chuột không dây Logitech MX Master 2S</h3>
         <p class="price">1.390.000đ</p>
-        <a href="chitietsanpham.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
 

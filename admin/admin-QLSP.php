@@ -19,15 +19,15 @@
             </div>
 
             <ul class="sidebar-menu">
-                <li><a href="admin-TongQuan.html"><i class="fas fa-home"></i>Tổng Quan</a></li>
-                <li><a href="admin-QLSP.html" class="active"><i class="fas fa-box"></i>Sản phẩm</a></li>
-                <li><a href="admin-QLPhieuNH.html"><i class="fas fa-receipt"></i>Nhập Hàng</a></li>
-                <li><a href="admin-QLKH.html"><i class="fas fa-users"></i>Khách hàng</a></li>
-                <li><a href="admin-QLGia.html"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
-                <li><a href="admin-QLDonHang.html"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
-                <li><a href="admin-QLKho.html"><i class="fas fa-warehouse"></i>Tồn kho</a></li>
-                <li><a href="../user/trangchu.html"><i class="fas fa-house-user"></i>Trang Chủ</a></li>
-                <li><a href="admin-DangNhap.html"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
+                <li><a href="admin-TongQuan.php"><i class="fas fa-home"></i>Tổng Quan</a></li>
+                <li><a href="admin-QLSP.php" class="active"><i class="fas fa-box"></i>Sản phẩm</a></li>
+                <li><a href="admin-QLPhieuNH.php"><i class="fas fa-receipt"></i>Nhập Hàng</a></li>
+                <li><a href="admin-QLKH.php"><i class="fas fa-users"></i>Khách hàng</a></li>
+                <li><a href="admin-QLGia.php"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
+                <li><a href="admin-QLDonHang.php"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
+                <li><a href="admin-QLKho.php"><i class="fas fa-warehouse"></i>Tồn kho</a></li>
+                <li><a href="../user/trangchu.php"><i class="fas fa-house-user"></i>Trang Chủ</a></li>
+                <li><a href="admin-DangNhap.php"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
             </ul>
         </aside>
 
@@ -72,7 +72,7 @@
                         <input type="text" placeholder="Mã loại" required />
                         <input type="text" placeholder="Tên loại" required />
 
-                        <a href="admin-phieu-loaisp.html">
+                        <a href="admin-phieu-loaisp.php">
                             <i class="fas fa-plus"></i>Thêm
                         </a>
                         <a href="#">
@@ -93,7 +93,7 @@
                                 <td>L01</td>
                                 <td>Điện thoại</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-loaisp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-loaisp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn info-sp">
@@ -105,7 +105,7 @@
                                 <td>L02</td>
                                 <td>Laptop</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-loaisp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-loaisp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn info-sp">
@@ -117,7 +117,7 @@
                                 <td>L03</td>
                                 <td>Bàn Phím</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-loaisp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-loaisp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn info-sp">
@@ -129,7 +129,7 @@
                                 <td>L04</td>
                                 <td>Thẻ Cào/Sim</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-loaisp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-loaisp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn info-sp">
@@ -141,7 +141,7 @@
                                 <td>L05</td>
                                 <td>Chuột</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-loaisp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-loaisp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn info-sp">
@@ -169,7 +169,7 @@
                         <input type="text" placeholder="Tên sản phẩm" required />
                         <input type="text" placeholder="Mô Tả sản phẩm" required />
                         <input type="text" placeholder="Giá" required />
-                        <a href="admin-phieu-sp.html" class="btn-add">
+                        <a href="admin-phieu-sp.php" class="btn-add">
                             <i class="fas fa-plus"></i> Thêm
                         </a>
                         <button type="submit" class="btn"><i class="fas fa-search"></i> Tìm Kiếm</button>
@@ -193,7 +193,7 @@
                                 <td>39.000.000₫</td>
                                 <td>Điện thoại</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -208,7 +208,7 @@
                                 <td>31.000.000₫</td>
                                 <td>Điện thoại</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -223,7 +223,7 @@
                                 <td>45.000.000₫</td>
                                 <td>Laptop</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -237,7 +237,7 @@
                                 <td>30.500.000₫</td>
                                 <td>Laptop</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -251,7 +251,7 @@
                                 <td>20.000.000₫</td>
                                 <td>Laptop</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -265,7 +265,7 @@
                                 <td>28.000.000₫</td>
                                 <td>Laptop</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -279,7 +279,7 @@
                                 <td>27.500.000₫</td>
                                 <td>Laptop</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -293,7 +293,7 @@
                                 <td>39.000.000₫</td>
                                 <td>Laptop</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -308,7 +308,7 @@
                                 <td>1.500.000₫</td>
                                 <td>Bàn Phím</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -322,7 +322,7 @@
                                 <td>1.200.000₫</td>
                                 <td>Bàn Phím</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -337,7 +337,7 @@
                                 <td>950.000₫</td>
                                 <td>Chuột</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -351,7 +351,7 @@
                                 <td>1.200.000₫</td>
                                 <td>Chuột</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -365,7 +365,7 @@
                                 <td>700.000₫</td>
                                 <td>Chuột</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -379,7 +379,7 @@
                                 <td>1.700.000₫</td>
                                 <td>Chuột</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -394,7 +394,7 @@
                                 <td>35.000.000₫</td>
                                 <td>Laptop</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -408,7 +408,7 @@
                                 <td>42.000.000₫</td>
                                 <td>Laptop</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -422,7 +422,7 @@
                                 <td>28.500.000₫</td>
                                 <td>Điện thoại</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -436,7 +436,7 @@
                                 <td>32.000.000₫</td>
                                 <td>Laptop</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -450,7 +450,7 @@
                                 <td>1.400.000₫</td>
                                 <td>Bàn Phím</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">
@@ -464,7 +464,7 @@
                                 <td>21.000.000₫</td>
                                 <td>Laptop</td>
                                 <td>
-                                    <a href="admin-SuaPhieu-sp.html" class="btn info-sp">
+                                    <a href="admin-SuaPhieu-sp.php" class="btn info-sp">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn lock-sp">

@@ -19,15 +19,15 @@
         Sylphia Shop
       </div>
       <ul class="sidebar-menu">
-        <li><a href="admin-TongQuan.html"><i class="fas fa-home"></i>Tổng Quan</a></li>
-        <li><a href="admin-QLSP.html"><i class="fas fa-box"></i>Sản phẩm</a></li>
-        <li><a href="admin-QLPhieuNH.html"><i class="fas fa-receipt"></i>Nhập Hàng</a></li>
-        <li><a href="admin-QLKH.html"><i class="fas fa-users"></i>Khách hàng</a></li>
-        <li><a href="admin-QLGia.html"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
-        <li><a href="admin-QLDonHang.html" class="active"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
-        <li><a href="admin-QLKho.html"><i class="fas fa-warehouse"></i>Tồn kho</a></li>
-        <li><a href="../user/trangchu.html"><i class="fas fa-house-user"></i>Trang Chủ</a></li>
-        <li><a href="admin-DangNhap.html"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
+        <li><a href="admin-TongQuan.php"><i class="fas fa-home"></i>Tổng Quan</a></li>
+        <li><a href="admin-QLSP.php"><i class="fas fa-box"></i>Sản phẩm</a></li>
+        <li><a href="admin-QLPhieuNH.php"><i class="fas fa-receipt"></i>Nhập Hàng</a></li>
+        <li><a href="admin-QLKH.php"><i class="fas fa-users"></i>Khách hàng</a></li>
+        <li><a href="admin-QLGia.php"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
+        <li><a href="admin-QLDonHang.php" class="active"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
+        <li><a href="admin-QLKho.php"><i class="fas fa-warehouse"></i>Tồn kho</a></li>
+        <li><a href="../user/trangchu.php"><i class="fas fa-house-user"></i>Trang Chủ</a></li>
+        <li><a href="admin-DangNhap.php"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
       </ul>
     </aside>
 
@@ -564,7 +564,7 @@
     <div class="modal-box">
       <label for="update1" class="close"><i class="fas fa-times"></i></label>
       <h2>Cập nhật đơn #1001</h2>
-      <form action="admin-QLDonHang.html">
+      <form action="admin-QLDonHang.php">
         <p>Chọn tình trạng mới:</p>
         <select>
           <option>Mới đặt</option>
@@ -582,7 +582,7 @@
     <div class="modal-box">
       <label for="update4" class="close"><i class="fas fa-times"></i></label>
       <h2>Cập nhật đơn #1004</h2>
-      <form action="admin-QLDonHang.html">
+      <form action="admin-QLDonHang.php">
         <p>Chọn tình trạng mới:</p>
         <select>
           <option>Mới đặt</option>
@@ -600,7 +600,7 @@
     <div class="modal-box">
       <label for="update5" class="close"><i class="fas fa-times"></i></label>
       <h2>Cập nhật đơn #1005</h2>
-      <form action="admin-QLDonHang.html">
+      <form action="admin-QLDonHang.php">
         <p>Chọn tình trạng mới:</p>
         <select>
           <option>Mới đặt</option>
@@ -618,7 +618,7 @@
     <div class="modal-box">
       <label for="update8" class="close"><i class="fas fa-times"></i></label>
       <h2>Cập nhật đơn #1008</h2>
-      <form action="admin-QLDonHang.html">
+      <form action="admin-QLDonHang.php">
         <p>Chọn tình trạng mới:</p>
         <select>
           <option>Mới đặt</option>
@@ -637,7 +637,7 @@
     <div class="modal-box">
       <label for="update10" class="close"><i class="fas fa-times"></i></label>
       <h2>Cập nhật đơn #1010</h2>
-      <form action="admin-QLDonHang.html">
+      <form action="admin-QLDonHang.php">
         <p>Chọn tình trạng mới:</p>
         <select>
           <option>Mới đặt</option>
@@ -656,7 +656,7 @@
     <div class="modal-box">
       <label for="update12" class="close"><i class="fas fa-times"></i></label>
       <h2>Cập nhật đơn #1012</h2>
-      <form action="admin-QLDonHang.html">
+      <form action="admin-QLDonHang.php">
         <p>Chọn tình trạng mới:</p>
         <select>
           <option>Mới đặt</option>
@@ -675,7 +675,7 @@
     <div class="modal-box">
       <label for="update14" class="close"><i class="fas fa-times"></i></label>
       <h2>Cập nhật đơn #1014</h2>
-      <form action="admin-QLDonHang.html">
+      <form action="admin-QLDonHang.php">
         <p>Chọn tình trạng mới:</p>
         <select>
           <option>Mới đặt</option>

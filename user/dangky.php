@@ -15,15 +15,15 @@
   <!-- Header giữ phong cách trang chủ -->
   <header>
     <div class="logo">
-      <a href="trangchu.html">
+      <a href="trangchu.php">
         <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
         Sylphia Shop
       </a>
     </div>
     <nav>
-      <a href="trangchu.html">Trang Chủ</a>
+      <a href="trangchu.php">Trang Chủ</a>
       <a href="#">Liên Hệ</a>
-      <a href="dangnhap.html">Đăng nhập</a>
+      <a href="dangnhap.php">Đăng nhập</a>
     </nav>
   </header>
 
@@ -53,8 +53,8 @@
       </div>
 
       <div class="button-group">
-        <a href="../user/dangnhap.html" class="btn secondary">Quay lại đăng nhập</a>
-        <a href="../user/trangchu-dangnhap.html" class="btn primary">
+        <a href="../user/dangnhap.php" class="btn secondary">Quay lại đăng nhập</a>
+        <a href="../user/trangchu-dangnhap.php" class="btn primary">
           Hoàn tất đăng ký
         </a>
       </div>
@@ -92,7 +92,7 @@
     okBtn.addEventListener("click", () => {
       popup.classList.remove("show");
       setTimeout(() => {
-        window.location.href = "../user/trangchu-dangnhap.html";
+        window.location.href = "../user/trangchu-dangnhap.php";
       }, 300);
     });
 

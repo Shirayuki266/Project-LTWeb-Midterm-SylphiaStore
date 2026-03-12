@@ -67,13 +67,13 @@
     function login(event) {
       event.preventDefault();
       alert("Đăng nhập thành công!");
-      window.location.href = "admin-TongQuan.html";
+      window.location.href = "admin-TongQuan.php";
       return false;
     }
 
     function socialLogin(platform) {
       alert(`Đăng nhập bằng ${platform} (Thành công!)`);
-      window.location.href = "admin-TongQuan.html";
+      window.location.href = "admin-TongQuan.php";
     }
   </script>
 

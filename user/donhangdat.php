@@ -16,14 +16,14 @@
   <!--Header-->
   <header>
     <div class="logo">
-      <a href="trangchu-dangnhap.html" class="logo">
+      <a href="trangchu-dangnhap.php" class="logo">
         <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
         Sylphia Shop
       </a>
     </div>
 
     <div class="icons">
-      <form action="sanphamip.html" method="get">
+      <form action="sanphamip.php" method="get">
         <span class="search-icon">
           <!-- SVG kính lúp -->
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
@@ -47,12 +47,12 @@
 
 
     <nav>
-      <a href="trangchu.html">Trang Chủ</a>
-      <a href="sanpham.html">Sản Phẩm</a>
+      <a href="trangchu.php">Trang Chủ</a>
+      <a href="sanpham.php">Sản Phẩm</a>
       <a href="#lienhe">Liên Hệ</a>
-      <a href="giohang-dangnhap.html">Giỏ Hàng</a>
-      <a href="trangcanhan.html">Thông Tin Cá Nhân</a>
-      <a href="trangchu.html">Đăng Xuất</a>
+      <a href="giohang-dangnhap.php">Giỏ Hàng</a>
+      <a href="trangcanhan.php">Thông Tin Cá Nhân</a>
+      <a href="trangchu.php">Đăng Xuất</a>
     </nav>
   </header>
 
@@ -122,7 +122,7 @@
       <a href="#" class="action-button">Yêu Cầu Trả Hàng / Hoàn Tiền</a>
     </div>
 
-    <a href="trangchu-dangnhap.html" class="back-to-home-button">
+    <a href="trangchu-dangnhap.php" class="back-to-home-button">
       QUAY LẠI TRANG CHỦ
     </a>
   </div>

@@ -14,14 +14,14 @@
 <body>
   <header>
     <div class="logo">
-      <a href="trangchu-dangnhap.html" class="logo">
+      <a href="trangchu-dangnhap.php" class="logo">
         <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
         Sylphia Shop
       </a>
     </div>
 
     <div class="icons">
-      <form action="sanphamip.html" method="get">
+      <form action="sanphamip.php" method="get">
         <span class="search-icon">
           <!-- SVG kính lúp -->
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
@@ -44,12 +44,12 @@
     </div>
 
     <nav>
-      <a href="trangchu-dangnhap.html">Trang Chủ</a>
-      <a href="sanpham-dangnhap.html">Sản Phẩm</a>
+      <a href="trangchu-dangnhap.php">Trang Chủ</a>
+      <a href="sanpham-dangnhap.php">Sản Phẩm</a>
       <a href="#lienhe">Liên Hệ</a>
-      <a href="giohang-dangnhap.html">Giỏ Hàng</a>
-      <a href="trangcanhan.html">Thông Tin Cá Nhân</a>
-      <a href="dangnhap.html">Đăng Xuất</a>
+      <a href="giohang-dangnhap.php">Giỏ Hàng</a>
+      <a href="trangcanhan.php">Thông Tin Cá Nhân</a>
+      <a href="dangnhap.php">Đăng Xuất</a>
     </nav>
   </header>
 
@@ -240,7 +240,7 @@
               <div class="total-final"><span>Tổng cộng:</span><span>39.525.000đ</span></div>
             </div>
           </div>
-          <a href="donhangdat.html" class="confirm-button">Tiến Hành Đặt Hàng</a>
+          <a href="donhangdat.php" class="confirm-button">Tiến Hành Đặt Hàng</a>
         </div>
       </div>
     </div>

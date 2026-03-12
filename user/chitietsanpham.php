@@ -14,14 +14,14 @@
 <body>
   <header>
     <div class="logo">
-      <a href="trangchu.html" class="logo">
+      <a href="trangchu.php" class="logo">
         <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
         Sylphia Shop
       </a>
     </div>
 
     <div class="icons">
-      <form action="sanphamip-chuadangnhap.html" method="get">
+      <form action="sanphamip-chuadangnhap.php" method="get">
         <span class="search-icon">
           <!-- SVG kính lúp -->
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
@@ -44,12 +44,12 @@
     </div>
 
     <nav>
-      <a href="trangchu.html">Trang Chủ</a>
-      <a href="sanpham.html">Sản Phẩm</a>
+      <a href="trangchu.php">Trang Chủ</a>
+      <a href="sanpham.php">Sản Phẩm</a>
       <a href="#lienhe">Liên Hệ</a>
-      <a href="dangnhap.html">Giỏ Hàng</a>
-      <a href="dangnhap.html">Đăng nhập</a>
-      <a href="dangky.html">Đăng Ký</a>
+      <a href="dangnhap.php">Giỏ Hàng</a>
+      <a href="dangnhap.php">Đăng nhập</a>
+      <a href="dangky.php">Đăng Ký</a>
     </nav>
   </header>
 
@@ -94,8 +94,8 @@
       </ul>
       <div class="actions">
         <input type="number" min="1" value="3" class="quantity-input" />
-        <a href="../user/dangnhap.html" class="buy-btn">Thêm vào giỏ hàng</a>
-        <a href="../user/dangnhap.html" class="buy-btn">Mua Ngay</a>
+        <a href="../user/dangnhap.php" class="buy-btn">Thêm vào giỏ hàng</a>
+        <a href="../user/dangnhap.php" class="buy-btn">Mua Ngay</a>
       </div>
     </div>
   </main>

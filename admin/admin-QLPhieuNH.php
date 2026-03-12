@@ -19,15 +19,15 @@
                 Sylphia Shop
             </div>
             <ul class="sidebar-menu">
-                <li><a href="admin-TongQuan.html"><i class="fas fa-home"></i>Tổng Quan</a></li>
-                <li><a href="admin-QLSP.html"><i class="fas fa-box"></i>Sản phẩm</a></li>
-                <li><a href="admin-QLPhieuNH.html" class="active"><i class="fas fa-receipt"></i>Nhập Hàng</a></li>
-                <li><a href="admin-QLKH.html"><i class="fas fa-users"></i>Khách hàng</a></li>
-                <li><a href="admin-QLGia.html"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
-                <li><a href="admin-QLDonHang.html"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
-                <li><a href="admin-QLKho.html"><i class="fas fa-warehouse"></i>Tồn kho</a></li>
-                <li><a href="../user/trangchu.html"><i class="fas fa-house-user"></i>Trang Chủ</a></li>
-                <li><a href="admin-DangNhap.html"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
+                <li><a href="admin-TongQuan.php"><i class="fas fa-home"></i>Tổng Quan</a></li>
+                <li><a href="admin-QLSP.php"><i class="fas fa-box"></i>Sản phẩm</a></li>
+                <li><a href="admin-QLPhieuNH.php" class="active"><i class="fas fa-receipt"></i>Nhập Hàng</a></li>
+                <li><a href="admin-QLKH.php"><i class="fas fa-users"></i>Khách hàng</a></li>
+                <li><a href="admin-QLGia.php"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
+                <li><a href="admin-QLDonHang.php"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
+                <li><a href="admin-QLKho.php"><i class="fas fa-warehouse"></i>Tồn kho</a></li>
+                <li><a href="../user/trangchu.php"><i class="fas fa-house-user"></i>Trang Chủ</a></li>
+                <li><a href="admin-DangNhap.php"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
             </ul>
         </aside>
 
@@ -87,7 +87,7 @@
                             <label> Đến Ngày nhập:</label>
                             <input type="date" />
                         </div>
-                        <a href="admin-phieu-nh.html" class="btn-add">
+                        <a href="admin-phieu-nh.php" class="btn-add">
                             <i class="fas fa-plus"></i> Thêm
                         </a>
                         <button type="button" class="btn"><i class="fas fa-search"></i> Tìm Kiếm</button>
@@ -140,7 +140,7 @@
                                 <td>20,000,000</td>
                                 <td><span class="status locked">Chưa hoàn thành</span></td>
                                 <td class="action-buttons">
-                                    <a href="admin-SuaPhieu-nh.html" class="btn"><i class="fas fa-edit"></i></a>
+                                    <a href="admin-SuaPhieu-nh.php" class="btn"><i class="fas fa-edit"></i></a>
                                     <a class="btn"><i class="fas fa-check"></i></a>
                                 </td>
                             </tr>
@@ -188,7 +188,7 @@
                                 <td>55,000,000</td>
                                 <td><span class="status locked">Chưa hoàn thành</span></td>
                                 <td class="action-buttons">
-                                    <a href="admin-SuaPhieu-nh.html" class="btn"><i class="fas fa-edit"></i></a>
+                                    <a href="admin-SuaPhieu-nh.php" class="btn"><i class="fas fa-edit"></i></a>
                                     <a class="btn"><i class="fas fa-check"></i></a>
                                 </td>
                             </tr>
@@ -224,7 +224,7 @@
                                 <td>30,000,000</td>
                                 <td><span class="status locked">Chưa hoàn thành</span></td>
                                 <td class="action-buttons">
-                                    <a href="admin-SuaPhieu-nh.html" class="btn"><i class="fas fa-edit"></i></a>
+                                    <a href="admin-SuaPhieu-nh.php" class="btn"><i class="fas fa-edit"></i></a>
                                     <a class="btn"><i class="fas fa-check"></i></a>
                                 </td>
                             </tr>
@@ -260,7 +260,7 @@
                                 <td>5,000,000</td>
                                 <td><span class="status locked">Chưa hoàn thành</span></td>
                                 <td class="action-buttons">
-                                    <a href="admin-SuaPhieu-nh.html" class="btn"><i class="fas fa-edit"></i></a>
+                                    <a href="admin-SuaPhieu-nh.php" class="btn"><i class="fas fa-edit"></i></a>
                                     <a class="btn"><i class="fas fa-check"></i></a>
                                 </td>
                             </tr>

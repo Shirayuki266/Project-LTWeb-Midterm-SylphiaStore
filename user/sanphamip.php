@@ -19,14 +19,14 @@
   <!-- Header -->
   <header>
     <div class="logo">
-      <a href="trangchu-dangnhap.html" class="logo">
+      <a href="trangchu-dangnhap.php" class="logo">
         <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
         Sylphia Shop
       </a>
     </div>
 
     <div class="icons">
-      <form action="sanphamip.html" method="get">
+      <form action="sanphamip.php" method="get">
         <span class="search-icon">
           <!-- SVG kính lúp -->
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
@@ -49,12 +49,12 @@
     </div>
 
     <nav>
-      <a href="trangchu-dangnhap.html">Trang Chủ</a>
-      <a href="sanpham-dangnhap.html">Sản Phẩm</a>
+      <a href="trangchu-dangnhap.php">Trang Chủ</a>
+      <a href="sanpham-dangnhap.php">Sản Phẩm</a>
       <a href="#lienhe">Liên Hệ</a>
-      <a href="giohang-dangnhap.html">Giỏ Hàng</a>
-      <a href="trangcanhan.html">Thông Tin Cá Nhân</a>
-      <a href="trangchu.html">Đăng Xuất</a>
+      <a href="giohang-dangnhap.php">Giỏ Hàng</a>
+      <a href="trangcanhan.php">Thông Tin Cá Nhân</a>
+      <a href="trangchu.php">Đăng Xuất</a>
     </nav>
   </header>
 
@@ -69,9 +69,9 @@
         <div class="fake-select">
           <div class="selected">Chọn phân loại ▾</div>
           <div class="options">
-            <a href="sanphamip.html">Điện thoại</a>
-            <a href="sanphamlaptop.html">Laptop</a>
-            <a href="sanphamphukien.html">Phụ kiện</a>
+            <a href="sanphamip.php">Điện thoại</a>
+            <a href="sanphamlaptop.php">Laptop</a>
+            <a href="sanphamphukien.php">Phụ kiện</a>
           </div>
         </div>
 
@@ -90,9 +90,9 @@
         </div>
 
         <label for="sort-select">Sắp xếp:</label>
-        <a href="../user/sanphamip.html" class="price-select">Mặc định</a>
-        <a href="../user/sanphamipthap.html" class="price-select">Giá tăng dần</a>
-        <a href="../user/sanphamipcao.html" class="price-select">Giá giảm dần</a>
+        <a href="../user/sanphamip.php" class="price-select">Mặc định</a>
+        <a href="../user/sanphamipthap.php" class="price-select">Giá tăng dần</a>
+        <a href="../user/sanphamipcao.php" class="price-select">Giá giảm dần</a>
         <!-- Nút tìm kiếm -->
         <button type="" class="btn-search">Tìm kiếm</button>
       </form>
@@ -106,7 +106,7 @@
           />
           <h3>iPhone 17 Pro Max 1TB</h3>
           <p class="price">46.990.000đ</p>
-          <a href="chitietsanpham-dangnhap.html" class="buy-btn"
+          <a href="chitietsanpham-dangnhap.php" class="buy-btn"
             >Xem chi tiết</a
           >
         </div>
@@ -114,59 +114,59 @@
               <img src="../images/iphone-16-pro-max.webp" alt="IPhone 16 Pro Max" />
               <h3>Iphone 16 Pro Max</h3>
               <p class="price">30.590.000đ</p>
-              <a href="chitietsanpham-dangnhap.html?id=iphone16" class="buy-btn">Xem chi tiết</a>
+              <a href="chitietsanpham-dangnhap.php?id=iphone16" class="buy-btn">Xem chi tiết</a>
             </div>
          <div class="product-card">
               <img src="../images/vivo-v60.jpg" alt="Điện thoại vivo V60 5G" />
               <h3>Điện thoại vivo V60 5G 12GB/512GB</h3>
               <p class="price">16.990.000đ</p>
-              <a href="chitietsanpham-dangnhap.html?id=vivo-v60-5g" class="buy-btn">Xem chi tiết</a>
+              <a href="chitietsanpham-dangnhap.php?id=vivo-v60-5g" class="buy-btn">Xem chi tiết</a>
             </div>
 
             <div class="product-card">
               <img src="../images/samsung-galaxy-z-fold7.jpg" alt="Samsung Galaxy Z Fold7 5G 12GB/256GB" />
               <h3>Samsung Galaxy Z Fold7 5G 12GB/256GB</h3>
               <p class="price">16.990.000đ</p>
-              <a href="chitietsanpham-dangnhap.html?id=samsung-galaxy-z-fold-7-5g" class="buy-btn">Xem chi tiết</a>
+              <a href="chitietsanpham-dangnhap.php?id=samsung-galaxy-z-fold-7-5g" class="buy-btn">Xem chi tiết</a>
             </div>
         <div class="product-card">
               <img src="../images/oppo-find-x8-pro-.jpg" alt="OPPO Find X8 Pro 5G 16GB/512GB" />
               <h3>OPPO Find X8 Pro 5G 16GB/512GB</h3>
               <p class="price">26.450.000đ</p>
-              <a href="chitietsanpham-dangnhap.html?id=OPPO Find X8 Pro 5G 16GB/512GB" class="buy-btn">Xem chi tiết</a>
+              <a href="chitietsanpham-dangnhap.php?id=OPPO Find X8 Pro 5G 16GB/512GB" class="buy-btn">Xem chi tiết</a>
             </div>
 
             <div class="product-card">
               <img src="../images/thumb-flip7-den-jet.webp" alt="Samsung Galaxy Z Flip7 5G 12GB/256GB" />
               <h3>Samsung Galaxy Z Flip7 5G 12GB/256GB</h3>
               <p class="price">25.990.000₫</p>
-              <a href="chitietsanpham-dangnhap.html?id=samsung-galaxy-z-flip-7-5g" class="buy-btn">Xem chi tiết</a>
+              <a href="chitietsanpham-dangnhap.php?id=samsung-galaxy-z-flip-7-5g" class="buy-btn">Xem chi tiết</a>
             </div>
       <div class="product-card">
         <img src="../images/dtsony.webp" alt="Điện thoại Sony Xperia 10VI 8GB 128GB - Đã Kích Hoạt" />
         <h3>Điện thoại Sony Xperia 10VI 8GB 128GB - Đã Kích Hoạt</h3>
         <p class="price">6.690.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/benco.webp" alt="Điện thoại benco S1 Pro 8GB 256GB - Cũ Trầy Xước" />
         <h3>Điện thoại benco S1 Pro 8GB 256GB - Cũ Trầy Xước</h3>
         <p class="price">2.490.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
       <div class="product-card">
         <img src="../images/opporeno12.webp" alt="OPPO Reno12 F 5G 8GB 256GB" />
         <h3>OPPO Reno12 F 5G 8GB 256GB</h3>
         <p class="price">7.120.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/opporeno10.webp" alt="OPPO Reno10 5G 8GB 256GB" />
         <h3>OPPO Reno10 5G 8GB 256GB</h3>
         <p class="price">8.490.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
     </div>
 

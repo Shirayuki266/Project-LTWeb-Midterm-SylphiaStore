@@ -15,14 +15,14 @@
   <!-- Header -->
   <header>
     <div class="logo">
-      <a href="trangchu.html" class="logo">
+      <a href="trangchu.php" class="logo">
         <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
         Sylphia Shop
       </a>
     </div>
 
     <div class="icons">
-      <form action="sanphamip-chuadangnhap.html" method="get">
+      <form action="sanphamip-chuadangnhap.php" method="get">
         <span class="search-icon">
           <!-- SVG kính lúp -->
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
@@ -45,12 +45,12 @@
     </div>
 
     <nav>
-      <a href="trangchu.html">Trang Chủ</a>
-      <a href="sanpham.html">Sản Phẩm</a>
+      <a href="trangchu.php">Trang Chủ</a>
+      <a href="sanpham.php">Sản Phẩm</a>
       <a href="#lienhe">Liên Hệ</a>
-      <a href="dangnhap.html">Giỏ Hàng</a>
-      <a href="dangnhap.html">Đăng nhập</a>
-      <a href="dangky.html">Đăng Ký</a>
+      <a href="dangnhap.php">Giỏ Hàng</a>
+      <a href="dangnhap.php">Đăng nhập</a>
+      <a href="dangky.php">Đăng Ký</a>
     </nav>
   </header>
   <div class="main-content-wrapper">
@@ -67,13 +67,13 @@
     <section id="categories">
       <h2>Danh Mục Nổi Bật</h2>
       <div class="grid">
-        <a href="sanphamip-chuadangnhap.html">
+        <a href="sanphamip-chuadangnhap.php">
           <div class="cat-card">Điện Thoại</div>
         </a>
-        <a href="sanpham-laptopchdangnhap.html">
+        <a href="sanpham-laptopchdangnhap.php">
           <div class="cat-card">Máy Tính</div>
         </a>
-        <a href="sanphamphukien-chuadangnhap.html">
+        <a href="sanphamphukien-chuadangnhap.php">
           <div class="cat-card">Phụ Kiện</div>
         </a>
       </div>
@@ -88,21 +88,21 @@
           <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 17 Pro Max 10" />
           <h3>Iphone 17 Pro Max</h3>
           <p>42.990.000đ</p>
-          <a href="../user/chitietsanpham.html" class="buy-btn">Mua Ngay</a>
+          <a href="../user/chitietsanpham.php" class="buy-btn">Mua Ngay</a>
         </div>
         <!-- Sản phẩm 2 -->
         <div class="product-card">
           <img src="../images/laptop-Asus.png" alt="Laptop Asus" />
           <h3>Laptop Asus</h3>
           <p>22.890.000đ</p>
-          <a href="../user/chitietsanpham.html" class="buy-btn">Mua Ngay</a>
+          <a href="../user/chitietsanpham.php" class="buy-btn">Mua Ngay</a>
         </div>
         <!-- Sản phẩm 3 -->
         <div class="product-card">
           <img src="../images/ban-phim-gaming.jpg" alt="Bàn Phím Gaming Đời Mới" />
           <h3>Bàn Phím Gaming Đời Mới</h3>
           <p>1.560.000đ</p>
-          <a href="../user/chitietsanpham.html" class="buy-btn">Mua Ngay</a>
+          <a href="../user/chitietsanpham.php" class="buy-btn">Mua Ngay</a>
         </div>
       </div>
     </section>

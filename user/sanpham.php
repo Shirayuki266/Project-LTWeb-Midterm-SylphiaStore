@@ -28,14 +28,14 @@
   <!-- Header -->
   <header>
     <div class="logo">
-      <a href="trangchu.html" class="logo">
+      <a href="trangchu.php" class="logo">
         <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
         Sylphia Shop
       </a>
     </div>
 
     <div class="icons">
-      <form action="sanphamip-chuadangnhap.html" method="get">
+      <form action="sanphamip-chuadangnhap.php" method="get">
         <span class="search-icon">
           <!-- SVG kính lúp -->
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
@@ -59,12 +59,12 @@
 
 
     <nav>
-      <a href="trangchu.html">Trang Chủ</a>
-      <a href="sanpham.html">Sản Phẩm</a>
+      <a href="trangchu.php">Trang Chủ</a>
+      <a href="sanpham.php">Sản Phẩm</a>
       <a href="#lienhe">Liên Hệ</a>
-      <a href="dangnhap.html">Giỏ Hàng</a>
-      <a href="dangnhap.html">Đăng nhập</a>
-      <a href="dangky.html">Đăng Ký</a>
+      <a href="dangnhap.php">Giỏ Hàng</a>
+      <a href="dangnhap.php">Đăng nhập</a>
+      <a href="dangky.php">Đăng Ký</a>
     </nav>
   </header>
 
@@ -80,9 +80,9 @@
         <div class="fake-select">
           <div class="selected">Chọn phân loại ▾</div>
           <div class="options">
-            <a href="sanphamip-chuadangnhap.html">Điện thoại</a>
-            <a href="sanpham-laptopchdangnhap.html">Laptop</a>
-            <a href="sanphamphukien-chuadangnhap.html">Phụ kiện</a>
+            <a href="sanphamip-chuadangnhap.php">Điện thoại</a>
+            <a href="sanpham-laptopchdangnhap.php">Laptop</a>
+            <a href="sanphamphukien-chuadangnhap.php">Phụ kiện</a>
           </div>
         </div>
 
@@ -101,9 +101,9 @@
         </div>
 
         <label for="sort-select">Sắp xếp:</label>
-        <a href="sanphamip-chuadangnhap.html" class="price-select">Mặc định</a>
-        <a href="sanphamipthap-chuadangnhap.html" class="price-select">Giá tăng dần</a>
-        <a href="sanphamipcao-chuadangnhap.html" class="price-select">Giá giảm dần</a>
+        <a href="sanphamip-chuadangnhap.php" class="price-select">Mặc định</a>
+        <a href="sanphamipthap-chuadangnhap.php" class="price-select">Giá tăng dần</a>
+        <a href="sanphamipcao-chuadangnhap.php" class="price-select">Giá giảm dần</a>
         <!-- Nút tìm kiếm -->
         <button type="" class="btn-search">Tìm kiếm</button>
       </form>
@@ -115,70 +115,70 @@
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 17 Pro Max" />
         <h3>Iphone 17 Pro Max</h3>
         <p class="price">42.990.000đ</p>
-        <a href="chitietsanpham.html?id=iphone17" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php?id=iphone17" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/laptop-Asus.png" alt="Laptop Asus" />
         <h3>Laptop Asus</h3>
         <p class="price">22.890.000đ</p>
-        <a href="chitietsanpham.html?id=laptopasus" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php?id=laptopasus" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/ban-phim-gaming.jpg" alt="Bàn phím gaming" />
         <h3>Bàn phím gaming</h3>
         <p class="price">1.560.000đ</p>
-        <a href="chitietsanpham.html?id=banphim" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php?id=banphim" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/tainghebluetooth.webp" alt="Tai nghe bluetooth" />
         <h3>Tai nghe Bluetooth True Wireless JBL Live Pro 2</h3>
         <p class="price">2.150.000đ</p>
-        <a href="chitietsanpham.html?id=tainghe" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php?id=tainghe" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-16-pro-max.webp" alt="IPhone 16 Pro Max" />
         <h3>Iphone 16 Pro Max</h3>
         <p class="price">30.590.000đ</p>
-        <a href="chitietsanpham.html?id=iphone16" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php?id=iphone16" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/vivo-v60.jpg" alt="Điện thoại vivo V60 5G" />
         <h3>Điện thoại vivo V60 5G 12GB/512GB</h3>
         <p class="price">16.990.000đ</p>
-        <a href="chitietsanpham.html?id=vivo-v60-5g" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php?id=vivo-v60-5g" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/samsung-galaxy-z-fold7.jpg" alt="Samsung Galaxy Z Fold7 5G 12GB/256GB" />
         <h3>Samsung Galaxy Z Fold7 5G 12GB/256GB</h3>
         <p class="price">16.990.000đ</p>
-        <a href="chitietsanpham.html?id=samsung-galaxy-z-fold-7-5g" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php?id=samsung-galaxy-z-fold-7-5g" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/oppo-find-x8-pro-.jpg" alt="OPPO Find X8 Pro 5G 16GB/512GB" />
         <h3>OPPO Find X8 Pro 5G 16GB/512GB</h3>
         <p class="price">26.450.000đ</p>
-        <a href="chitietsanpham.html?id=OPPO Find X8 Pro 5G 16GB/512GB" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php?id=OPPO Find X8 Pro 5G 16GB/512GB" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/thumb-flip7-den-jet.webp" alt="Samsung Galaxy Z Flip7 5G 12GB/256GB" />
         <h3>Samsung Galaxy Z Flip7 5G 12GB/256GB</h3>
         <p class="price">25.990.000₫</p>
-        <a href="chitietsanpham.html?id=samsung-galaxy-z-flip-7-5g" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php?id=samsung-galaxy-z-flip-7-5g" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/laptop-asus-tuf-gaming.webp" alt="Laptop ASUS TUF Gaming F16 FX607VJ-RL034W" />
         <h3>Laptop ASUS TUF Gaming F16 FX607VJ-RL034W</h3>
         <p class="price">21.990.000₫</p>
-        <a href="chitietsanpham.html?id=laptop-asus-tuf-gaming-f16-fx607vj-rl034w" class="buy-btn">Xem chi
+        <a href="chitietsanpham.php?id=laptop-asus-tuf-gaming-f16-fx607vj-rl034w" class="buy-btn">Xem chi
           tiết</a>
       </div>
 
@@ -186,35 +186,35 @@
         <img src="../images/laptopnitro.webp" alt="Laptop Gaming Acer Nitro V ANV15-51-57B2" />
         <h3>Laptop Gaming Acer Nitro V ANV15-51-57B2</h3>
         <p class="price">23.290.000đ</p>
-        <a href="chitietsanpham.html?id=laptop-gaming-acer-nitro-v-anv15-51-57b2" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php?id=laptop-gaming-acer-nitro-v-anv15-51-57b2" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/banphimco.webp" alt="Bàn phím cơ không dây AULA F75 trắng xanh dương gradient" />
         <h3>Bàn phím cơ không dây AULA F75 trắng xanh dương gradient</h3>
         <p class="price">1.490.000đ</p>
-        <a href="chitietsanpham.html?id=banphim1" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php?id=banphim1" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/laptopacernitro.webp" alt="Laptop Acer Gaming Nitro Lite 16 NL16-71G-71UJ" />
         <h3>Laptop Acer Gaming Nitro Lite 16 NL16-71G-71UJ</h3>
         <p class="price">22.890.000đ</p>
-        <a href="chitietsanpham.html?id=laptop2" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php?id=laptop2" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/tainghe.webp" alt="Tai nghe Bluetooth chụp tai Marshall Major 5" />
         <h3>Tai nghe Bluetooth chụp tai Marshall Major 5</h3>
         <p class="price">4.220.000đ</p>
-        <a href="chitietsanpham.html?id=tainghe1" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php?id=tainghe1" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/taingheapple.webp" alt="Tai nghe Bluetooth Apple AirPods Pro 3 2025 Type-C" />
         <h3>Tai nghe Bluetooth Apple AirPods Pro 3 2025 Type-C</h3>
         <p class="price">6.790.000đ</p>
-        <a href="chitietsanpham.html?id=tainghe2" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham.php?id=tainghe2" class="buy-btn">Xem chi tiết</a>
       </div>
     </div>
     </section>

@@ -13,7 +13,7 @@
 <body>
     <header class="main-header">
         <div class="logo">
-            <a href="trangchu.html">
+            <a href="trangchu.php">
                 <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
                 <span class="shop-name">Sylphia Shop</span>
             </a>
@@ -62,7 +62,7 @@ iPhone 17 Pro Max với màn hình Super Retina XDR 6,9″, chip A19 Pro mạnh 
                 <a href="#" class="btn-add">
                     <i class="fas fa-edit"></i> Sửa Hình Ảnh
                 </a>
-                <a href="admin-QLSP.html" class="btn-add">
+                <a href="admin-QLSP.php" class="btn-add">
                     <i class="fas fa-check"></i> Hoàn Thành
                 </a>
             </div>

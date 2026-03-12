@@ -1,3 +1,42 @@
+<?php
+session_start(); // Để ghi nhớ trạng thái đăng nhập
+$host = "localhost";
+$user = "root";
+$pass = "";
+$dbname = "danh_muc_ban_"; // Tên database của bạn
+
+$conn = mysqli_connect($host, $user, $pass, $dbname);
+
+$error_msg = "";
+
+if (isset($_POST['login'])) {
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $password = $_POST['password']; // Sẽ hash sau khi đăng ký cũng hash
+
+    // Câu lệnh tìm người dùng có username khớp, sau đó kiểm tra password
+    $sql = "SELECT * FROM danh_sach_nguoi_dung WHERE username=?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $username);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        // Kiểm tra mật khẩu (giả sử mật khẩu đã hash bằng password_hash khi đăng ký)
+        if ($password === $row['password']) {
+            // Nếu khớp, lưu tên vào session và báo thành công
+            $_SESSION['user'] = $username;
+            echo "<script>alert('Đăng nhập thành công!'); window.location.href='../user/trangchu-dangnhap.php';</script>";
+            exit();
+        } else {
+            $error_msg = "Sai tên đăng nhập hoặc mật khẩu!";
+        }
+    } else {
+        $error_msg = "Sai tên đăng nhập hoặc mật khẩu!";
+    }
+    mysqli_stmt_close($stmt);
+}
+?>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -14,15 +53,15 @@
   <!-- HEADER -->
   <header>
     <div class="logo">
-      <a href="trangchu.html">
+      <a href="trangchu.php">
         <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
         Sylphia Shop
       </a>
     </div>
     <nav>
-      <a href="trangchu.html">Trang Chủ</a>
+      <a href="trangchu.php">Trang Chủ</a>
       <a href="#">Liên Hệ</a>
-      <a href="dangky.html">Đăng ký</a>
+      <a href="dangky.php">Đăng ký</a>
     </nav>
   </header>
 
@@ -30,6 +69,10 @@
   <main class="login-container">
     <form class="login-form" id="loginForm" action="#" method="post">
       <h1>Đăng Nhập</h1>
+
+      <?php if ($error_msg): ?>
+        <p style="color: red; text-align: center;"><?php echo $error_msg; ?></p>
+      <?php endif; ?>
 
       <label for="username">Tên đăng nhập</label>
       <input type="text" id="username" name="username" required />
@@ -39,7 +82,7 @@
 
       <a href="#" class="forgot-link"> Quên mật khẩu? </a>
 
-      <button type="#" class="btn primary full">Đăng Nhập</button>
+      <button type="submit" name="login" class="btn primary full">Đăng Nhập</button>
 
       <div class="social-login">
         <input type="image" id="googleBtn" src="../images/gg-logo.webp" alt="Google" title="Đăng nhập Google" />
@@ -48,7 +91,7 @@
 
       <div class="register-section">
         <span>Bạn chưa có tài khoản?</span>
-        <a href="dangky.html" class="btn secondary small">
+        <a href="dangky.php" class="btn secondary small">
           Đăng ký ngay
         </a>
       </div>
@@ -88,32 +131,11 @@
     okBtn.addEventListener("click", () => {
       popup.classList.remove("show");
       setTimeout(() => {
-        window.location.href = "../user/trangchu-dangnhap.html";
+        window.location.href = "../user/trangchu-dangnhap.php";
       }, 300);
     });
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-
-      if (username === "" || password === "") {
-        showPopup("⚠️ Vui lòng nhập đầy đủ thông tin!");
-        return;
-      }
-      showPopup(`Xin chào ${username}! Đăng nhập thành công 💖`);
-    });
-
-    googleBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      showPopup("Đăng nhập bằng Google thành công 🌐");
-    });
-
-    facebookBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      showPopup("Đăng nhập bằng Facebook thành công 👍");
-    });
+ 
   </script>
 </body>
-
 </html>

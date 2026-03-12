@@ -13,7 +13,7 @@
 <body>
     <header class="main-header">
         <div class="logo">
-            <a href="admin-TongQuan.html">
+            <a href="admin-TongQuan.php">
                 <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
                 <span class="shop-name">Sylphia Shop</span>
             </a>
@@ -59,7 +59,7 @@
                 <a href="#" class="btn-add">
                     <i class="fas fa-image"></i> Thêm Hình Ảnh
                 </a>
-                <a href="admin-QLSP.html" class="btn-add">
+                <a href="admin-QLSP.php" class="btn-add">
                     <i class="fas fa-check"></i> Thêm Sản Phẩm
                 </a>
             </div>

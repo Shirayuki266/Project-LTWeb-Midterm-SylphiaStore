@@ -19,14 +19,14 @@
   <!-- Header -->
   <header>
     <div class="logo">
-      <a href="trangchu-dangnhap.html" class="logo">
+      <a href="trangchu-dangnhap.php" class="logo">
         <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
         Sylphia Shop
       </a>
     </div>
 
     <div class="icons">
-      <form action="sanphamip.html" method="get">
+      <form action="sanphamip.php" method="get">
         <span class="search-icon">
           <!-- SVG kính lúp -->
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
@@ -49,12 +49,12 @@
     </div>
 
     <nav>
-      <a href="trangchu-dangnhap.html">Trang Chủ</a>
-      <a href="sanpham-dangnhap.html">Sản Phẩm</a>
+      <a href="trangchu-dangnhap.php">Trang Chủ</a>
+      <a href="sanpham-dangnhap.php">Sản Phẩm</a>
       <a href="#lienhe">Liên Hệ</a>
-      <a href="giohang-dangnhap.html">Giỏ Hàng</a>
-      <a href="trangcanhan.html">Thông Tin Cá Nhân</a>
-      <a href="trangchu.html">Đăng Xuất</a>
+      <a href="giohang-dangnhap.php">Giỏ Hàng</a>
+      <a href="trangcanhan.php">Thông Tin Cá Nhân</a>
+      <a href="trangchu.php">Đăng Xuất</a>
     </nav>
   </header>
 
@@ -69,9 +69,9 @@
         <div class="fake-select">
           <div class="selected">Chọn phân loại ▾</div>
           <div class="options">
-            <a href="sanphamip.html">Điện thoại</a>
-            <a href="sanphamlaptop.html">Laptop</a>
-            <a href="sanphamphukien.html">Phụ kiện</a>
+            <a href="sanphamip.php">Điện thoại</a>
+            <a href="sanphamlaptop.php">Laptop</a>
+            <a href="sanphamphukien.php">Phụ kiện</a>
           </div>
         </div>
 
@@ -90,9 +90,9 @@
         </div>
 
         <label for="sort-select">Sắp xếp:</label>
-        <a href="../user/sanphamip.html" class="price-select">Mặc định</a>
-        <a href="../user/sanphamipthap.html" class="price-select">Giá tăng dần</a>
-        <a href="../user/sanphamipcao.html" class="price-select">Giá giảm dần</a>
+        <a href="../user/sanphamip.php" class="price-select">Mặc định</a>
+        <a href="../user/sanphamipthap.php" class="price-select">Giá tăng dần</a>
+        <a href="../user/sanphamipcao.php" class="price-select">Giá giảm dần</a>
         <!-- Nút tìm kiếm -->
         <button type="" class="btn-search">Tìm kiếm</button>
       </form>
@@ -104,175 +104,175 @@
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone XR 64GB (Cũ)" />
         <h3>iPhone XR 64GB (Cũ)</h3>
         <p class="price">4.500.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 11 64GB (Cũ)" />
         <h3>iPhone 11 64GB (Cũ)</h3>
         <p class="price">6.990.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 12 64GB (Cũ)" />
         <h3>iPhone 12 64GB (Cũ)</h3>
         <p class="price">9.500.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 12 Pro Max 128GB (Cũ)" />
         <h3>iPhone 12 Pro Max 128GB (Cũ)</h3>
         <p class="price">11.990.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone SE 4 64GB" />
         <h3>iPhone SE 4 64GB</h3>
         <p class="price">12.500.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 13 Mini 128GB (Cũ)" />
         <h3>iPhone 13 Mini 128GB (Cũ)</h3>
         <p class="price">13.500.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 13 128GB (Mới)" />
         <h3>iPhone 13 128GB (Mới)</h3>
         <p class="price">15.990.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 14 128GB (Mới)" />
         <h3>iPhone 14 128GB</h3>
         <p class="price">17.990.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 13 Pro Max 256GB (Cũ)" />
         <h3>iPhone 13 Pro Max 256GB (Cũ)</h3>
         <p class="price">17.990.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 15 128GB (Cũ)" />
         <h3>iPhone 15 128GB (Likenew)</h3>
         <p class="price">19.990.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 14 Pro 128GB (Cũ)" />
         <h3>iPhone 14 Pro 128GB (Cũ)</h3>
         <p class="price">19.990.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 14 Pro Max 128GB (Cũ)" />
         <h3>iPhone 14 Pro Max 128GB (Cũ)</h3>
         <p class="price">21.500.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 15 Pro 128GB (Cũ 99%)" />
         <h3>iPhone 15 Pro 128GB (Cũ)</h3>
         <p class="price">22.500.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 14 Plus 256GB (Mới)" />
         <h3>iPhone 14 Plus 256GB</h3>
         <p class="price">22.990.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 16 128GB" />
         <h3>iPhone 16 128GB</h3>
         <p class="price">23.500.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 15 Plus 128GB (Mới)" />
         <h3>iPhone 15 Plus 128GB</h3>
         <p class="price">24.500.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 16 Plus 128GB" />
         <h3>iPhone 16 Plus 128GB</h3>
         <p class="price">24.990.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 17 128GB" />
         <h3>iPhone 17 128GB</h3>
         <p class="price">26.990.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 15 Pro Max 256GB (Mới)" />
         <h3>iPhone 15 Pro Max 256GB (Mới)</h3>
         <p class="price">28.990.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 16 Pro 256GB" />
         <h3>iPhone 16 Pro 256GB</h3>
         <p class="price">29.990.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 17 Plus 256GB" />
         <h3>iPhone 17 Plus 256GB</h3>
         <p class="price">31.990.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 16 Pro Max 512GB" />
         <h3>iPhone 16 Pro Max 512GB</h3>
         <p class="price">33.500.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 17 Pro 256GB" />
         <h3>iPhone 17 Pro 256GB</h3>
         <p class="price">34.990.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 17 Pro Max 512GB" />
         <h3>iPhone 17 Pro Max 512GB</h3>
         <p class="price">42.990.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
 
       <div class="product-card">
         <img src="../images/iphone-17-pro-max.jpg" alt="Iphone 17 Pro Max 1TB" />
         <h3>iPhone 17 Pro Max 1TB</h3>
         <p class="price">46.990.000đ</p>
-        <a href="chitietsanpham-dangnhap.html" class="buy-btn">Xem chi tiết</a>
+        <a href="chitietsanpham-dangnhap.php" class="buy-btn">Xem chi tiết</a>
       </div>
     </div>
 
