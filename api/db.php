@@ -1,7 +1,7 @@
 <?php
 // DB Connection
 $host = 'localhost';
-$dbname = 'sylphia shop';
+$dbname = 'Sylphia Shop';
 $user = 'root';
 $pass = '';
 

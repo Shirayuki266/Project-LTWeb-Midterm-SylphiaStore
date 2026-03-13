@@ -1,7 +1,41 @@
 <?php
-// Legacy page; redirect to modern login page
-header('Location: login.php');
-exit;
+session_start(); // Để ghi nhớ trạng thái đăng nhập
+$host = "localhost";
+$user = "root";
+$pass = "";
+$dbname = "Sylphia Shop"; // Tên database của bạn
+
+$conn = mysqli_connect($host, $user, $pass, $dbname);
+
+$error_msg = "";
+
+if (isset($_POST['login'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Câu lệnh tìm người dùng có username khớp, sau đó kiểm tra password
+    $sql = "SELECT * FROM danh_sach_nguoi_dung WHERE username=?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $username);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        // Kiểm tra mật khẩu (giả sử mật khẩu đã hash bằng password_hash khi đăng ký)
+        if (password_verify($password, $row['password'])) {
+            // Nếu khớp, lưu tên vào session và báo thành công
+            $_SESSION['user'] = $username;
+            echo "<script>alert('Đăng nhập thành công!'); window.location.href='index.php';</script>";
+            exit();
+        } else {
+            $error_msg = "Sai tên đăng nhập hoặc mật khẩu!";
+        }
+    } else {
+        $error_msg = "Sai tên đăng nhập hoặc mật khẩu!";
+    }
+    mysqli_stmt_close($stmt);
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -37,7 +71,7 @@ exit;
       <h1>Đăng Nhập</h1>
 
       <?php if ($error_msg): ?>
-      <p style="color: red; text-align: center;"><?php echo $error_msg; ?></p>
+        <p style="color: red; text-align: center;"><?php echo $error_msg; ?></p>
       <?php endif; ?>
 
       <label for="username">Tên đăng nhập</label>
@@ -81,26 +115,27 @@ exit;
 
   <!-- JS -->
   <script>
-  const form = document.getElementById("loginForm");
-  const popup = document.getElementById("popup");
-  const popupMsg = document.getElementById("popupMsg");
-  const okBtn = document.getElementById("okBtn");
+    const form = document.getElementById("loginForm");
+    const popup = document.getElementById("popup");
+    const popupMsg = document.getElementById("popupMsg");
+    const okBtn = document.getElementById("okBtn");
 
-  const googleBtn = document.getElementById("googleBtn");
-  const facebookBtn = document.getElementById("facebookBtn");
+    const googleBtn = document.getElementById("googleBtn");
+    const facebookBtn = document.getElementById("facebookBtn");
 
-  function showPopup(message) {
-    popupMsg.textContent = message;
-    popup.classList.add("show");
-  }
+    function showPopup(message) {
+      popupMsg.textContent = message;
+      popup.classList.add("show");
+    }
 
-  okBtn.addEventListener("click", () => {
-    popup.classList.remove("show");
-    setTimeout(() => {
-      window.location.href = "../user/trangchu-dangnhap.php";
-    }, 300);
-  });
+    okBtn.addEventListener("click", () => {
+      popup.classList.remove("show");
+      setTimeout(() => {
+        window.location.href = "../user/trangchu-dangnhap.php";
+      }, 300);
+    });
+
+ 
   </script>
 </body>
-
 </html>
