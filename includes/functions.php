@@ -27,12 +27,24 @@ function formatPrice($price) {
 
 // Validate register
 function validate_register($data) {
+    global $conn; // Access the database connection
     $errors = [];
     if (strlen($data['username']) < 3) $errors[] = 'Username ≥3 chars';
     if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) $errors[] = 'Invalid email';
     if (strlen($data['password']) < 6) $errors[] = 'Password ≥6 chars';
     if ($data['password'] !== $data['confirm_password']) $errors[] = 'Passwords mismatch';
-    // Check unique in DB (add $conn param if needed)
+
+    // Check if email already exists
+    if (empty($errors)) {
+        $stmt = $conn->prepare("SELECT id FROM danh_sach_nguoi_dung WHERE email = ?");
+        $stmt->bind_param("s", $data['email']);
+        $stmt->execute();
+        if ($stmt->get_result()->num_rows > 0) {
+            $errors[] = 'Email đã được sử dụng';
+        }
+        $stmt->close();
+    }
+
     return $errors;
 }
 
