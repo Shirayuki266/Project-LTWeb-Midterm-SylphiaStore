@@ -87,7 +87,7 @@
                             <label> Đến Ngày nhập:</label>
                             <input type="date" />
                         </div>
-                        <a href="admin-phieu-nh.php" class="btn-add">
+                        <a href="admin-phieu-nh-process.php" class="btn-add">
                             <i class="fas fa-plus"></i> Thêm
                         </a>
                         <button type="button" class="btn"><i class="fas fa-search"></i> Tìm Kiếm</button>

@@ -1,173 +1,103 @@
-<!DOCTYPE html>
-<html lang="vi">
+<?php
+session_start();
+require_once 'includes/config.php';
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chi Tiết Sản Phẩm - Sylphia Shop</title>
-  <!-- Liên kết Font Poppins cho giao diện hiện đại -->
-  <link rel="stylesheet" href="../css/chitietsanpham.css" />
-  <link rel="stylesheet" href="../css/footer.css" />
-  <link rel="stylesheet" href="../css/header.css" />
-</head>
+$id = (int)($_GET['id'] ?? 0);
+if ($id <= 0) {
+    header('Location: sanpham.php');
+    exit;
+}
 
-<body>
-  <header>
-    <div class="logo">
-      <a href="trangchu.php" class="logo">
-        <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
-        Sylphia Shop
-      </a>
+$sql = "SELECT s.*, l.ten_loai FROM sanpham s LEFT JOIN loaisp l ON s.loai = l.id WHERE s.id = ?";
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_bind_param($stmt, 'i', $id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$product = mysqli_fetch_assoc($result);
+mysqli_stmt_close($stmt);
+
+if (!$product) {
+    header('Location: sanpham.php');
+    exit;
+}
+?>
+<?php include 'header.php'; ?>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-6">
+      <div id="productCarousel" class="carousel slide shadow">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="../images/<?php echo htmlspecialchars($product['hinh']); ?>" class="d-block w-100"
+              alt="<?php echo htmlspecialchars($product['ten']); ?>">
+          </div>
+        </div>
+      </div>
+      <div class="small-images mt-3 d-flex gap-2 justify-content-center">
+        <img src="../images/<?php echo htmlspecialchars($product['hinh']); ?>" class="img-thumbnail active-thumb"
+          alt="Thumb">
+        <!-- More thumbs if multiple images -->
+      </div>
     </div>
-
-    <div class="icons">
-      <form action="sanphamip-chuadangnhap.php" method="get">
-        <span class="search-icon">
-          <!-- SVG kính lúp -->
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-        </span>
-
-        <input type="text" name="keyword" placeholder="Tìm kiếm..." />
-
-        <span class="filter-icon">
-          <!-- SVG phễu -->
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 3h18L13 14v7H11v-7L3 3z" />
-          </svg>
-        </span>
+    <div class="col-lg-6">
+      <h1><?php echo htmlspecialchars($product['ten']); ?></h1>
+      <p class="text-muted"><?php echo htmlspecialchars($product['ten_loai']); ?></p>
+      <div class="rating mb-3">
+        <?php for($i=1; $i<=5; $i++): ?>
+        <i class="fas fa-star<?php echo $i <= round($product['rating']) ? '' : '-empty'; ?> text-warning"></i>
+        <?php endfor; ?>
+        <span class="ms-2"><?php echo $product['rating']; ?>/5 (123 đánh giá)</span>
+      </div>
+      <hr>
+      <div class="price-group mb-4">
+        <span class="h3 text-danger"><?php echo number_format($product['gia'], 0, ',', '.'); ?>₫</span>
+        <?php if ($product['giamgia'] > 0): ?>
+        <span
+          class="h5 text-muted text-decoration-line-through ms-3"><?php echo number_format($product['giamgia'], 0, ',', '.'); ?>₫</span>
+        <?php endif; ?>
+      </div>
+      <form>
+        <div class="row g-3 align-items-end mb-4">
+          <div class="col-md-4">
+            <label>Số lượng</label>
+            <input type="number" class="form-control" value="1" min="1" id="quantity">
+          </div>
+          <div class="col-md-8">
+            <button type="button" onclick="addToCart(<?php echo $product['id']; ?>)"
+              class="btn btn-danger btn-lg w-100">Thêm vào giỏ hàng</button>
+          </div>
+        </div>
       </form>
-    </div>
-
-    <nav>
-      <a href="trangchu.php">Trang Chủ</a>
-      <a href="sanpham.php">Sản Phẩm</a>
-      <a href="#lienhe">Liên Hệ</a>
-      <a href="dangnhap.php">Giỏ Hàng</a>
-      <a href="dangnhap.php">Đăng nhập</a>
-      <a href="dangky.php">Đăng Ký</a>
-    </nav>
-  </header>
-
-  <!-- Khu vực hiển thị sản phẩm -->
-  <main class="product-detail">
-    <div class="product-image">
-      <img id="product-image" src="../images/iphone-17-pro-max.jpg" alt="Sản phẩm" />
-      <!-- Ảnh sản phẩm mẫu -->
-    </div>
-
-    <div class="product-info">
-      <h1 id="product-name">iPhone 17 Pro Max - Sức Mạnh Vượt Trội</h1>
-      <p id="product-price" class="price">42.990.000 VNĐ</p>
-
-      <!-- 5-6 điểm nổi bật chính -->
-      <ul class="key-features">
-        <li><i class="fas fa-tag"></i> <strong>Hãng:</strong> Apple</li>
-        <li>
-          <i class="fas fa-mobile-alt"></i>
-          <strong>Tên sản phẩm:</strong> iPhone 17 Pro Max
-        </li>
-        <li>
-          <i class="fas fa-money-bill-alt"></i>
-          <strong>Giá tiền:</strong> 42.990.000 VNĐ
-        </li>
-        <li>
-          <i class="fas fa-microchip"></i> <strong>Chip xử lý:</strong> A19
-          Bionic
-        </li>
-        <li>
-          <i class="fas fa-camera"></i> <strong>Camera:</strong> Hệ thống Tứ
-          Ống Kính Đột Phá
-        </li>
-        <li>
-          <i class="fas fa-battery-full"></i> <strong>Pin:</strong> Cực kỳ bền
-          bỉ, sạc nhanh
-        </li>
-        <li>
-          <i class="fas fa-expand"></i> <strong>Màn hình:</strong> ProMotion
-          XDR 120Hz
-        </li>
+      <ul class="list-unstyled">
+        <li><i class="fas fa-shipping-fast text-success me-2"></i> Miễn phí vận chuyển toàn quốc</li>
+        <li><i class="fas fa-undo text-primary me-2"></i> Đổi trả trong 30 ngày</li>
+        <li><i class="fas fa-shield-alt text-info me-2"></i> Bảo hành chính hãng</li>
       </ul>
-      <div class="actions">
-        <input type="number" min="1" value="3" class="quantity-input" />
-        <a href="../user/dangnhap.php" class="buy-btn">Thêm vào giỏ hàng</a>
-        <a href="../user/dangnhap.php" class="buy-btn">Mua Ngay</a>
+      <div class="mt-4">
+        <h5>Mô tả</h5>
+        <p><?php echo nl2br(htmlspecialchars($product['mota'] ?? 'Sản phẩm chất lượng cao từ thương hiệu uy tín.')); ?>
+        </p>
       </div>
     </div>
-  </main>
-
-  <!-- Footer Section -->
-  <footer class="footer">
-    <div class="container">
-      <!-- Cột 1 -->
-      <div class="footer-col">
-        <h3>SYLPHIASHOP</h3>
-        <p class="hotline">HOTLINE: 022.222.2222</p>
-        <p class="store-address">
-          Store 1: 01 Quang Trung, P.1, Q.Gò Vấp, TP.HCM - 0913.846535
-        </p>
-        <p class="store-address">
-          Store 2: 02 Lê Hồng Phong, Q.10 TP.HCM - 0913.846535
-        </p>
-        <p class="store-address">
-          Store 3: 03 Trần Quang Khải, Q.1 TP.HCM - 0913.846535
-        </p>
-        <p class="store-address">
-          Store 4: 04 Võ Văn Ngân, P.Bình Thọ, Thủ Đức - 0913.846535
-        </p>
-        <p class="store-address">
-          Store 5: 05 Nguyễn Văn Rập, Trảng Bàng, Tây Ninh - 0913.846535
-        </p>
-      </div>
-
-      <!-- Cột 2 -->
-      <div class="footer-col">
-        <h3>QUY ĐỊNH & CHÍNH SÁCH</h3>
-        <ul>
-          <li><a href="#">Quy định hình thức thanh toán</a></li>
-          <li><a href="#">Chính sách vận chuyển hàng</a></li>
-          <li><a href="#">Chính sách bảo hành</a></li>
-          <li><a href="#">Chính sách đổi trả</a></li>
-          <li><a href="#">Chính sách kiểm hàng</a></li>
-          <li><a href="#">Chính sách bảo mật</a></li>
-        </ul>
-      </div>
-      <!-- Cột 3 -->
-      <div class="footer-col" id="lienhe">
-        <h3>HÌNH THỨC THANH TOÁN</h3>
-        <div class="payment-methods">
-          <img src="../images/visa.png" alt="Visa" />
-        </div>
-        <div class="momo">
-          <img src="../images/momo.png" alt="MOMO" />
-        </div>
-      </div>
-
-      <!-- Cột 4 -->
-      <div class="footer-col">
-        <h3>HỆ THỐNG FANPAGE</h3>
-        <ul>
-          <li><a href="#">SYLPHIASHOP GÒ VẤP</a></li>
-          <li><a href="#">SYLPHIASHOP QUẬN 10</a></li>
-          <li><a href="#">SYLPHIASHOP QUẬN 1</a></li>
-          <li><a href="#">SYLPHIASHOP THỦ ĐỨC</a></li>
-          <li><a href="#">SYLPHIASHOP TÂY NINH</a></li>
-          <li><a href="#">SYLPHIASHOP TIỀN GIANG</a></li>
-          <li><a href="#">SYLPHIASHOP LONG AN</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Dòng bản quyền -->
-    <div class="footer-bottom">
-      <p>© 2025 SylphiaShop. All rights reserved.</p>
-      <p>Email: support@sylphiashop.vn | Hotline: 0917 997 997</p>
-    </div>
-  </footer>
-</body>
-
-</html>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function addToCart(id) {
+  const qty = document.getElementById('quantity').value;
+  // AJAX to cart.php
+  fetch('cart.php?action=add', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      id: id,
+      qty: qty
+    })
+  }).then(res => res.json()).then(data => {
+    alert('Thêm giỏ hàng thành công!');
+  });
+}
+</script>
+<?php include 'footer.php'; ?>

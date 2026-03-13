@@ -1,3 +1,9 @@
+<?php
+// Legacy page; redirect to modern register page
+header('Location: register.php');
+exit;
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -52,11 +58,16 @@
         <input type="image" id="facebookBtn" src="../images/fb-logo.png" alt="Facebook" title="Đăng nhập Facebook" />
       </div>
 
+      <?php if ($success_msg): ?>
+      <p style="color: green; text-align: center;"><?php echo $success_msg; ?></p>
+      <?php endif; ?>
+      <?php if ($error_msg): ?>
+      <p style="color: red; text-align: center;"><?php echo $error_msg; ?></p>
+      <?php endif; ?>
+
       <div class="button-group">
-        <a href="../user/dangnhap.php" class="btn secondary">Quay lại đăng nhập</a>
-        <a href="../user/trangchu-dangnhap.php" class="btn primary">
-          Hoàn tất đăng ký
-        </a>
+        <a href="dangnhap.php" class="btn secondary">Đăng nhập</a>
+        <button type="submit" class="btn primary">Đăng ký</button>
       </div>
     </form>
   </main>
@@ -78,33 +89,33 @@
   <!-- JS -->
   <!-- JS -->
   <script>
-    const popup = document.getElementById("popup");
-    const popupMsg = document.getElementById("popupMsg");
-    const okBtn = document.getElementById("okBtn");
-    const googleBtn = document.getElementById("googleBtn");
-    const facebookBtn = document.getElementById("facebookBtn");
+  const popup = document.getElementById("popup");
+  const popupMsg = document.getElementById("popupMsg");
+  const okBtn = document.getElementById("okBtn");
+  const googleBtn = document.getElementById("googleBtn");
+  const facebookBtn = document.getElementById("facebookBtn");
 
-    function showPopup(message) {
-      popupMsg.textContent = message;
-      popup.classList.add("show");
-    }
+  function showPopup(message) {
+    popupMsg.textContent = message;
+    popup.classList.add("show");
+  }
 
-    okBtn.addEventListener("click", () => {
-      popup.classList.remove("show");
-      setTimeout(() => {
-        window.location.href = "../user/trangchu-dangnhap.php";
-      }, 300);
-    });
+  okBtn.addEventListener("click", () => {
+    popup.classList.remove("show");
+    setTimeout(() => {
+      window.location.href = "../user/trangchu-dangnhap.php";
+    }, 300);
+  });
 
-    googleBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      showPopup("Đăng ký nhanh bằng Google thành công 🌐");
-    });
+  googleBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    showPopup("Đăng ký nhanh bằng Google thành công 🌐");
+  });
 
-    facebookBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      showPopup("Đăng ký nhanh bằng Facebook thành công 👍");
-    });
+  facebookBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    showPopup("Đăng ký nhanh bằng Facebook thành công 👍");
+  });
   </script>
 </body>
 
