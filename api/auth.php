@@ -21,14 +21,35 @@ class Auth {
         return $res && $res->num_rows > 0;
     }
 
-    // Register user (uses legacy schema: danh_sach_nguoi_dung)
+    private function getUserTable() {
+        // Prefer the modern schema, but keep legacy support.
+        if (function_exists('get_user_table')) {
+            return get_user_table($this->conn);
+        }
+        if ($this->tableExists('users')) return 'users';
+        if ($this->tableExists('danh_sach_nguoi_dung')) return 'danh_sach_nguoi_dung';
+        return null;
+    }
+
+    // Register user (supports legacy schema `danh_sach_nguoi_dung` and newer `users` schema)
     public function register($data) {
         $errors = validate_register($data);
         if (!empty($errors)) return ['success' => false, 'errors' => $errors];
 
+        $table = get_user_table($this->conn);
+        if (!$table) {
+            return ['success' => false, 'error' => 'Database not initialized. Missing users table.'];
+        }
+
         $hash = password_hash($data['password'], PASSWORD_DEFAULT);
-        $stmt = $this->conn->prepare("INSERT INTO danh_sach_nguoi_dung (username, password, email, phonenumber) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $data['username'], $hash, $data['email'], $data['phone']);
+
+        if ($table === 'users') {
+            $stmt = $this->conn->prepare("INSERT INTO users (username, password, email, phone, address_default) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssss", $data['username'], $hash, $data['email'], $data['phone'], $data['address']);
+        } else {
+            $stmt = $this->conn->prepare("INSERT INTO danh_sach_nguoi_dung (username, password, email, phonenumber) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("ssss", $data['username'], $hash, $data['email'], $data['phone']);
+        }
 
         if ($stmt->execute()) {
             $user_id = $this->conn->insert_id;
@@ -42,7 +63,11 @@ class Auth {
 
     // User login
     public function userLogin($username, $password) {
-        $table = $this->tableExists('danh_sach_nguoi_dung') ? 'danh_sach_nguoi_dung' : 'users';
+        $table = $this->getUserTable();
+        if (!$table) {
+            return ['success' => false, 'error' => 'Authentication unavailable'];
+        }
+
         $stmt = $this->conn->prepare("SELECT * FROM $table WHERE username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
@@ -57,9 +82,13 @@ class Auth {
         return ['success' => false, 'error' => 'Sai tên đăng nhập hoặc mật khẩu'];
     }
 
-    // Admin login (falls back to legacy user table if no admins table)
+    // Admin login (supports `account`, `admins`, or legacy `danh_sach_nguoi_dung`)
     public function adminLogin($username, $password) {
-        $table = $this->tableExists('admins') ? 'admins' : 'danh_sach_nguoi_dung';
+        $table = $this->tableExists('account') ? 'account' : ($this->tableExists('admins') ? 'admins' : $this->getUserTable());
+        if (!$table) {
+            return ['success' => false, 'error' => 'Authentication unavailable'];
+        }
+
         $stmt = $this->conn->prepare("SELECT * FROM $table WHERE username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
@@ -90,7 +119,9 @@ class Auth {
     public function getCurrentUser() {
         if (isset($_SESSION['user_id'])) {
             $id = $_SESSION['user_id'];
-            $table = $this->tableExists('danh_sach_nguoi_dung') ? 'danh_sach_nguoi_dung' : 'users';
+            $table = $this->getUserTable();
+            if (!$table) return null;
+
             $stmt = $this->conn->prepare("SELECT * FROM $table WHERE id = ?");
             $stmt->bind_param("i", $id);
             $stmt->execute();

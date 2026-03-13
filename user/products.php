@@ -15,7 +15,7 @@ $page = (int)($_GET['page'] ?? 1);
 $result = $productsObj->getProducts($search, $category, $min_price, $max_price, $page);
 $products = $result['data'];
 $pages = $result['pages'];
-$cats = $conn->query("SELECT * FROM loaisp")->fetch_all(MYSQLI_ASSOC);
+$cats = $conn->query("SELECT * FROM product_type")->fetch_all(MYSQLI_ASSOC);
 
 $auth = new Auth($conn);
 $isLoggedIn = $auth->isLoggedIn();

@@ -38,7 +38,7 @@ class Cart {
     public function getItems() {
         $items = [];
         foreach ($_SESSION['cart'] as $pid => $qty) {
-            $stmt = $this->conn->prepare("SELECT id, ten AS name, gia AS price, hinh AS image FROM sanpham WHERE id = ?");
+            $stmt = $this->conn->prepare("SELECT id, ten AS name, gia AS price, hinh AS image FROM product WHERE id = ?");
             $stmt->bind_param("i", $pid);
             $stmt->execute();
             $prod = $stmt->get_result()->fetch_assoc();

@@ -25,6 +25,27 @@ function formatPrice($price) {
     return number_format($price, 0, ',', '.') . '₫';
 }
 
+// Database helpers
+function table_exists($conn, $name) {
+    $nameEscaped = mysqli_real_escape_string($conn, $name);
+    $res = $conn->query("SHOW TABLES LIKE '" . $nameEscaped . "'");
+    return $res && $res->num_rows > 0;
+}
+
+function get_user_table($conn) {
+    // Prefer the modern schema tables. Legacy support for old table remains.
+    if (table_exists($conn, 'users')) {
+        return 'users';
+    }
+    if (table_exists($conn, 'account')) {
+        return 'account';
+    }
+    if (table_exists($conn, 'danh_sach_nguoi_dung')) {
+        return 'danh_sach_nguoi_dung';
+    }
+    return null;
+}
+
 // Validate register
 function validate_register($data) {
     global $conn; // Access the database connection
@@ -34,9 +55,15 @@ function validate_register($data) {
     if (strlen($data['password']) < 6) $errors[] = 'Password ≥6 chars';
     if ($data['password'] !== $data['confirm_password']) $errors[] = 'Passwords mismatch';
 
+    $table = get_user_table($conn);
+    if (!$table) {
+        $errors[] = 'Database not initialized. Missing users table.';
+        return $errors;
+    }
+
     // Check if email already exists
     if (empty($errors)) {
-        $stmt = $conn->prepare("SELECT id FROM danh_sach_nguoi_dung WHERE email = ?");
+        $stmt = $conn->prepare("SELECT id FROM $table WHERE email = ?");
         $stmt->bind_param("s", $data['email']);
         $stmt->execute();
         if ($stmt->get_result()->num_rows > 0) {

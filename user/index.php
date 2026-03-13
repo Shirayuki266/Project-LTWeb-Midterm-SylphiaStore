@@ -6,7 +6,7 @@ require_once '../includes/functions.php';
 
 $productsObj = new Products($conn);
 $featured = $productsObj->getProducts('', 0, 0, 0, 1, 6)['data']; // Top 6
-$cats = $conn->query("SELECT * FROM loaisp")->fetch_all(MYSQLI_ASSOC);
+$cats = $conn->query("SELECT * FROM product_type")->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
