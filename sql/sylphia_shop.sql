@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th3 12, 2026 lúc 09:13 AM
+-- Thời gian đã tạo: Th3 13, 2026 lúc 08:44 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `danh_muc_ban_`
+-- Cơ sở dữ liệu: `sylphia_shop`
 --
 
 -- --------------------------------------------------------
