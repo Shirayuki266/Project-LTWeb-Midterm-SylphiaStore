@@ -1,183 +1,360 @@
 <?php
 session_start();
 require_once '../api/db.php';
-require_once '../api/products.php';
 require_once '../api/auth.php';
 require_once '../includes/functions.php';
 
-$productsObj = new Products($conn);
-$search = $_GET['search'] ?? '';
-$category = (int)($_GET['category'] ?? 0);
-$min_price = (float)($_GET['min_price'] ?? 0);
-$max_price = (float)($_GET['max_price'] ?? 0);
-$page = (int)($_GET['page'] ?? 1);
-
-$result = $productsObj->getProducts($search, $category, $min_price, $max_price, $page);
-$products = $result['data'];
-$pages = $result['pages'];
-$cats = $conn->query("SELECT * FROM product_type")->fetch_all(MYSQLI_ASSOC);
-
 $auth = new Auth($conn);
 $isLoggedIn = $auth->isLoggedIn();
+
+$page_title = 'Sản phẩm';
+$current_page = 'products';
+
+include 'header.php';
 ?>
-<!DOCTYPE html>
-<html lang="vi">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sản phẩm - Sylphia Shop</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-</head>
+<main class="flex-fill">
 
-<body>
-  <!-- Header (reuse from index or inline mini) -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
-      <a class="navbar-brand" href="../user/index.php">Sylphia Shop</a>
-      <form class="d-flex me-auto" method="GET">
-        <input type="text" name="search" value="<?php echo htmlspecialchars($search); ?>" class="form-control me-2"
-          placeholder="Tìm kiếm...">
-        <button class="btn btn-outline-light"><i class="fas fa-search"></i></button>
-      </form>
-      <div>
-        <a href="cart.php" class="btn btn-outline-light me-2"><i class="fas fa-shopping-cart"></i></a>
-        <?php if ($isLoggedIn): ?>
-        <a href="profile.php" class="btn btn-light me-2">Tài khoản</a>
-        <?php else: ?>
-        <a href="login.php" class="btn btn-light">Đăng nhập</a>
-        <?php endif; ?>
-      </div>
-    </div>
-  </nav>
+  <div class="py-5">
+    <div class="container-fluid">
 
-  <div class="container my-5">
-    <div class="row">
-      <!-- Filters -->
-      <div class="col-lg-3">
-        <div class="card mb-4">
-          <div class="card-header"><strong>Bộ lọc</strong></div>
-          <div class="card-body">
-            <h6>Danh mục</h6>
-            <ul class="list-unstyled">
-              <li><a href="?<?php echo http_build_query(array_diff_key($_GET, ['category'=>1])); ?>"
-                  class="text-decoration-none <?php echo !$category ? 'fw-bold' : ''; ?>">Tất cả</a></li>
-              <?php foreach ($cats as $cat): $sel = $category == $cat['id'] ? 'fw-bold' : ''; $cat_name = $cat['ten_loai']; ?>
-              <li><a
-                  href="?category=<?php echo $cat['id']; ?>&<?php echo http_build_query(array_diff_key($_GET, ['category'=>1])); ?>"
-                  class="<?php echo $sel; ?>"><?php echo $cat_name; ?></a></li>
-              <?php endforeach; ?>
-            </ul>
-            <h6 class="mt-4">Khoảng giá</h6>
-            <form method="GET">
-              <input type="hidden" name="search" value="<?php echo $search; ?>">
-              <input type="hidden" name="category" value="<?php echo $category; ?>">
-              <div class="mb-3">
-                <input type="number" name="min_price" value="<?php echo $min_price ?: ''; ?>"
-                  class="form-control form-control-sm" placeholder="Từ">
-              </div>
-              <div class="mb-3">
-                <input type="number" name="max_price" value="<?php echo $max_price ?: ''; ?>"
-                  class="form-control form-control-sm" placeholder="Đến">
-              </div>
-              <button type="submit" class="btn btn-primary w-100">Lọc</button>
-            </form>
+      <div class="row">
+
+        <!-- SIDEBAR -->
+        <div class="col-lg-3">
+
+          <div class="card mb-4 shadow-sm">
+
+            <div class="card-header fw-bold">
+              <i class="fas fa-list me-2"></i>Danh mục
+            </div>
+
+            <div class="list-group list-group-flush" id="categoriesList">
+            </div>
+
           </div>
-        </div>
-      </div>
 
-      <!-- Products -->
-      <div class="col-lg-9">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <h2>Kết quả tìm kiếm (<?php echo count($products); ?>)</h2>
-          <div>
-            <span>Sắp xếp: </span>
-            <a href="?sort=price_asc&<?php echo http_build_query(array_diff_key($_GET, ['sort'=>1])); ?>"
-              class="btn btn-sm btn-outline-primary">Giá ↑</a>
-            <a href="?sort=price_desc&<?php echo http_build_query(array_diff_key($_GET, ['sort'=>1])); ?>"
-              class="btn btn-sm btn-outline-primary">Giá ↓</a>
-          </div>
         </div>
 
-        <div class="row g-4">
-          <?php if (empty($products)): ?>
-          <div class="col-12 text-center py-5">
-            <i class="fas fa-search fa-3x text-muted mb-3"></i>
-            <h4>Không tìm thấy sản phẩm</h4>
-            <p>Thử thay đổi từ khóa hoặc bộ lọc</p>
-          </div>
-          <?php else: ?>
-          <?php foreach ($products as $p): $disp_price = $p['discount_price'] ?: $p['price']; ?>
-          <div class="col-xl-3 col-lg-4 col-md-6">
-            <div class="card h-100 shadow-sm">
-              <img src="../images/<?php echo htmlspecialchars($p['image']); ?>" class="card-img-top"
-                alt="<?php echo htmlspecialchars($p['name']); ?>">
-              <div class="card-body">
-                <h6><?php echo htmlspecialchars($p['name']); ?></h6>
-                <p class="small"><?php echo htmlspecialchars(substr($p['description'] ?? '', 0, 100)); ?>...</p>
-                <?php echo renderStars($p['rating']); ?>
-                <div class="mt-2">
-                  <strong><?php echo formatPrice($disp_price); ?></strong>
-                  <?php if ($p['discount_price'] && $p['discount_price'] < $p['price']): ?>
-                  <small
-                    class="ms-2 text-muted text-decoration-line-through"><?php echo formatPrice($p['price']); ?></small>
-                  <?php endif; ?>
-                  <small class="badge bg-success ms-2">Còn hàng</small>
-                </div>
-              </div>
-              <div class="card-footer pt-0">
-                <div class="d-grid gap-1">
-                  <a href="product-detail.php?id=<?php echo $p['id']; ?>" class="btn btn-outline-primary btn-sm">Chi
-                    tiết</a>
-                  <button onclick="addToCart(<?php echo $p['id']; ?>)" class="btn btn-primary btn-sm">Thêm giỏ
-                    hàng</button>
-                </div>
+
+        <!-- MAIN -->
+        <div class="col-lg-9">
+
+          <!-- Search + Filter -->
+          <div class="row mb-4">
+
+            <div class="col-md-5">
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="fas fa-search"></i>
+                </span>
+
+                <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm sản phẩm...">
               </div>
             </div>
+
+            <div class="col-md-4">
+
+              <div class="input-group">
+
+                <span class="input-group-text">Giá</span>
+
+                <input type="number" id="minPrice" class="form-control" placeholder="Từ">
+
+                <span class="input-group-text">-</span>
+
+                <input type="number" id="maxPrice" class="form-control" placeholder="Đến">
+
+              </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+              <select class="form-select" id="sortSelect">
+
+                <option value="id_desc">Mới nhất</option>
+                <option value="name_asc">Tên A-Z</option>
+                <option value="name_desc">Tên Z-A</option>
+                <option value="price_asc">Giá tăng</option>
+                <option value="price_desc">Giá giảm</option>
+
+              </select>
+
+            </div>
+
           </div>
-          <?php endforeach; ?>
-          <?php endif; ?>
+
+
+          <!-- RESULT INFO -->
+          <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div id="resultsInfo" class="text-muted">
+              Đang tải...
+            </div>
+
+            <nav id="paginationNav" class="d-none">
+
+              <ul class="pagination pagination-sm mb-0">
+
+                <li class="page-item">
+                  <a class="page-link prev-page" href="#">Trước</a>
+                </li>
+
+                <li class="page-item">
+                  <a class="page-link next-page" href="#">Sau</a>
+                </li>
+
+              </ul>
+
+            </nav>
+
+          </div>
+
+
+          <!-- PRODUCTS GRID -->
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="productsGrid">
+          </div>
+
         </div>
 
-        <!-- Pagination -->
-        <?php if ($pages > 1): ?>
-        <nav class="mt-5">
-          <ul class="pagination justify-content-center">
-            <?php for ($i = 1; $i <= $pages; $i++): $active = $i == $page ? 'active' : ''; ?>
-            <li class="page-item <?php echo $active; ?>">
-              <a class="page-link"
-                href="?page=<?php echo $i; ?>&<?php echo http_build_query(array_diff_key($_GET, ['page'=>1])); ?>"><?php echo $i; ?></a>
-            </li>
-            <?php endfor; ?>
-          </ul>
-        </nav>
-        <?php endif; ?>
       </div>
+
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-  function addToCart(id) {
-    if (confirm('Thêm vào giỏ hàng?')) {
-      // AJAX call stub
-      fetch('../api/cart.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          action: 'add',
-          id: id,
-          qty: 1
-        })
-      }).then(res => res.json()).then(data => {
-        if (data.success) alert('Đã thêm!');
-      });
-    }
-  }
-  </script>
-</body>
+</main>
 
-</html>
+<?php include 'footer.php'; ?>
+
+
+<script>
+let currentCategory = 0
+let currentPage = 1
+let searchTerm = ''
+let minPrice = 0
+let maxPrice = 999999999
+let currentSort = 'id_desc'
+
+
+function buildQueryParams() {
+
+  return new URLSearchParams({
+
+    category: currentCategory,
+    page: currentPage,
+    search: searchTerm,
+    min_price: minPrice,
+    max_price: maxPrice,
+    sort: currentSort
+
+  }).toString()
+
+}
+
+
+/* LOAD PRODUCTS */
+
+async function loadProducts() {
+
+  const grid = document.getElementById("productsGrid")
+
+  grid.innerHTML = `
+<div class="col-12 text-center py-5">
+<div class="spinner-border text-primary"></div>
+</div>
+`
+
+  const url = `../api/products.php?${buildQueryParams()}`
+
+  try {
+
+    const res = await fetch(url)
+    const result = await res.json()
+
+    grid.innerHTML = ''
+
+    if (result.products.length === 0) {
+
+      grid.innerHTML = `
+<div class="col-12 text-center py-5">
+<h5>Không tìm thấy sản phẩm</h5>
+</div>
+`
+
+      return
+    }
+
+    let html = ""
+
+    result.products.forEach(p => {
+
+      html += `
+
+<div class="col">
+
+<div class="card h-100 shadow-sm border-0">
+
+<img src="${p.image}"
+class="card-img-top p-3"
+style="height:220px;object-fit:contain"
+onerror="this.src='https://via.placeholder.com/220x220?text=No+Image'">
+
+<div class="card-body d-flex flex-column">
+
+<h6 class="fw-semibold">${p.name}</h6>
+
+<div class="text-primary fw-bold fs-5 mb-3">
+${formatPrice(p.price)}
+</div>
+
+<div class="mt-auto d-flex gap-2">
+
+<a href="product-detail.php?id=${p.id}"
+class="btn btn-outline-primary btn-sm flex-fill">
+
+<i class="fas fa-eye"></i> Chi tiết
+
+</a>
+
+<button onclick="addToCart(${p.id})"
+class="btn btn-primary btn-sm flex-fill">
+
+<i class="fas fa-cart-plus"></i>
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+`
+
+    })
+
+    grid.innerHTML = html
+
+    updatePagination(result.pagination)
+    updateResultsInfo(result.pagination)
+
+  } catch (err) {
+
+    console.error(err)
+
+  }
+
+}
+
+
+/* LOAD CATEGORIES */
+
+async function loadCategories() {
+
+  try {
+
+    const res = await fetch('../api/categories.php')
+    const categories = await res.json()
+
+    const list = document.getElementById("categoriesList")
+
+    list.innerHTML = `
+<button class="list-group-item list-group-item-action active"
+onclick="filterCategory(0,this)">
+Tất cả
+</button>
+`
+
+    categories.forEach(c => {
+
+      list.innerHTML += `
+<button class="list-group-item list-group-item-action"
+onclick="filterCategory(${c.id},this)">
+${c.name}
+</button>
+`
+
+    })
+
+  } catch (e) {
+
+    console.error(e)
+
+  }
+
+}
+
+
+/* FILTER CATEGORY */
+
+function filterCategory(id, btn) {
+
+  currentCategory = id
+  currentPage = 1
+
+  document.querySelectorAll("#categoriesList .list-group-item")
+    .forEach(b => b.classList.remove("active"))
+
+  btn.classList.add("active")
+
+  loadProducts()
+
+}
+
+
+/* PAGINATION */
+
+function updatePagination(pag) {
+
+  const nav = document.getElementById("paginationNav")
+
+  if (!pag || pag.pages <= 1) {
+
+    nav.classList.add("d-none")
+    return
+
+  }
+
+  nav.classList.remove("d-none")
+
+}
+
+
+/* RESULT INFO */
+
+function updateResultsInfo(pag) {
+
+  if (!pag) return
+
+  document.getElementById("resultsInfo").textContent =
+
+    `Hiển thị ${(currentPage-1)*12+1} - ${Math.min(currentPage*12,pag.total)} của ${pag.total} sản phẩm`
+
+}
+
+
+/* FORMAT PRICE */
+
+function formatPrice(price) {
+
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND'
+  }).format(price)
+
+}
+
+
+
+/* INIT */
+
+document.addEventListener("DOMContentLoaded", function() {
+
+  loadCategories()
+  loadProducts()
+
+})
+</script>

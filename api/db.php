@@ -6,9 +6,7 @@ $user = 'root';
 $pass = '';
 $dbNames = [
     getenv('DB_NAME') ?: null,
-    'Sylphia Shop',
-    'SylphiaShop',
-    'sylphia_shop',
+    'sylphia_shop2',
 ];
 
 $conn = null;

@@ -1,102 +1,271 @@
 <?php
+session_start();
 require_once '../api/db.php';
-require_once '../api/products.php';
+require_once '../api/auth.php';
+require_once '../includes/functions.php';
 
 $id = (int)($_GET['id'] ?? 0);
-$productsObj = new Products($conn);
-$product = $productsObj->getById($id);
 
-if (!$product) {
-    header('Location: products.php');
+$stmt = $conn->prepare("SELECT * FROM products WHERE id=?");
+$stmt->bind_param("i",$id);
+$stmt->execute();
+
+$result = $stmt->get_result();
+$product = $result->fetch_assoc();
+
+if(!$product){
+    header("Location: products.php");
     exit;
 }
 
-// Related products same cat
-$related = $productsObj->getProducts('', $product['category_id'], 0, 0, 1, 4)['data'];
+$auth = new Auth($conn);
+$isLoggedIn = $auth->isLoggedIn();
+
+/* related products */
+$related = [];
+
+$stmt = $conn->prepare("
+SELECT * FROM products 
+WHERE category_id=? AND id!=?
+LIMIT 4
+");
+
+$stmt->bind_param("ii",$product['category_id'],$id);
+$stmt->execute();
+
+$res = $stmt->get_result();
+
+while($row=$res->fetch_assoc()){
+    $related[]=$row;
+}
 ?>
-<!DOCTYPE html>
-<html lang="vi">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php echo htmlspecialchars($product['name']); ?> - Sylphia Shop</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+<?php
+$page_title = $product['name'];
+$current_page = 'product-detail';
+include 'header.php';
+?>
 
-<body>
-  <nav class="navbar navbar-dark bg-primary">
-    <div class="container">
-      <a class="navbar-brand" href="index.php">← Sylphia Shop</a>
-    </div>
-  </nav>
+<div class="container py-5">
 
-  <div class="container my-5">
-    <div class="row">
-      <div class="col-lg-6">
-        <img src="../images/<?php echo htmlspecialchars($product['image']); ?>" class="img-fluid rounded shadow">
+  <div class="row g-5">
+
+    <!-- IMAGE -->
+    <div class="col-lg-6">
+
+      <div class="card border-0 shadow-sm">
+
+        <img id="mainImage" src="<?php echo htmlspecialchars($product['image']); ?>" class="img-fluid p-4"
+          style="height:420px;object-fit:contain">
+
       </div>
-      <div class="col-lg-6">
-        <h1><?php echo htmlspecialchars($product['name']); ?></h1>
-        <p class="text-muted">Danh mục: <?php echo htmlspecialchars($product['cat_name']); ?></p>
-        <?php echo renderStars($product['rating']); ?>
-        <h3><?php echo formatPrice($product['sell_price'] ?: ($product['discount_price'] ?: $product['price'])); ?></h3>
-        <p class="text-success fs-5">Còn <?php echo $product['stock']; ?> sản phẩm</p>
 
-        <div class="mb-4">
-          <label>Số lượng:</label>
-          <input type="number" id="qty" class="form-control w-25 d-inline ms-3" value="1" min="1"
-            max="<?php echo $product['stock']; ?>">
-          <button onclick="addToCart(<?php echo $id; ?>)" class="btn btn-success btn-lg ms-3">Thêm giỏ hàng</button>
-        </div>
+      <div class="d-flex gap-2 mt-3">
 
-        <div class="mt-4">
-          <h6>Mô tả:</h6>
-          <p><?php echo nl2br(htmlspecialchars($product['description'])); ?></p>
-        </div>
+        <img src="<?php echo htmlspecialchars($product['image']); ?>" style="width:70px;height:70px;object-fit:contain"
+          class="border rounded p-1" onclick="changeImage(this.src)">
+
       </div>
+
     </div>
 
-    <!-- Related -->
-    <?php if ($related): ?>
-    <div class="mt-5">
-      <h3>Sản phẩm liên quan</h3>
-      <div class="row g-3">
-        <?php foreach ($related as $r): ?>
-        <div class="col-md-3">
-          <div class="card">
-            <img src="../images/<?php echo $r['image']; ?>" class="card-img-top">
-            <div class="card-body">
-              <h6><?php echo htmlspecialchars($r['name']); ?></h6>
-              <a href="product-detail.php?id=<?php echo $r['id']; ?>" class="btn btn-primary">Xem</a>
-            </div>
-          </div>
-        </div>
-        <?php endforeach; ?>
+
+    <!-- INFO -->
+    <div class="col-lg-6">
+
+      <h2 class="fw-bold mb-3">
+        <?php echo htmlspecialchars($product['name']); ?>
+      </h2>
+
+      <div class="mb-3 text-warning fs-5">
+        ⭐ ⭐ ⭐ ⭐ ⭐
+        <span class="text-muted fs-6">(5.0)</span>
       </div>
+
+      <div class="fs-2 fw-bold text-primary mb-4">
+        <?php echo formatPrice($product['price']); ?>
+      </div>
+
+      <div class="mb-3">
+        <i class="fas fa-box me-2"></i>
+        <?php if($product['stock']>0): ?>
+        Còn <b><?php echo $product['stock']; ?></b> sản phẩm
+        <?php else: ?>
+        <span class="text-danger">Hết hàng</span>
+        <?php endif; ?>
+      </div>
+
+      <hr>
+
+      <div class="mb-4">
+
+        <h5>Mô tả</h5>
+
+        <p class="text-muted">
+          <?php echo nl2br(htmlspecialchars($product['description'])); ?>
+        </p>
+
+      </div>
+
+
+      <!-- QUANTITY -->
+      <div class="d-flex align-items-center mb-4">
+
+        <span class="me-3">Số lượng:</span>
+
+        <button class="btn btn-outline-secondary" onclick="changeQty(-1)">-</button>
+
+        <input id="qty" value="1" class="form-control text-center mx-2" style="width:70px" readonly>
+
+        <button class="btn btn-outline-secondary" onclick="changeQty(1)">+</button>
+
+      </div>
+
+
+      <!-- BUTTONS -->
+      <div class="d-flex gap-3">
+
+        <button class="btn btn-primary" onclick="addToCart()">
+
+          <i class="fas fa-cart-plus me-2"></i>
+          Thêm vào giỏ
+
+        </button>
+
+        <button class="btn btn-success" onclick="buyNow()">
+
+          <i class="fas fa-bolt me-2"></i>
+          Mua ngay
+
+        </button>
+
+      </div>
+
     </div>
-    <?php endif; ?>
+
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-  function addToCart(id) {
-    const qty = document.getElementById('qty').value;
-    fetch('../api/cart.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        action: 'add',
-        id,
-        qty
-      })
-    }).then(res => res.json()).then(data => {
-      if (data.success) alert('Đã thêm ' + qty + ' sản phẩm!');
-    });
-  }
-  </script>
-</body>
+</div>
 
-</html>
+
+<!-- RELATED PRODUCTS -->
+
+<?php if(!empty($related)): ?>
+
+<div class="container pb-5">
+
+  <h3 class="mb-4">Sản phẩm liên quan</h3>
+
+  <div class="row g-4">
+
+    <?php foreach($related as $p): ?>
+
+    <div class="col-md-3">
+
+      <div class="card h-100 shadow-sm border-0">
+
+        <img src="<?php echo htmlspecialchars($p['image']); ?>" class="card-img-top p-3"
+          style="height:200px;object-fit:contain">
+
+        <div class="card-body">
+
+          <h6 class="fw-semibold">
+            <?php echo htmlspecialchars($p['name']); ?>
+          </h6>
+
+          <div class="text-primary fw-bold mb-2">
+            <?php echo formatPrice($p['price']); ?>
+          </div>
+
+          <a href="product-detail.php?id=<?php echo $p['id']; ?>" class="btn btn-outline-primary btn-sm">
+
+            <i class="fas fa-eye"></i>
+            Chi tiết
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <?php endforeach; ?>
+
+  </div>
+
+</div>
+
+<?php endif; ?>
+
+
+<?php include 'footer.php'; ?>
+
+
+<script>
+function changeImage(src) {
+
+  document.getElementById("mainImage").src = src
+
+}
+
+function changeQty(delta) {
+
+  let input = document.getElementById("qty")
+
+  let qty = parseInt(input.value)
+
+  qty += delta
+
+  if (qty < 1) qty = 1
+
+  input.value = qty
+
+}
+
+function addToCart() {
+
+  let qty = document.getElementById("qty").value
+
+  fetch("../api/cart.php", {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        action: "add",
+        id: <?php echo $id;?>,
+        qty: parseInt(qty)
+      })
+
+    })
+    .then(res => res.json())
+    .then(data => {
+
+      if (data.success) {
+
+        alert("Đã thêm vào giỏ hàng")
+
+      } else {
+
+        alert("Lỗi thêm giỏ")
+
+      }
+
+    })
+
+}
+
+function buyNow() {
+
+  addToCart()
+
+  setTimeout(() => {
+    window.location = "checkout.php"
+  }, 400)
+
+}
+</script>

@@ -1,97 +1,113 @@
 <?php
 session_start();
+
 require_once '../api/db.php';
 require_once '../api/auth.php';
 
 $auth = new Auth($conn);
-$error = '';
 
-if ($_POST) {
-    $result = $auth->userLogin($_POST['username'], $_POST['password']);
-    if ($result['success']) {
-        header('Location: index.php');
-        exit;
-    } else {
-        $error = $result['error'];
-    }
+$error = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+$username = $_POST['username'] ?? '';
+$password = $_POST['password'] ?? '';
+
+$result = $auth->userLogin($username, $password);
+
+if ($result['success']) {
+
+$return = $_GET['return_url'] ?? 'index.php';
+
+header("Location: $return");
+exit;
+
+} else {
+
+$error = "Sai tài khoản hoặc mật khẩu";
+
+}
 }
 
-if ($auth->isLoggedIn()) {
-    header('Location: index.php');
-    exit;
-}
+include 'header.php';
 ?>
-<!DOCTYPE html>
-<html lang="vi">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Đăng nhập - Sylphia Shop</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <style>
-  body {
-    background: #f8f9fa;
-  }
-  </style>
-</head>
+<div class="container-fluid">
 
-<body>
-  <div class="container">
-    <div class="row justify-content-center align-items-center min-vh-100">
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow-lg">
-          <div class="card-body p-5">
-            <div class="text-center mb-4">
-              <img src="../images/logo-web-removebg-preview.png" alt="Logo" height="60" class="mb-3">
-              <h3>Đăng nhập</h3>
-              <p class="text-muted">Chào mừng quay lại!</p>
-            </div>
+  <div class="row vh-100">
 
-            <?php if ($error): ?>
-            <div class="alert alert-danger"><?php echo $error; ?></div>
-            <?php endif; ?>
+    <!-- LEFT IMAGE -->
+    <div class="col-lg-6 d-none d-lg-block p-0">
 
-            <form method="POST" id="loginForm">
-              <div class="mb-3">
-                <label class="form-label">Tên đăng nhập</label>
-                <div class="input-group">
-                  <span class="input-group-text"><i class="fas fa-user"></i></span>
-                  <input type="text" name="username" class="form-control" required minlength="3"
-                    value="<?php echo $_POST['username'] ?? ''; ?>">
-                </div>
-              </div>
-              <div class="mb-4">
-                <label class="form-label">Mật khẩu</label>
-                <div class="input-group">
-                  <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                  <input type="password" name="password" class="form-control" required minlength="6">
-                </div>
-              </div>
-              <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
-            </form>
+      <img src="../images/logo_login.png" class="w-100 h-100 object-fit-cover">
 
-            <div class="text-center mt-4">
-              <p>Chưa có tài khoản? <a href="register.php">Đăng ký ngay</a></p>
-              <a href="index.php" class="btn btn-link">← Quay lại trang chủ</a>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
+
+    <!-- RIGHT LOGIN -->
+    <div class="col-lg-6 d-flex align-items-center justify-content-center bg-light">
+
+      <div class="card shadow-lg border-0 rounded-4 p-4" style="width:420px;">
+
+        <h3 class="text-center mb-4">
+          Đăng nhập
+        </h3>
+
+        <?php if($error): ?>
+
+        <div class="alert alert-danger">
+          <?php echo $error; ?>
+        </div>
+
+        <?php endif; ?>
+
+        <form method="POST" class="p-3">
+
+          <div class="input-group mb-4">
+
+            <span class="input-group-text bg-white border-end-0 px-3 py-3">
+              <i class="fas fa-user text-secondary fs-5"></i>
+            </span>
+
+            <input type="text" name="username" class="form-control border-start-0 py-3 fs-5" placeholder="Username"
+              required>
+
+          </div>
+
+          <div class="input-group mb-4">
+
+            <span class="input-group-text bg-white border-end-0 px-3 py-3">
+              <i class="fas fa-lock text-secondary fs-5"></i>
+            </span>
+
+            <input type="password" name="password" class="form-control border-start-0 py-3 fs-5" placeholder="Mật khẩu"
+              required>
+
+          </div>
+
+          <button class="btn btn-primary w-100 rounded-pill py-3 fs-5 mb-4">
+            Đăng nhập
+          </button>
+
+          <div class="d-flex justify-content-between fs-6">
+
+            <a href="#" class="text-decoration-none text-secondary">
+              Quên mật khẩu?
+            </a>
+
+            <a href="register.php" class="text-decoration-none text-secondary">
+              Tạo tài khoản mới
+            </a>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-  document.getElementById('loginForm').addEventListener('submit', function(e) {
-    const pass = document.querySelector('input[name="password"]').value;
-    if (pass.length < 6) {
-      e.preventDefault();
-      alert('Mật khẩu ít nhất 6 ký tự');
-    }
-  });
-  </script>
-</body>
+</div>
 
-</html>
+<?php include 'footer.php'; ?>

@@ -1,320 +1,169 @@
 <?php
-require_once '../includes/config.php';
+session_start();
+require_once '../api/db.php';
+require_once '../includes/functions.php';
 
-$customers = [];
-$sql = "SELECT * FROM danh_sach_nguoi_dung ORDER BY id DESC LIMIT 15";
-$result = mysqli_query($conn, $sql);
-if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $customers[] = $row;
-    }
+/* 1. KIỂM TRA ĐĂNG NHẬP */
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header('Location: login.php');
+    exit();
 }
 
-$total_customers = mysqli_num_rows(mysqli_query($conn, "SELECT 1 FROM danh_sach_nguoi_dung"));
+/* 2. XỬ LÝ RESET MẬT KHẨU */
+if (isset($_GET['reset_id'])) {
+    $id = (int)$_GET['reset_id'];
+    $new_password = password_hash('123456', PASSWORD_DEFAULT); // Mật khẩu mặc định sau khi reset
+    
+    $stmt = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
+    $stmt->bind_param("si", $new_password, $id);
+    
+    if ($stmt->execute()) {
+        $_SESSION['message'] = "Đã reset mật khẩu khách hàng #$id về mặc định: 123456";
+    } else {
+        $_SESSION['error'] = "Lỗi khi reset mật khẩu!";
+    }
+    header("Location: admin-QLKH.php");
+    exit();
+}
+
+/* 3. XỬ LÝ XÓA KHÁCH HÀNG */
+if (isset($_GET['delete']) && isset($_GET['id'])) {
+    $id = (int)$_GET['id'];
+    $stmt = $conn->prepare("DELETE FROM users WHERE id=?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $_SESSION['message'] = "Đã xóa khách hàng thành công";
+    header("Location: admin-QLKH.php");
+    exit();
+}
+
+$message = $_SESSION['message'] ?? '';
+$error = $_SESSION['error'] ?? '';
+unset($_SESSION['message'], $_SESSION['error']);
+
+/* 4. LẤY DANH SÁCH */
+$customers = $conn->query("SELECT * FROM users ORDER BY created_at DESC")->fetch_all(MYSQLI_ASSOC);
 ?>
-<!DOCTYPE html>
-<html lang="vi">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Khách hàng | Trang Quản Trị Sylphia Shop</title>
-  <link rel="stylesheet" href="../fontawesome-free-7.1.0-web/css/all.min.css" />
-  <link rel="stylesheet" href="../css/admin.css" />
-</head>
+<?php include 'header.php'; ?>
 
-<body>
-  <div class="admin-layout">
-    <!-- ===== SIDEBAR ===== -->
-    <aside class="sidebar">
-      <div class="logo">
-        <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
-        Sylphia Shop
-      </div>
+<div class="container-fluid py-4 px-md-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 mb-0 fw-bold"><i class="fas fa-users-cog me-2"></i>Quản lý khách hàng</h2>
+  </div>
 
-      <ul class="sidebar-menu">
-        <li><a href="admin-TongQuan.php"><i class="fas fa-home"></i>Tổng Quan</a></li>
-        <li><a href="admin-QLSP.php"><i class="fas fa-box"></i>Sản phẩm</a></li>
-        <li><a href="admin-QLPhieuNH.php"><i class="fas fa-receipt"></i>Nhập Hàng</a></li>
-        <li><a href="admin-QLKH.php" class="active"><i class="fas fa-users"></i>Khách hàng</a></li>
-        <li><a href="admin-QLGia.php"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
-        <li><a href="admin-QLDonHang.php"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
-        <li><a href="admin-QLKho.php"><i class="fas fa-warehouse"></i>Tồn kho</a></li>
-        <li><a href="../user/trangchu.php"><i class="fas fa-house-user"></i>Trang Chủ</a></li>
-        <li><a href="admin-DangNhap.php"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
-      </ul>
-    </aside>
+  <?php if ($message): ?>
+  <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 mb-4" role="alert">
+    <i class="fas fa-check-circle me-2"></i><?php echo $message; ?>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+  <?php endif; ?>
 
-    <!-- ===== MAIN CONTENT ===== -->
-    <div class="main-content">
-      <!-- TOP NAV -->
-      <div class="top-nav">
-        <div class="search-bar">
-          <i class="fas fa-search"></i>
-          <input type="text" placeholder="Tìm khách hàng..." />
-        </div>
-
-        <div class="user-profile">
-          <div class="notifications">
-            <i class="fas fa-bell"></i>
-          </div>
-          <img src="../images/avatar.jpg" alt="Admin" class="avatar" />
-          <span class="admin-name">Admin</span>
-        </div>
-      </div>
-
-      <!-- CUSTOMER LIST -->
-      <div class="dashboard">
-        <h1>Danh sách khách hàng</h1>
-        <div class="stats-grid">
-          <div class="card">
-            <i class="fas fa-users"></i>
-            <div>
-              <h3><?php echo $total_customers; ?></h3>
-              <p>Tổng Khách Hàng</p>
-            </div>
-          </div>
-
-          <div class="card">
-            <i class="fas fa-lock"></i>
-            <div>
-              <h3>0</h3>
-              <p>Đã Khóa</p>
-            </div>
-          </div>
-
-        </div>
-        <div class="panel">
-          <div class="manage-form">
-            <input type="text" placeholder="Tìm kiếm khách hàng..." required />
-            <button type="submit" class="btn"><i class="fas fa-search"></i> Tìm Kiếm</button>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Họ tên</th>
-                <th>Email</th>
-                <th>Số điện thoại</th>
-                <th>Trạng thái</th>
-                <th>Hành động</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($customers as $customer): ?>
-              <tr>
-                <td>#<?php echo sprintf('%03d', $customer['id']); ?></td>
-                <td><?php echo htmlspecialchars($customer['username']); ?></td>
-                <td><?php echo htmlspecialchars($customer['email']); ?></td>
-                <td><?php echo $customer['phonenumber']; ?></td>
-                <td><span class="status active">Hoạt động</span></td>
-                <td>
-                  <button class="btn info"><i class="fas fa-info-circle"></i></button>
-                  <button class="btn reset"><i class="fas fa-rotate-right"></i></button>
-                  <button class="btn unlock"><i class="fas fa-unlock"></i></button>
-                </td>
-              </tr>
-              <?php endforeach; ?>
-              <tr>
-                <td>#001</td>
-                <td>Nguyễn Minh Anh</td>
-                <td>minhanh@gmail.com</td>
-                <td>0901234567</td>
-                <td><span class="status active">Hoạt động</span></td>
-                <td>
-                  <button class="btn info"><i class="fas fa-info-circle"></i></button>
-                  <button class="btn reset"><i class="fas fa-rotate-right"></i></button>
-                  <button class="btn unlock"><i class="fas fa-unlock"></i></button>
-                </td>
-              </tr>
-              <!--------------------------------------------------------->
-              <tr>
-                <td>#002</td>
-                <td>Trần Hải Đăng</td>
-                <td>haidang@gmail.com</td>
-                <td>0987654321</td>
-                <td><span class="status locked">Đã khóa</span></td>
-                <td>
-                  <button class="btn info"><i class="fas fa-info-circle"></i></button>
-                  <button class="btn reset"><i class="fas fa-rotate-right"></i></button>
-                  <button class="btn lock"><i class="fas fa-lock"></i></button>
-                </td>
-              </tr>
-              <!--------------------------------------------------------->
-              <tr>
-                <td>#003</td>
-                <td>Lê Bảo Trân</td>
-                <td>tranbao@gmail.com</td>
-                <td>0912345678</td>
-                <td><span class="status active">Hoạt động</span></td>
-                <td>
-                  <button class="btn info"><i class="fas fa-info-circle"></i></button>
-                  <button class="btn reset"><i class="fas fa-rotate-right"></i></button>
-                  <button class="btn unlock"><i class="fas fa-unlock"></i></button>
-                </td>
-              </tr>
-              <!--------------------------------------------------------->
-              <tr>
-                <td>#004</td>
-                <td>Phạm Gia Khang</td>
-                <td>giakhang.pham@gmail.com</td>
-                <td>0971112233</td>
-                <td><span class="status locked">Đã khóa</span></td>
-                <td>
-                  <button class="btn info"><i class="fas fa-info-circle"></i></button>
-                  <button class="btn reset"><i class="fas fa-rotate-right"></i></button>
-                  <button class="btn lock"><i class="fas fa-lock"></i></button>
-                </td>
-              </tr>
-              <!--------------------------------------------------------->
-              <tr>
-                <td>#005</td>
-                <td>Đặng Phương Nhi</td>
-                <td>nhiphuong@gmail.com</td>
-                <td>0945566778</td>
-                <td><span class="status active">Hoạt động</span></td>
-                <td>
-                  <button class="btn info"><i class="fas fa-info-circle"></i></button>
-                  <button class="btn reset"><i class="fas fa-rotate-right"></i></button>
-                  <button class="btn unlock"><i class="fas fa-unlock"></i></button>
-                </td>
-              </tr>
-              <!--------------------------------------------------------->
-              <tr>
-                <td>#006</td>
-                <td>Hoàng Tấn Lộc</td>
-                <td>tanloc@gmail.com</td>
-                <td>0909988776</td>
-                <td><span class="status locked">Đã khóa</span></td>
-                <td>
-                  <button class="btn info"><i class="fas fa-info-circle"></i></button>
-                  <button class="btn reset"><i class="fas fa-rotate-right"></i></button>
-                  <button class="btn lock"><i class="fas fa-lock"></i></button>
-                </td>
-              </tr>
-              <!--------------------------------------------------------->
-              <tr>
-                <td>#007</td>
-                <td>Ngô Bích Ngọc</td>
-                <td>ngocbich@gmail.com</td>
-                <td>0911223344</td>
-                <td><span class="status active">Hoạt động</span></td>
-                <td>
-                  <button class="btn info"><i class="fas fa-info-circle"></i></button>
-                  <button class="btn reset"><i class="fas fa-rotate-right"></i></button>
-                  <button class="btn unlock"><i class="fas fa-unlock"></i></button>
-                </td>
-              </tr>
-              <!--------------------------------------------------------->
-              <tr>
-                <td>#008</td>
-                <td>Võ Hải Đăng</td>
-                <td>haidang.vo@gmail.com</td>
-                <td>0905566778</td>
-                <td><span class="status active">Hoạt động</span></td>
-                <td>
-                  <button class="btn info"><i class="fas fa-info-circle"></i></button>
-                  <button class="btn reset"><i class="fas fa-rotate-right"></i></button>
-                  <button class="btn unlock"><i class="fas fa-unlock"></i></button>
-                </td>
-              </tr>
-              <!--------------------------------------------------------->
-              <tr>
-                <td>#009</td>
-                <td>Đoàn Khánh Linh</td>
-                <td>linhkhanh@gmail.com</td>
-                <td>0988111222</td>
-                <td><span class="status locked">Đã khóa</span></td>
-                <td>
-                  <button class="btn info"><i class="fas fa-info-circle"></i></button>
-                  <button class="btn reset"><i class="fas fa-rotate-right"></i></button>
-                  <button class="btn lock"><i class="fas fa-lock"></i></button>
-                </td>
-              </tr>
-              <!-------------------------------------------------------->
-              <tr>
-                <td>#010</td>
-                <td>Phan Bảo Anh</td>
-                <td>anhphan@gmail.com</td>
-                <td>0903445566</td>
-                <td><span class="status active">Hoạt động</span></td>
-                <td>
-                  <button class="btn info"><i class="fas fa-info-circle"></i></button>
-                  <button class="btn reset"><i class="fas fa-rotate-right"></i></button>
-                  <button class="btn unlock"><i class="fas fa-unlock"></i></button>
-                </td>
-              </tr>
-              <!--------------------------------------------------------->
-              <tr>
-                <td>#011</td>
-                <td>Trương Gia Hân</td>
-                <td>giahant@gmail.com</td>
-                <td>0908123456</td>
-                <td><span class="status active">Hoạt động</span></td>
-                <td>
-                  <button class="btn info"><i class="fas fa-info-circle"></i></button>
-                  <button class="btn reset"><i class="fas fa-rotate-right"></i></button>
-                  <button class="btn unlock"><i class="fas fa-unlock"></i></button>
-                </td>
-              </tr>
-              <!--------------------------------------------------------->
-              <tr>
-                <td>#012</td>
-                <td>Đinh Minh Khoa</td>
-                <td>khoadinh@gmail.com</td>
-                <td>0974332211</td>
-                <td><span class="status locked">Đã khóa</span></td>
-                <td>
-                  <button class="btn info"><i class="fas fa-info-circle"></i></button>
-                  <button class="btn reset"><i class="fas fa-rotate-right"></i></button>
-                  <button class="btn lock"><i class="fas fa-lock"></i></button>
-                </td>
-              </tr>
-              <!--------------------------------------------------------->
-              <tr>
-                <td>#013</td>
-                <td>Lưu Hoàng My</td>
-                <td>myhoang@gmail.com</td>
-                <td>0944556677</td>
-                <td><span class="status active">Hoạt động</span></td>
-                <td>
-                  <button class="btn info"><i class="fas fa-info-circle"></i></button>
-                  <button class="btn reset"><i class="fas fa-rotate-right"></i></button>
-                  <button class="btn unlock"><i class="fas fa-unlock"></i></button>
-                </td>
-              </tr>
-              <!--------------------------------------------------------->
-              <tr>
-                <td>#014</td>
-                <td>Nguyễn Tấn Phát</td>
-                <td>phatnguyen@gmail.com</td>
-                <td>0938776655</td>
-                <td><span class="status locked">Đã khóa</span></td>
-                <td>
-                  <button class="btn info"><i class="fas fa-info-circle"></i></button>
-                  <button class="btn reset"><i class="fas fa-rotate-right"></i></button>
-                  <button class="btn lock"><i class="fas fa-lock"></i></button>
-                </td>
-              </tr>
-              <!--------------------------------------------------------->
-              <tr>
-                <td>#015</td>
-                <td>Vũ Lan Chi</td>
-                <td>chilv@gmail.com</td>
-                <td>0909111223</td>
-                <td><span class="status active">Hoạt động</span></td>
-                <td>
-                  <button class="btn info"><i class="fas fa-info-circle"></i></button>
-                  <button class="btn reset"><i class="fas fa-rotate-right"></i></button>
-                  <button class="btn unlock"><i class="fas fa-unlock"></i></button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body p-3">
+      <div class="input-group">
+        <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+        <input type="text" id="searchInput" class="form-control border-start-0"
+          placeholder="Tìm tên, email hoặc số điện thoại...">
       </div>
     </div>
   </div>
-</body>
 
-</html>
+  <div class="card shadow-sm border-0 rounded-3">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th class="ps-3">ID</th>
+            <th>Khách hàng</th>
+            <th>Liên hệ</th>
+            <th>Ngày tạo</th>
+            <th class="text-end pe-3">Hành động</th>
+          </tr>
+        </thead>
+        <tbody id="customersTable">
+          <?php foreach ($customers as $c): ?>
+          <tr>
+            <td class="ps-3 text-muted">#<?php echo $c['id']; ?></td>
+            <td>
+              <div class="fw-bold"><?php echo htmlspecialchars($c['username'] ?? 'User'); ?></div>
+              <small class="text-muted">Tài khoản khách</small>
+            </td>
+            <td>
+              <div><i class="fas fa-envelope me-1 small"></i><?php echo htmlspecialchars($c['email'] ?? 'N/A'); ?></div>
+              <div class="small text-muted"><i
+                  class="fas fa-phone me-1"></i><?php echo htmlspecialchars($c['phone'] ?? 'N/A'); ?></div>
+            </td>
+            <td><span
+                class="badge bg-light text-dark border"><?php echo isset($c['created_at']) ? date('d/m/Y', strtotime($c['created_at'])) : '--'; ?></span>
+            </td>
+            <td class="text-end pe-3">
+              <div class="btn-group">
+                <button class="btn btn-sm btn-outline-info" onclick="viewCustomer(<?php echo $c['id']; ?>)"
+                  title="Chi tiết">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <a href="?reset_id=<?php echo $c['id']; ?>" class="btn btn-sm btn-outline-warning"
+                  onclick="return confirm('Bạn có chắc muốn đặt lại mật khẩu khách hàng này về 123456?')"
+                  title="Reset mật khẩu">
+                  <i class="fas fa-key"></i>
+                </a>
+                <a href="?delete=1&id=<?php echo $c['id']; ?>" class="btn btn-sm btn-outline-danger"
+                  onclick="return confirm('Xác nhận xóa vĩnh viễn khách hàng này?')" title="Xóa">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="customerModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold">Thông tin chi tiết</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="customerDetails">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Search thực tế
+document.getElementById("searchInput").addEventListener("input", function() {
+  let val = this.value.toLowerCase();
+  document.querySelectorAll("#customersTable tr").forEach(row => {
+    row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none';
+  });
+});
+
+// View chi tiết
+function viewCustomer(id) {
+  fetch(`../api/get_customer.php?id=${id}`)
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        const c = data.customer;
+        document.getElementById("customerDetails").innerHTML = `
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between"><span>ID:</span> <strong>#${c.id}</strong></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>Username:</span> <strong>${c.username}</strong></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>Email:</span> <strong>${c.email}</strong></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>SĐT:</span> <strong>${c.phone || 'N/A'}</strong></li>
+                    <li class="list-group-item d-flex justify-content-between"><span>Ngày đăng ký:</span> <strong>${new Date(c.created_at).toLocaleDateString('vi-VN')}</strong></li>
+                </ul>
+            `;
+        new bootstrap.Modal(document.getElementById("customerModal")).show();
+      }
+    });
+}
+</script>
+
+<?php include 'admin-footer.php'; ?>

@@ -32,35 +32,57 @@ class Auth {
     }
 
     // Register user (supports legacy schema `danh_sach_nguoi_dung` and newer `users` schema)
-    public function register($data) {
-        $errors = validate_register($data);
-        if (!empty($errors)) return ['success' => false, 'errors' => $errors];
+public function register($data) {
 
-        $table = get_user_table($this->conn);
-        if (!$table) {
-            return ['success' => false, 'error' => 'Database not initialized. Missing users table.'];
-        }
+    $errors = validate_register($this->conn, $data);
 
-        $hash = password_hash($data['password'], PASSWORD_DEFAULT);
-
-        if ($table === 'users') {
-            $stmt = $this->conn->prepare("INSERT INTO users (username, password, email, phone, address_default) VALUES (?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssss", $data['username'], $hash, $data['email'], $data['phone'], $data['address']);
-        } else {
-            $stmt = $this->conn->prepare("INSERT INTO danh_sach_nguoi_dung (username, password, email, phonenumber) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("ssss", $data['username'], $hash, $data['email'], $data['phone']);
-        }
-
-        if ($stmt->execute()) {
-            $user_id = $this->conn->insert_id;
-            $_SESSION['user_id'] = $user_id;
-            $_SESSION['username'] = $data['username'];
-            $_SESSION['user_type'] = 'user';
-            return ['success' => true, 'user' => ['id' => $user_id, 'username' => $data['username']]];
-        }
-        return ['success' => false, 'error' => 'Registration failed'];
+    if (!empty($errors)) {
+        return ['success'=>false,'errors'=>$errors];
     }
 
+    $table = get_user_table($this->conn);
+
+    if (!$table) {
+        return ['success'=>false,'error'=>'Users table not found'];
+    }
+
+    $hash = password_hash($data['password'], PASSWORD_DEFAULT);
+
+    $stmt = $this->conn->prepare(
+        "INSERT INTO users (username,password,email,phone,address_default,role)
+         VALUES (?,?,?,?,?, 'customer')"
+    );
+
+    $stmt->bind_param(
+        "sssss",
+        $data['username'],
+        $hash,
+        $data['email'],
+        $data['phone'],
+        $data['address']
+    );
+
+    if (!$stmt->execute()) {
+        return [
+            'success'=>false,
+            'error'=>$stmt->error
+        ];
+    }
+
+    $user_id = $this->conn->insert_id;
+
+    $_SESSION['user_id'] = $user_id;
+    $_SESSION['username'] = $data['username'];
+    $_SESSION['user_type'] = 'user';
+
+    return [
+        'success'=>true,
+        'user'=>[
+            'id'=>$user_id,
+            'username'=>$data['username']
+        ]
+    ];
+}
     // User login
     public function userLogin($username, $password) {
         $table = $this->getUserTable();
@@ -94,18 +116,20 @@ class Auth {
         $stmt->execute();
         $admin = $stmt->get_result()->fetch_assoc();
 
-        if ($admin && password_verify($password, $admin['password'])) {
-            $_SESSION['admin_id'] = $admin['id'];
-            $_SESSION['username'] = $admin['username'];
-            $_SESSION['user_type'] = 'admin';
-            return ['success' => true, 'admin' => $admin];
-        }
+if ($admin && ($password == $admin['password'] || password_verify($password,$admin['password']))) {
+
+    $_SESSION['admin_id'] = $admin['id'];
+    $_SESSION['username'] = $admin['username'];
+    $_SESSION['user_type'] = 'admin';
+
+    return ['success' => true];
+}
         return ['success' => false, 'error' => 'Sai tên đăng nhập hoặc mật khẩu'];
     }
 
     public function isLoggedIn($type = null) {
         if ($type === 'admin') {
-            return isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin';
+            return isset($_SESSION['admin_id']) && $_SESSION['user_type'] === 'admin';
         }
         return isset($_SESSION['user_id']);
     }

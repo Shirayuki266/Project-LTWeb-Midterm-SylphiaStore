@@ -1,300 +1,327 @@
-<!DOCTYPE html>
-<html lang="vi">
+<?php
+session_start();
+require_once '../api/db.php';
+require_once '../includes/functions.php';
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản lý nhập sản phẩm | Sylphia Shop</title>
+/* CHECK ADMIN LOGIN */
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header('Location: login.php');
+    exit();
+}
 
-    <link rel="stylesheet" href="../fontawesome-free-7.1.0-web/css/all.min.css" />
-    <link rel="stylesheet" href="../css/admin.css" />
-</head>
+/* =============================
+   1. XỬ LÝ HOÀN THÀNH PHIẾU NHẬP
+============================= */
+if (isset($_GET['complete_id'])) {
 
-<body>
-    <div class="admin-layout">
-        <!-- ===== SIDEBAR ===== -->
-        <aside class="sidebar">
-            <div class="logo">
-                <img src="../images/logo-web-removebg-preview.png" alt="Logo" />
-                Sylphia Shop
-            </div>
-            <ul class="sidebar-menu">
-                <li><a href="admin-TongQuan.php"><i class="fas fa-home"></i>Tổng Quan</a></li>
-                <li><a href="admin-QLSP.php"><i class="fas fa-box"></i>Sản phẩm</a></li>
-                <li><a href="admin-QLPhieuNH.php" class="active"><i class="fas fa-receipt"></i>Nhập Hàng</a></li>
-                <li><a href="admin-QLKH.php"><i class="fas fa-users"></i>Khách hàng</a></li>
-                <li><a href="admin-QLGia.php"><i class="fas fa-tags"></i>Quản lý giá bán</a></li>
-                <li><a href="admin-QLDonHang.php"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
-                <li><a href="admin-QLKho.php"><i class="fas fa-warehouse"></i>Tồn kho</a></li>
-                <li><a href="../user/trangchu.php"><i class="fas fa-house-user"></i>Trang Chủ</a></li>
-                <li><a href="admin-DangNhap.php"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
-            </ul>
-        </aside>
+    $id = intval($_GET['complete_id']);
 
-        <!-- ===== MAIN CONTENT ===== -->
-        <div class="main-content">
-            <div class="top-nav">
-                <div class="search-bar">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Tìm kiếm phiếu nhập..." />
-                </div>
-                <div class="user-profile">
-                    <div class="notifications"><i class="fas fa-bell"></i></div>
-                    <img src="../images/avatar.jpg" alt="Admin" class="avatar" />
-                    <span class="admin-name">Admin</span>
-                </div>
-            </div>
+    $conn->begin_transaction();
 
-            <div class="dashboard">
-                <h1>Quản lý phiếu nhập sản phẩm</h1>
-                <div class="stats-grid">
-                    <div class="card">
-                        <i class="fas fa-receipt"></i>
-                        <div>
-                            <h3>156</h3>
-                            <p>Tổng Phiếu Nhập Hàng</p>
-                        </div>
-                    </div>
+    try {
 
-                    <div class="card">
-                        <i class="fas fa-box"></i>
-                        <div>
-                            <h3>2,971</h3>
-                            <p>Tổng Sản Phẩm Đã Nhập Hàng</p>
-                        </div>
-                    </div>
+        $stmt = $conn->prepare("UPDATE purchase_orders SET status='completed' WHERE id=? AND status='pending'");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
 
-                    <div class="card">
-                        <i class="fas fa-shopping-cart"></i>
-                        <div>
-                            <h3>204</h3>
-                            <p>Tổng Sản Phẩm Đang Nhập Hàng</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel">
-                    <!-- Form Thêm phiếu nhập -->
-                    <form class="form-grid manage-form">
-                        <div class="form-group">
-                            <label>Mã phiếu nhập:</label>
-                            <input type="text" placeholder="VD: PN01" />
-                        </div>
-                        <div class="form-group">
-                            <label>Ngày nhập Từ:</label>
-                            <input type="date" />
-                        </div>
-                        <div class="form-group">
-                            <label> Đến Ngày nhập:</label>
-                            <input type="date" />
-                        </div>
-                        <a href="admin-phieu-nh-process.php" class="btn-add">
-                            <i class="fas fa-plus"></i> Thêm
-                        </a>
-                        <button type="button" class="btn"><i class="fas fa-search"></i> Tìm Kiếm</button>
-                    </form>
-                    <h2><i class="fas fa-file-invoice"></i> Danh sách phiếu nhập</h2>
-                    <h3>Lưu ý: Phiếu Chỉ Ở trạng thái hoàn thành sau khi admin nhấn nút hoàn thành</h3>
-                    <!-- Bảng phiếu nhập -->
-                    <table class="manage-table">
-                        <thead>
-                            <tr>
-                                <th>Mã phiếu</th>
-                                <th>Ngày nhập</th>
-                                <th>Sản phẩm</th>
-                                <th>Số lượng</th>
-                                <th>Giá nhập</th>
-                                <th>Trạng thái</th>
-                                <th>Hành động</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>PN01</td>
-                                <td>2025-11-02</td>
-                                <td>Iphone 17 Pro Max</td>
-                                <td>10</td>
-                                <td>25,000,000</td>
-                                <td><span class="status active">Hoàn thành</span></td>
-                                <td class="action-buttons">
-                                    <button class="btn info disabled"><i class="fas fa-edit"></i></button>
-                                    <button class="btn lock disabled"><i class="fas fa-check"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>PN02</td>
-                                <td>2025-11-01</td>
-                                <td>MacBook Air M3</td>
-                                <td>5</td>
-                                <td>35,000,000</td>
-                                <td><span class="status active">Hoàn thành</span></td>
-                                <td class="action-buttons">
-                                    <button class="btn info disabled"><i class="fas fa-edit"></i></button>
-                                    <button class="btn lock disabled"><i class="fas fa-check"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>PN03</td>
-                                <td>2025-11-03</td>
-                                <td>iPad Pro M6</td>
-                                <td>8</td>
-                                <td>20,000,000</td>
-                                <td><span class="status locked">Chưa hoàn thành</span></td>
-                                <td class="action-buttons">
-                                    <a href="admin-SuaPhieu-nh.php" class="btn"><i class="fas fa-edit"></i></a>
-                                    <a class="btn"><i class="fas fa-check"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>PN04</td>
-                                <td>2025-11-03</td>
-                                <td>Galaxy S25 Ultra</td>
-                                <td>12</td>
-                                <td>22,500,000</td>
-                                <td><span class="status active">Hoàn thành</span></td>
-                                <td class="action-buttons">
-                                    <button class="btn info disabled"><i class="fas fa-edit"></i></button>
-                                    <button class="btn lock disabled"><i class="fas fa-check"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>PN05</td>
-                                <td>2025-11-04</td>
-                                <td>MacBook Pro M3</td>
-                                <td>6</td>
-                                <td>40,000,000</td>
-                                <td><span class="status active">Hoàn thành</span></td>
-                                <td class="action-buttons">
-                                    <button class="btn info disabled"><i class="fas fa-edit"></i></button>
-                                    <button class="btn lock disabled"><i class="fas fa-check"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>PN06</td>
-                                <td>2025-11-05</td>
-                                <td>AirPods Max</td>
-                                <td>15</td>
-                                <td>8,000,000</td>
-                                <td><span class="status active">Hoàn thành</span></td>
-                                <td class="action-buttons">
-                                    <button class="btn info disabled"><i class="fas fa-edit"></i></button>
-                                    <button class="btn lock disabled"><i class="fas fa-check"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>PN07</td>
-                                <td>2025-11-06</td>
-                                <td>iMac M3</td>
-                                <td>4</td>
-                                <td>55,000,000</td>
-                                <td><span class="status locked">Chưa hoàn thành</span></td>
-                                <td class="action-buttons">
-                                    <a href="admin-SuaPhieu-nh.php" class="btn"><i class="fas fa-edit"></i></a>
-                                    <a class="btn"><i class="fas fa-check"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>PN08</td>
-                                <td>2025-11-06</td>
-                                <td>Galaxy Tab S9</td>
-                                <td>7</td>
-                                <td>18,000,000</td>
-                                <td><span class="status active">Hoàn thành</span></td>
-                                <td class="action-buttons">
-                                    <button class="btn info disabled"><i class="fas fa-edit"></i></button>
-                                    <button class="btn lock disabled"><i class="fas fa-check"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>PN09</td>
-                                <td>2025-11-07</td>
-                                <td>Apple Watch Series 11</td>
-                                <td>20</td>
-                                <td>12,000,000</td>
-                                <td><span class="status active">Hoàn thành</span></td>
-                                <td class="action-buttons">
-                                    <button class="btn info disabled"><i class="fas fa-edit"></i></button>
-                                    <button class="btn lock disabled"><i class="fas fa-check"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>PN10</td>
-                                <td>2025-11-08</td>
-                                <td>Mac Mini M3</td>
-                                <td>3</td>
-                                <td>30,000,000</td>
-                                <td><span class="status locked">Chưa hoàn thành</span></td>
-                                <td class="action-buttons">
-                                    <a href="admin-SuaPhieu-nh.php" class="btn"><i class="fas fa-edit"></i></a>
-                                    <a class="btn"><i class="fas fa-check"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>PN11</td>
-                                <td>2025-11-08</td>
-                                <td>iPhone SE 5G</td>
-                                <td>25</td>
-                                <td>15,000,000</td>
-                                <td><span class="status active">Hoàn thành</span></td>
-                                <td class="action-buttons">
-                                    <button class="btn info disabled"><i class="fas fa-edit"></i></button>
-                                    <button class="btn lock disabled"><i class="fas fa-check"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>PN12</td>
-                                <td>2025-11-09</td>
-                                <td>iPad Mini M6</td>
-                                <td>9</td>
-                                <td>14,000,000</td>
-                                <td><span class="status active">Hoàn thành</span></td>
-                                <td class="action-buttons">
-                                    <button class="btn info disabled"><i class="fas fa-edit"></i></button>
-                                    <button class="btn lock disabled"><i class="fas fa-check"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>PN13</td>
-                                <td>2025-11-10</td>
-                                <td>Galaxy Buds Pro</td>
-                                <td>18</td>
-                                <td>5,000,000</td>
-                                <td><span class="status locked">Chưa hoàn thành</span></td>
-                                <td class="action-buttons">
-                                    <a href="admin-SuaPhieu-nh.php" class="btn"><i class="fas fa-edit"></i></a>
-                                    <a class="btn"><i class="fas fa-check"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>PN14</td>
-                                <td>2025-11-10</td>
-                                <td>MacBook Pro 16 M3</td>
-                                <td>2</td>
-                                <td>50,000,000</td>
-                                <td><span class="status active">Hoàn thành</span></td>
-                                <td class="action-buttons">
-                                    <button class="btn info disabled"><i class="fas fa-edit"></i></button>
-                                    <button class="btn lock disabled"><i class="fas fa-check"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>PN15</td>
-                                <td>2025-11-11</td>
-                                <td>iMac Pro M3</td>
-                                <td>3</td>
-                                <td>60,000,000</td>
-                                <td><span class="status active">Hoàn thành</span></td>
-                                <td class="action-buttons">
-                                    <button class="btn info disabled"><i class="fas fa-edit"></i></button>
-                                    <button class="btn lock disabled"><i class="fas fa-check"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
+        if ($stmt->affected_rows > 0) {
 
-                    </table>
-                </div>
-            </div>
-        </div>
+            $items = $conn->query("
+                SELECT product_id, quantity 
+                FROM purchase_order_details 
+                WHERE purchase_order_id = $id
+            ");
+
+            while ($item = $items->fetch_assoc()) {
+
+                $pid = intval($item['product_id']);
+                $qty = intval($item['quantity']);
+
+                $conn->query("
+                    INSERT INTO inventory (product_id, stock)
+                    VALUES ($pid,$qty)
+                    ON DUPLICATE KEY UPDATE stock = stock + $qty
+                ");
+            }
+        }
+
+        $conn->commit();
+
+        header("Location: admin-QLPhieuNH.php?msg=success");
+        exit();
+
+    } catch (Exception $e) {
+
+        $conn->rollback();
+        header("Location: admin-QLPhieuNH.php?msg=error");
+        exit();
+    }
+}
+
+/* =============================
+   2. THỐNG KÊ
+============================= */
+
+$total_orders = $conn->query("
+SELECT COUNT(*) as cnt 
+FROM purchase_orders
+")->fetch_assoc()['cnt'] ?? 0;
+
+$total_items_imported = $conn->query("
+SELECT SUM(pod.quantity) as qty
+FROM purchase_order_details pod
+JOIN purchase_orders po ON pod.purchase_order_id = po.id
+WHERE po.status='completed'
+")->fetch_assoc()['qty'] ?? 0;
+
+$total_items_pending = $conn->query("
+SELECT SUM(pod.quantity) as qty
+FROM purchase_order_details pod
+JOIN purchase_orders po ON pod.purchase_order_id = po.id
+WHERE po.status='pending'
+")->fetch_assoc()['qty'] ?? 0;
+
+/* =============================
+   3. TÌM KIẾM
+============================= */
+
+$search_code = $conn->real_escape_string($_GET['code'] ?? '');
+$from_date = $conn->real_escape_string($_GET['from'] ?? '');
+$to_date = $conn->real_escape_string($_GET['to'] ?? '');
+
+$where = "WHERE 1=1";
+
+if ($search_code) {
+    $where .= " AND po.code LIKE '%$search_code%'";
+}
+
+if ($from_date) {
+    $where .= " AND po.order_date >= '$from_date'";
+}
+
+if ($to_date) {
+    $where .= " AND po.order_date <= '$to_date'";
+}
+
+/* =============================
+   4. LẤY DANH SÁCH PHIẾU NHẬP
+============================= */
+
+$sql = "
+SELECT 
+    po.id,
+    po.code,
+    po.order_date,
+    po.status,
+
+    GROUP_CONCAT(p.name SEPARATOR '<br>') as product_names,
+
+    SUM(pod.quantity) as total_qty,
+
+    SUM(pod.import_price * pod.quantity) as total_cost
+
+FROM purchase_orders po
+
+LEFT JOIN purchase_order_details pod
+ON po.id = pod.purchase_order_id
+
+LEFT JOIN products p
+ON pod.product_id = p.id
+
+$where
+
+GROUP BY po.id
+
+ORDER BY po.order_date DESC
+";
+
+$result = $conn->query($sql);
+$orders = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+
+?>
+
+<?php include 'header.php'; ?>
+
+<div class="main-content">
+
+  <div class="dashboard">
+
+    <h1>Quản lý phiếu nhập sản phẩm</h1>
+
+    <?php if(isset($_GET['msg']) && $_GET['msg']=='success'): ?>
+
+    <div class="alert success">
+      Cập nhật kho thành công
     </div>
-</body>
 
-</html>
+    <?php endif; ?>
+
+    <div class="stats-grid">
+
+      <div class="card">
+        <i class="fas fa-receipt"></i>
+        <div>
+          <h3><?php echo $total_orders; ?></h3>
+          <p>Tổng Phiếu Nhập Hàng</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <i class="fas fa-box"></i>
+        <div>
+          <h3><?php echo number_format($total_items_imported); ?></h3>
+          <p>Sản Phẩm Đã Vào Kho</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <i class="fas fa-shopping-cart"></i>
+        <div>
+          <h3><?php echo number_format($total_items_pending); ?></h3>
+          <p>Sản Phẩm Đang Đợi</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="panel">
+
+      <form class="form-grid manage-form" method="GET">
+
+        <div class="form-group">
+          <label>Mã phiếu nhập:</label>
+          <input type="text" name="code" value="<?php echo htmlspecialchars($search_code); ?>" placeholder="VD: PN01">
+        </div>
+
+        <div class="form-group">
+          <label>Ngày nhập Từ:</label>
+          <input type="date" name="from" value="<?php echo $from_date; ?>">
+        </div>
+
+        <div class="form-group">
+          <label>Đến Ngày nhập:</label>
+          <input type="date" name="to" value="<?php echo $to_date; ?>">
+        </div>
+
+        <div class="d-flex align-items-end">
+
+          <a href="admin-phieu-nh-process.php" class="btn-add me-2">
+            <i class="fas fa-plus"></i> Thêm
+          </a>
+
+          <button type="submit" class="btn">
+            <i class="fas fa-search"></i> Tìm Kiếm
+          </button>
+
+        </div>
+
+      </form>
+
+      <h2><i class="fas fa-file-invoice"></i> Danh sách phiếu nhập</h2>
+
+      <table class="manage-table">
+
+        <thead>
+
+          <tr>
+            <th>Mã phiếu</th>
+            <th>Ngày nhập</th>
+            <th>Sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Tổng tiền nhập</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <?php if (empty($orders)): ?>
+
+          <tr>
+            <td colspan="7" class="text-center">Không tìm thấy dữ liệu</td>
+          </tr>
+
+          <?php else: foreach ($orders as $row): ?>
+
+          <tr>
+
+            <td><strong><?php echo $row['code']; ?></strong></td>
+
+            <td>
+              <?php echo date('d/m/Y', strtotime($row['order_date'])); ?>
+            </td>
+
+            <td>
+              <small><?php echo $row['product_names']; ?></small>
+            </td>
+
+            <td>
+              <?php echo $row['total_qty']; ?>
+            </td>
+
+            <td>
+              <?php echo number_format($row['total_cost']); ?> đ
+            </td>
+
+            <td>
+
+              <?php if ($row['status'] == 'completed'): ?>
+
+              <span class="status active">
+                Hoàn thành
+              </span>
+
+              <?php else: ?>
+
+              <span class="status locked">
+                Chưa hoàn thành
+              </span>
+
+              <?php endif; ?>
+
+            </td>
+
+            <td class="action-buttons">
+
+              <?php if ($row['status'] == 'pending'): ?>
+
+              <a href="admin-SuaPhieu-nh.php?id=<?php echo $row['id']; ?>" class="btn info">
+                <i class="fas fa-edit"></i>
+              </a>
+
+              <a href="?complete_id=<?php echo $row['id']; ?>" class="btn lock"
+                onclick="return confirm('Xác nhận hoàn thành? Dữ liệu sẽ được cộng vào kho và không thể sửa lại.')">
+
+                <i class="fas fa-check"></i>
+
+              </a>
+
+              <?php else: ?>
+
+              <button class="btn info disabled">
+                <i class="fas fa-edit"></i>
+              </button>
+
+              <button class="btn lock disabled">
+                <i class="fas fa-check"></i>
+              </button>
+
+              <?php endif; ?>
+
+            </td>
+
+          </tr>
+
+          <?php endforeach; endif; ?>
+
+        </tbody>
+
+      </table>
+
+    </div>
+  </div>
+</div>
+
+<?php include 'admin-footer.php'; ?>
