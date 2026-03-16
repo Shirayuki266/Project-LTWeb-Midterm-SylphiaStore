@@ -8,7 +8,7 @@ $error = '';
 
 // 1. Nếu đã đăng nhập rồi thì chuyển thẳng vào trang quản trị
 if ($auth->isLoggedIn('admin')) {
-    header('Location: admin-TongQuan.php'); // Sửa từ dashboard.php thành admin-TongQuan.php
+    header('Location: dashboard.php'); // Sửa từ dashboard.php thành admin-TongQuan.php
     exit;
 }
 
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 2. Thiết lập thêm biến session để tương thích với các trang cũ đang dùng $_SESSION['admin_logged_in']
         $_SESSION['admin_logged_in'] = true; 
         
-        header('Location: admin-TongQuan.php'); // Chuyển hướng đúng trang tổng quan của bạn
+        header('Location: dashboard.php'); // Chuyển hướng đúng trang tổng quan của bạn
         exit;
     } else {
         $error = $result['error'];
