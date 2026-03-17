@@ -1,15 +1,10 @@
 <?php
-header('Content-Type: application/json');
 require_once 'db.php';
+header('Content-Type: application/json');
 
-if (!isset($_GET['id'])) {
-    echo json_encode(['success' => false, 'message' => 'Product ID is required']);
-    exit;
-}
+$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-$id = (int)$_GET['id'];
-
-try {
+if ($id > 0) {
     $stmt = $conn->prepare("SELECT * FROM products WHERE id = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -19,9 +14,8 @@ try {
     if ($product) {
         echo json_encode(['success' => true, 'product' => $product]);
     } else {
-        echo json_encode(['success' => false, 'message' => 'Product not found']);
+        echo json_encode(['success' => false, 'message' => 'Sản phẩm không tồn tại']);
     }
-} catch (Exception $e) {
-    echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+} else {
+    echo json_encode(['success' => false, 'message' => 'ID không hợp lệ']);
 }
-?>
