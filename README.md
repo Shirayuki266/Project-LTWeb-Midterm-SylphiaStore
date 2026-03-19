@@ -1,29 +1,29 @@
-# Sylphia Shop - Đồ Án Lập Trình Web PHP/MySQL
+Các chức năng cho người dùng cuối (end-user) (4.0 điểm)📌
 
-**Full e-commerce: User (search/cart/buy), Admin (manage), DB giá bình quân.**
+• Hiển thị sản phẩm (có phân trang) theo phân loại, kết quả tìm kiếm cơ bản theo tên
+sản phẩm, xem chi tiết sản phẩm (thông tin phải phù hợp với sản phẩm bán)
 
-## Chạy XAMPP:
+1.0
+• Tìm kiếm nâng cao (kết quả tìm kiếm có phân trang) theo tên sản phẩm, có chọn
+phân loại và khoảng giá bán (kết hợp nhiều tiêu chí trong 1 thao tác tìm kiếm)
 
-```
-1. XAMPP Control → Apache + MySQL ON
-2. phpMyAdmin localhost/phpmyadmin:
-   - DB `Sylphia Shop`
-   - Import sql/complete_schema.sql
-   - Import sql/full_data_fixed.sql (203 SP, 10 users, 20 orders)
-   - Import admin/giaban_trig.sql (giá vốn)
-3. Website: http://localhost/web b/user/index.php
-```
+1.0
+• Các chức năng cho người dùng 1.0
+o Đăng kí: cho phép người dùng đăng kí tài khoản Khách hàng, khi đăng kí phải
+nhập đầy đủ địa chỉ giao hàng mặc định
+o Đăng nhập / đăng xuất (hiển thị thông tin tài khoản đang đăng nhập)
+o Khách hàng chọn mua sản phẩm bằng giỏ hàng (khách hàng phải đăng nhập mới
+có thể sử dụng)
+• Các chức năng mua hàng: 1.0
+o Cho phép thêm bớt sản phẩm + số lượng sản phẩm trong giỏ hàng.
+o Cho phép chọn địa chỉ từ tài khoản hoặc nhập địa chỉ giao hàng mới (thiết kế
+các control nhập liệu đủ và đúng cho từng trường hợp)
+o Cho phép chọn thanh toán tiền mặt, chuyển khoản (hiển thị thông tin chuyển
+khoản) hoặc thanh toán trực tuyến (nhưng khi chọn thanh toán trực tuyến thì
+chưa cần xử lý tiếp).
+o Cho người mua xem tóm tắt đơn đặt hàng khi kết thúc quá trình mua.
+o Khách hàng có thể xem lại lịch sử mua hàng của tài khoản đang đăng nhập (đơn
+hàng mua gần nhất hiển thị ở trên)
 
-## Features:
-
-- **User:** Search/filter/paginate, login (user1/password), cart AJAX, profile orders.
-- **Admin:** Login, dashboard, import/price management.
-- **DB:** sanpham/loaisp/donhang, trigger giá = vốn\*(1+lợi nhuận).
-
-## Test:
-
-- Products: Filter iPhone → paginate.
-- Cart: Add → update qty.
-- Giá: `CALL sp_nhap_hang(1, 20e6, 10, 30);`
-
-**Ready! No error.** 🚀
+II. Các chức năng cho người quản trị web (web-admin) (6.0 điểm)
+Upgrade login, logout, pagination, and data partitioning.

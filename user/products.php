@@ -3,7 +3,11 @@ session_start();
 require_once '../api/db.php';
 require_once '../api/auth.php';
 require_once '../includes/functions.php';
-
+if (!$auth->isLoggedIn()) {
+    // Đuổi ngay ra trang login
+    header("Location: login.php");
+    exit(); // Bắt buộc phải có exit để dừng load dữ liệu bên dưới
+}
 $auth = new Auth($conn);
 $isLoggedIn = $auth->isLoggedIn();
 
@@ -13,348 +17,221 @@ $current_page = 'products';
 include 'header.php';
 ?>
 
-<main class="flex-fill">
-
+<main class="flex-fill bg-light">
   <div class="py-5">
     <div class="container-fluid">
-
       <div class="row">
 
-        <!-- SIDEBAR -->
         <div class="col-lg-3">
-
-          <div class="card mb-4 shadow-sm">
-
-            <div class="card-header fw-bold">
-              <i class="fas fa-list me-2"></i>Danh mục
+          <div class="card mb-4 border-0 shadow-sm rounded-4 " style="top: 60px;">
+            <div class="card-header bg-white fw-bold border-0 pt-3">
+              <i class="fas fa-list me-2 text-primary"></i>Danh mục
             </div>
-
-            <div class="list-group list-group-flush" id="categoriesList">
+            <div class="list-group list-group-flush p-2" id="categoriesList">
             </div>
-
           </div>
-
         </div>
 
-
-        <!-- MAIN -->
         <div class="col-lg-9">
-
-          <!-- Search + Filter -->
-          <div class="row mb-4">
-
+          <div class="row mb-4 g-3">
             <div class="col-md-5">
-              <div class="input-group">
-                <span class="input-group-text">
-                  <i class="fas fa-search"></i>
+              <div class="input-group shadow-sm rounded-pill overflow-hidden bg-white border">
+                <span class="input-group-text border-0 bg-white ps-3">
+                  <i class="fas fa-search text-muted"></i>
                 </span>
-
-                <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+                <input type="text" id="searchInput" class="form-control border-0" placeholder="Tìm tên sản phẩm...">
               </div>
             </div>
 
             <div class="col-md-4">
-
-              <div class="input-group">
-
-                <span class="input-group-text">Giá</span>
-
-                <input type="number" id="minPrice" class="form-control" placeholder="Từ">
-
-                <span class="input-group-text">-</span>
-
-                <input type="number" id="maxPrice" class="form-control" placeholder="Đến">
-
+              <div class="input-group shadow-sm rounded-pill overflow-hidden bg-white border">
+                <span class="input-group-text border-0 bg-white">Giá</span>
+                <input type="number" id="minPriceInput" class="form-control border-0 px-2" placeholder="Từ">
+                <span class="input-group-text border-0 bg-white">-</span>
+                <input type="number" id="maxPriceInput" class="form-control border-0 px-2" placeholder="Đến">
               </div>
-
             </div>
 
             <div class="col-md-3">
-
-              <select class="form-select" id="sortSelect">
-
+              <select class="form-select shadow-sm border rounded-pill ps-3" id="sortSelect">
                 <option value="id_desc">Mới nhất</option>
+                <option value="price_asc">Giá thấp đến cao</option>
+                <option value="price_desc">Giá cao đến thấp</option>
                 <option value="name_asc">Tên A-Z</option>
-                <option value="name_desc">Tên Z-A</option>
-                <option value="price_asc">Giá tăng</option>
-                <option value="price_desc">Giá giảm</option>
-
               </select>
-
             </div>
-
           </div>
 
-
-          <!-- RESULT INFO -->
-          <div class="d-flex justify-content-between align-items-center mb-4">
-
-            <div id="resultsInfo" class="text-muted">
-              Đang tải...
-            </div>
-
-            <nav id="paginationNav" class="d-none">
-
-              <ul class="pagination pagination-sm mb-0">
-
-                <li class="page-item">
-                  <a class="page-link prev-page" href="#">Trước</a>
-                </li>
-
-                <li class="page-item">
-                  <a class="page-link next-page" href="#">Sau</a>
-                </li>
-
-              </ul>
-
-            </nav>
-
-          </div>
-
-
-          <!-- PRODUCTS GRID -->
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="productsGrid">
           </div>
 
+          <nav id="paginationNav" class="mt-5 d-none">
+            <ul class="pagination justify-content-center" id="paginationList"></ul>
+          </nav>
         </div>
 
       </div>
-
     </div>
   </div>
-
 </main>
 
 <?php include 'footer.php'; ?>
 
-
 <script>
-let currentCategory = 0
-let currentPage = 1
-let searchTerm = ''
-let minPrice = 0
-let maxPrice = 999999999
-let currentSort = 'id_desc'
+// 1. LẤY THÔNG TIN TỪ URL NGAY KHI VÀO TRANG
+const urlParams = new URLSearchParams(window.location.search);
+let state = {
+  cat: parseInt(urlParams.get('category')) || 0, // Đọc ?category=X từ Header
+  page: 1,
+  search: '',
+  min: 0,
+  max: 999999999,
+  sort: 'id_desc'
+};
 
+const $ = id => document.getElementById(id);
+const formatPrice = p => new Intl.NumberFormat('vi-VN', {
+  style: 'currency',
+  currency: 'VND'
+}).format(p);
 
-function buildQueryParams() {
-
-  return new URLSearchParams({
-
-    category: currentCategory,
-    page: currentPage,
-    search: searchTerm,
-    min_price: minPrice,
-    max_price: maxPrice,
-    sort: currentSort
-
-  }).toString()
-
-}
-
-
-/* LOAD PRODUCTS */
-
+/* 2. HÀM LOAD SẢN PHẨM CHÍNH */
 async function loadProducts() {
+  const grid = $('productsGrid');
 
-  const grid = document.getElementById("productsGrid")
-
+  // Hiển thị Spinner chuẩn Bootstrap ở giữa màn hình
   grid.innerHTML = `
-<div class="col-12 text-center py-5">
-<div class="spinner-border text-primary"></div>
-</div>
-`
-
-  const url = `../api/products.php?${buildQueryParams()}`
+        <div class="col-12 d-flex flex-column align-items-center justify-content-center" style="min-height: 50vh;">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+            <h5 class="mt-3 text-secondary fw-light">Đang tìm sản phẩm...</h5>
+        </div>`;
 
   try {
+    const query = new URLSearchParams({
+      category: state.cat,
+      page: state.page,
+      search: state.search,
+      min_price: state.min,
+      max_price: state.max,
+      sort: state.sort
+    }).toString();
 
-    const res = await fetch(url)
-    const result = await res.json()
+    const res = await fetch(`../api/products.php?${query}`);
+    const result = await res.json();
 
-    grid.innerHTML = ''
+    grid.innerHTML = '';
 
-    if (result.products.length === 0) {
-
-      grid.innerHTML = `
-<div class="col-12 text-center py-5">
-<h5>Không tìm thấy sản phẩm</h5>
-</div>
-`
-
-      return
+    if (!result.products?.length) {
+      grid.innerHTML =
+        `<div class="col-12 text-center py-5"><h5 class="text-muted">Không tìm thấy sản phẩm phù hợp</h5></div>`;
+      if ($('paginationNav')) $('paginationNav').classList.add('d-none');
+      return;
     }
 
-    let html = ""
+    grid.innerHTML = result.products.map(p => `
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden product-card">
+                    <div class="p-3 bg-white d-flex align-items-center justify-content-center" style="height:180px">
+                        <img src="${p.image}" class="img-fluid" style="max-height:100%; object-fit:contain" 
+                            onerror="this.src='https://via.placeholder.com/200'">
+                    </div>
+                    <div class="card-body d-flex flex-column pt-0 text-center">
+                        <h6 class="fw-bold text-truncate mb-2">${p.name}</h6>
+                        <div class="text-primary fw-bold mb-3">${formatPrice(p.price)}</div>
+                        <div class="mt-auto d-flex gap-2">
+                            <a href="product-detail.php?id=${p.id}" class="btn btn-outline-dark btn-sm flex-fill rounded-pill">Chi tiết</a>
+                            <button onclick="addToCart(${p.id})" class="btn btn-dark btn-sm rounded-pill px-3">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>`).join('');
 
-    result.products.forEach(p => {
-
-      html += `
-
-<div class="col">
-
-<div class="card h-100 shadow-sm border-0">
-
-<img src="${p.image}"
-class="card-img-top p-3"
-style="height:220px;object-fit:contain"
-onerror="this.src='https://via.placeholder.com/220x220?text=No+Image'">
-
-<div class="card-body d-flex flex-column">
-
-<h6 class="fw-semibold">${p.name}</h6>
-
-<div class="text-primary fw-bold fs-5 mb-3">
-${formatPrice(p.price)}
-</div>
-
-<div class="mt-auto d-flex gap-2">
-
-<a href="product-detail.php?id=${p.id}"
-class="btn btn-outline-primary btn-sm flex-fill">
-
-<i class="fas fa-eye"></i> Chi tiết
-
-</a>
-
-<button onclick="addToCart(${p.id})"
-class="btn btn-primary btn-sm flex-fill">
-
-<i class="fas fa-cart-plus"></i>
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-`
-
-    })
-
-    grid.innerHTML = html
-
-    updatePagination(result.pagination)
-    updateResultsInfo(result.pagination)
-
-  } catch (err) {
-
-    console.error(err)
-
-  }
-
-}
-
-
-/* LOAD CATEGORIES */
-
-async function loadCategories() {
-
-  try {
-
-    const res = await fetch('../api/categories.php')
-    const categories = await res.json()
-
-    const list = document.getElementById("categoriesList")
-
-    list.innerHTML = `
-<button class="list-group-item list-group-item-action active"
-onclick="filterCategory(0,this)">
-Tất cả
-</button>
-`
-
-    categories.forEach(c => {
-
-      list.innerHTML += `
-<button class="list-group-item list-group-item-action"
-onclick="filterCategory(${c.id},this)">
-${c.name}
-</button>
-`
-
-    })
-
+    updatePagination(result.pagination);
   } catch (e) {
-
-    console.error(e)
-
+    grid.innerHTML = `<div class="col-12 text-center py-5 text-danger">Lỗi kết nối. Vui lòng thử lại!</div>`;
   }
-
 }
 
+/* 3. LOAD DANH MỤC VÀ TỰ ĐỘNG ACTIVE THEO URL */
+async function loadCategories() {
+  const res = await fetch('../api/categories.php');
+  const cats = await res.json();
+  const list = $('categoriesList');
 
-/* FILTER CATEGORY */
+  let html = `<button class="list-group-item list-group-item-action border-0 rounded-3 mb-1 ${state.cat == 0 ? 'active' : ''}" 
+                onclick="filterCat(0,this)">Tất cả</button>`;
 
-function filterCategory(id, btn) {
-
-  currentCategory = id
-  currentPage = 1
-
-  document.querySelectorAll("#categoriesList .list-group-item")
-    .forEach(b => b.classList.remove("active"))
-
-  btn.classList.add("active")
-
-  loadProducts()
-
+  cats.forEach(c => {
+    const activeClass = (state.cat == c.id) ? 'active' : '';
+    html += `<button class="list-group-item list-group-item-action border-0 rounded-3 mb-1 ${activeClass}" 
+                 onclick="filterCat(${c.id},this)">${c.name}</button>`;
+  });
+  list.innerHTML = html;
 }
 
+function filterCat(id, btn) {
+  state.cat = id;
+  state.page = 1;
+  document.querySelectorAll('#categoriesList .list-group-item').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  loadProducts();
+  // Cập nhật URL trình duyệt để đồng bộ với Header
+  window.history.pushState({}, '', `products.php?category=${id}`);
+}
 
-/* PAGINATION */
-
+/* 4. PHÂN TRANG */
 function updatePagination(pag) {
+  const nav = $('paginationNav');
+  if (!pag || pag.pages <= 1) return nav.classList.add('d-none');
+  nav.classList.remove('d-none');
 
-  const nav = document.getElementById("paginationNav")
-
-  if (!pag || pag.pages <= 1) {
-
-    nav.classList.add("d-none")
-    return
-
+  let html =
+    `<li class="page-item ${state.page==1?'disabled':''}"><a class="page-link rounded-pill border-0 shadow-sm me-2" href="javascript:void(0)" onclick="goToPage(${state.page-1})">Trước</a></li>`;
+  for (let i = 1; i <= pag.pages; i++) {
+    html +=
+      `<li class="page-item ${i==state.page?'active':''}"><a class="page-link rounded-pill mx-1 border-0 shadow-sm" href="javascript:void(0)" onclick="goToPage(${i})">${i}</a></li>`;
   }
-
-  nav.classList.remove("d-none")
-
+  html +=
+    `<li class="page-item ${state.page==pag.pages?'disabled':''}"><a class="page-link rounded-pill border-0 shadow-sm" href="javascript:void(0)" onclick="goToPage(${state.page+1})">Sau</a></li>`;
+  $('paginationList').innerHTML = html;
 }
 
+const goToPage = p => {
+  state.page = p;
+  loadProducts();
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+};
 
-/* RESULT INFO */
+/* 5. KHỞI TẠO VÀ LẮNG NGHE TÌM KIẾM */
+document.addEventListener("DOMContentLoaded", () => {
+  loadCategories();
+  loadProducts();
 
-function updateResultsInfo(pag) {
+  let timer;
+  const bind = (id, key, delay = 0) => {
+    const el = $(id);
+    if (!el) return;
+    el.oninput = (e) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        state[key] = e.target.value;
+        state.page = 1;
+        loadProducts();
+      }, delay);
+    };
+  };
 
-  if (!pag) return
-
-  document.getElementById("resultsInfo").textContent =
-
-    `Hiển thị ${(currentPage-1)*12+1} - ${Math.min(currentPage*12,pag.total)} của ${pag.total} sản phẩm`
-
-}
-
-
-/* FORMAT PRICE */
-
-function formatPrice(price) {
-
-  return new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND'
-  }).format(price)
-
-}
-
-
-
-/* INIT */
-
-document.addEventListener("DOMContentLoaded", function() {
-
-  loadCategories()
-  loadProducts()
-
-})
+  bind('searchInput', 'search', 500);
+  bind('minPriceInput', 'min', 300);
+  bind('maxPriceInput', 'max', 300);
+  $('sortSelect').onchange = (e) => {
+    state.sort = e.target.value;
+    loadProducts();
+  };
+});
 </script>

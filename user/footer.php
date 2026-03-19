@@ -9,7 +9,7 @@
       <!-- Column 1: Brand -->
       <div class="col">
         <div>
-          <img src="../images/logo-web-removebg-preview.png" alt="Sylphia Shop" height="45" class="mb-3">
+          <img src="../images/logoshop.png" alt="Sylphia Shop" height="45" class="mb-3">
           <p class="mb-3">
             Sylphia Shop - Nơi hội tụ những sản phẩm công nghệ <strong>chất lượng cao</strong> với
             <strong>giá tốt nhất thị trường</strong> và dịch vụ <strong>chuẩn 5 sao</strong>.

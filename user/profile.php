@@ -3,7 +3,11 @@ session_start();
 require_once '../api/db.php';
 require_once '../api/auth.php';
 require_once '../includes/functions.php';
-
+if (!$auth->isLoggedIn()) {
+    // Đuổi ngay ra trang login
+    header("Location: login.php");
+    exit(); // Bắt buộc phải có exit để dừng load dữ liệu bên dưới
+}
 $auth = new Auth($conn);
 
 if (!$auth->isLoggedIn()) {
