@@ -27,7 +27,7 @@ $address_tool = new Address($conn);
 $address_default = $user['address_default'] ?? $user['street_address'] ?? 'Chưa cập nhật địa chỉ';
 $phone_default = $user['phone'] ?? $user['sdt'] ?? $user['phonenumber'] ?? 'Chưa có SĐT';
 
-/* 1. TÍNH TOÁN HÓA ĐƠN */
+// TÍNH TOÁN HÓA ĐƠN
 $subtotal = 0;
 foreach ($items as $item) {
     $subtotal += $item['price'] * $item['quantity'];
@@ -46,7 +46,7 @@ $discount_amount = ($subtotal * $discount_percent) / 100;
 $shipping = 30000;
 $total = ($subtotal - $discount_amount) + $shipping;
 
-/* 2. XỬ LÝ ĐẶT HÀNG */
+// XỬ LÝ ĐẶT HÀNG
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $address_option = $_POST['address_option'] ?? 'default';
     if ($address_option === 'new') {
@@ -54,8 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $w_code = $_POST['ward'] ?? '';
         $house = $_POST['house_number'] ?? '';
         $note = $_POST['order_note'] ?? '';
-        
-        // SỬ DỤNG HÀM MỚI (Chỉ nối Tỉnh và Xã)
         $final_address = $address_tool->getFullAddressShort($p_code, $w_code, $house);
         if (!empty($note)) $final_address .= " (Ghi chú: $note)";
     } else {
@@ -76,8 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $cart->clear();
         $success = true;
-    } else {
-        $error = "Lỗi hệ thống: " . $conn->error;
     }
 }
 ?>
@@ -99,15 +95,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   .form-check {
     cursor: pointer;
     transition: all 0.2s;
+    border: 1px solid #dee2e6;
   }
 
   .form-check:hover {
     background-color: #f8f9fa !important;
+    border-color: #0d6efd;
   }
 
   .sticky-summary {
     position: sticky;
     top: 20px;
+  }
+
+  .bank-box {
+    background: #f0f7ff;
+    border: 1px dashed #0d6efd !important;
   }
   </style>
 </head>
@@ -127,102 +130,103 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="row g-4">
       <div class="col-lg-7">
-        <h3 class="mb-4 fw-bold">Thông tin thanh toán</h3>
+        <h3 class="mb-4 fw-bold">Thanh toán</h3>
         <form method="POST" id="checkoutForm">
-          <div class="card shadow-sm mb-4">
-            <div class="card-body p-4">
-              <h5 class="fw-bold mb-3">Địa chỉ nhận hàng</h5>
 
-              <div class="form-check p-3 border rounded mb-3 bg-white shadow-sm position-relative">
-                <input class="form-check-input ms-0 me-2" type="radio" name="address_option" id="addr_default"
-                  value="default" checked>
-                <label class="form-check-label fw-bold text-dark" for="addr_default">
-                  <i class="fas fa-map-marker-alt text-danger me-1"></i> Sử dụng địa chỉ mặc định
-                </label>
+          <div class="card shadow-sm mb-4 p-4">
+            <h5 class="fw-bold mb-3">Địa chỉ nhận hàng</h5>
 
-                <div class="ms-4 mt-2 p-2 bg-light rounded-3 border-start border-primary border-3">
-                  <div class="d-flex align-items-center mb-1">
-                    <i class="fas fa-user-circle text-secondary me-2 small"></i>
-                    <span class="small"><strong>Người nhận:</strong>
-                      <?php echo htmlspecialchars($user['username']); ?></span>
-                  </div>
-                  <div class="d-flex align-items-center mb-1">
-                    <i class="fas fa-phone-alt text-secondary me-2 small"></i>
-                    <span class="small"><strong>SĐT:</strong> <span
-                        class="text-primary fw-bold"><?php echo htmlspecialchars($phone_default); ?></span></span>
-                  </div>
-                  <div class="d-flex align-items-start">
-                    <i class="fas fa-home text-secondary me-2 mt-1 small"></i>
-                    <span class="small text-muted"><strong>Địa chỉ:</strong>
-                      <?php echo htmlspecialchars($address_default); ?></span>
-                  </div>
+            <div class="form-check p-3 rounded mb-3 bg-white position-relative">
+              <input class="form-check-input ms-0 me-2" type="radio" name="address_option" id="addr_default"
+                value="default" checked onchange="toggleAddressNew()">
+              <label class="form-check-label fw-bold" for="addr_default">Sử dụng địa chỉ mặc định</label>
+              <div class="ms-4 mt-2 small p-2 bg-light rounded">
+                <div><i class="fas fa-user me-2 text-muted"></i><?php echo htmlspecialchars($user['username']); ?></div>
+                <div><i class="fas fa-phone me-2 text-muted"></i><?php echo htmlspecialchars($phone_default); ?></div>
+                <div><i
+                    class="fas fa-map-marker-alt me-2 text-muted"></i><?php echo htmlspecialchars($address_default); ?>
                 </div>
-
-                <span class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-primary px-2 py-1"
-                  style="font-size: 0.65rem;">
-                  Mặc định
-                </span>
               </div>
+            </div>
 
-              <div class="form-check p-3 border rounded mb-3 bg-white">
-                <input class="form-check-input ms-0 me-2" type="radio" name="address_option" id="addr_new" value="new">
-                <label class="form-check-label fw-bold" for="addr_new">Giao đến địa chỉ mới</label>
-              </div>
+            <div class="form-check p-3 rounded mb-3 bg-white">
+              <input class="form-check-input ms-0 me-2" type="radio" name="address_option" id="addr_new" value="new"
+                onchange="toggleAddressNew()">
+              <label class="form-check-label fw-bold" for="addr_new">Giao đến địa chỉ mới</label>
+            </div>
 
-              <div id="new_address_section" class="mt-3 p-3 border border-primary rounded-3 bg-white d-none">
-                <div class="row g-3">
-                  <div class="col-md-6">
-                    <label class="small fw-bold text-primary">Tỉnh/Thành</label>
-                    <select class="form-select shadow-none" id="city" name="city"></select>
-                  </div>
-                  <div class="col-md-6">
-                    <label class="small fw-bold text-primary">Phường/Xã</label>
-                    <select class="form-select shadow-none" id="ward" name="ward"></select>
-                  </div>
-                  <div class="col-12">
-                    <label class="small fw-bold">Số nhà, tên đường</label>
-                    <input type="text" name="house_number" class="form-control" placeholder="VD: 123 Đường ABC...">
-                  </div>
-                </div>
+            <div id="new_address_section" class="mt-2 p-3 border border-primary rounded-3 d-none">
+              <div class="row g-3">
+                <div class="col-md-6"><label class="small fw-bold">Tỉnh/Thành</label><select
+                    class="form-select shadow-none" id="city" name="city"></select></div>
+                <div class="col-md-6"><label class="small fw-bold">Phường/Xã</label><select
+                    class="form-select shadow-none" id="ward" name="ward"></select></div>
+                <div class="col-12"><label class="small fw-bold">Số nhà, tên đường</label><input type="text"
+                    name="house_number" class="form-control" placeholder="VD: 123 Đường ABC..."></div>
               </div>
             </div>
           </div>
 
-          <div class="card shadow-sm mb-4">
-            <div class="card-body p-4">
-              <h5 class="fw-bold mb-3">Phương thức thanh toán</h5>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="payment" value="cash" checked id="pay_cod">
-                <label class="form-check-label" for="pay_cod">Tiền mặt (COD)</label>
+          <div class="card shadow-sm mb-4 p-4">
+            <h5 class="fw-bold mb-3">Phương thức thanh toán</h5>
+
+            <div class="form-check p-2 rounded mb-2">
+              <input class="form-check-input" type="radio" name="payment" value="cash" checked id="pay_cod"
+                onchange="togglePaymentBox()">
+              <label class="form-check-label fw-bold" for="pay_cod"><i
+                  class="fas fa-money-bill-wave text-success me-2"></i>Tiền mặt (COD)</label>
+            </div>
+
+            <div class="form-check p-2 rounded mb-2">
+              <input class="form-check-input" type="radio" name="payment" value="transfer" id="pay_bank"
+                onchange="togglePaymentBox()">
+              <label class="form-check-label fw-bold" for="pay_bank"><i
+                  class="fas fa-university text-primary me-2"></i>Chuyển khoản</label>
+            </div>
+
+            <div id="bank_info" class="p-3 bank-box rounded mb-3 d-none animate__animated animate__fadeIn">
+              <p class="mb-1 small"><strong>MB Bank:</strong> 0123456789</p>
+              <p class="mb-1 small"><strong>Chủ TK:</strong> NGUYEN THE BAO</p>
+              <div class="text-center mt-2">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=ChuyenKhoanBao" width="100"
+                  class="border p-1 bg-white">
               </div>
             </div>
+
+            <div class="form-check p-2 rounded mb-2 opacity-75">
+              <input class="form-check-input" type="radio" name="payment" value="online" id="pay_online"
+                onchange="togglePaymentBox()">
+              <label class="form-check-label fw-bold" for="pay_online"><i class="fab fa-cc-visa text-info me-2"></i>Trực
+                tuyến (VNPay/Momo)</label>
+            </div>
+
+            <div id="online_msg" class="alert alert-warning py-2 small d-none mt-2">Tính năng đang phát triển!</div>
+
           </div>
-          <button type="submit" class="btn btn-primary btn-lg w-100 py-3 rounded-pill fw-bold">Xác nhận đặt
-            hàng</button>
+          <button type="submit" class="btn btn-primary btn-lg w-100 py-3 rounded-pill fw-bold">XÁC NHẬN ĐẶT
+            HÀNG</button>
         </form>
       </div>
 
       <div class="col-lg-5">
         <div class="sticky-summary">
-          <h4 class="fw-bold mb-4">Đơn hàng của bạn</h4>
-          <div class="card shadow-sm">
-            <ul class="list-group list-group-flush">
-              <?php foreach ($items as $item): $item_total = $item['price'] * $item['quantity']; ?>
-              <li class="list-group-item d-flex justify-content-between py-3">
-                <span><?php echo htmlspecialchars($item['name']); ?> (x<?php echo $item['quantity']; ?>)</span>
-                <span class="fw-bold"><?php echo formatPrice($item_total); ?></span>
+          <h4 class="fw-bold mb-4">Đơn hàng</h4>
+          <div class="card shadow-sm p-4 text-center bg-white">
+            <ul class="list-group list-group-flush mb-3">
+              <?php foreach ($items as $item): ?>
+              <li class="list-group-item d-flex justify-content-between px-0">
+                <span><?php echo $item['name']; ?> x<?php echo $item['quantity']; ?></span>
+                <strong><?php echo formatPrice($item['price'] * $item['quantity']); ?></strong>
               </li>
               <?php endforeach; ?>
             </ul>
-            <div class="card-footer bg-white p-4">
-              <div class="d-flex justify-content-between mb-2"><span>Tạm
-                  tính</span><span><?php echo formatPrice($subtotal); ?></span></div>
-              <div class="d-flex justify-content-between mb-3"><span>Phí
-                  ship</span><span><?php echo formatPrice($shipping); ?></span></div>
-              <hr>
-              <h5 class="d-flex justify-content-between fw-bold"><span>Tổng:</span><span
-                  class="text-danger"><?php echo formatPrice($total); ?></span></h5>
-            </div>
+            <hr>
+            <div class="d-flex justify-content-between mb-2"><span>Tạm
+                tính</span><span><?php echo formatPrice($subtotal); ?></span></div>
+            <div class="d-flex justify-content-between mb-3"><span>Phí
+                ship</span><span><?php echo formatPrice($shipping); ?></span></div>
+            <h5 class="d-flex justify-content-between fw-bold text-danger">
+              <span>Tổng:</span><span><?php echo formatPrice($total); ?></span></h5>
           </div>
         </div>
       </div>
@@ -233,39 +237,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <script>
   const city = document.getElementById("city");
   const ward = document.getElementById("ward");
-  const section = document.getElementById('new_address_section');
-  const rdoNew = document.getElementById('addr_new');
-  const rdoDef = document.getElementById('addr_default');
+  const addrNew = document.getElementById("new_address_section");
+  const bankBox = document.getElementById("bank_info");
+  const onlineMsg = document.getElementById("online_msg");
 
-  fetch('../api/get_location.php?action=get_provinces')
-    .then(res => res.json())
-    .then(data => {
-      city.innerHTML = '<option value="">Chọn Tỉnh Thành</option>';
-      data.forEach(p => city.options.add(new Option(p.name, p.code)));
-    });
+  function toggleAddressNew() {
+    if (document.getElementById("addr_new").checked) addrNew.classList.remove('d-none');
+    else addrNew.classList.add('d-none');
+  }
+
+  function togglePaymentBox() {
+    if (document.getElementById("pay_bank").checked) bankBox.classList.remove('d-none');
+    else bankBox.classList.add('d-none');
+
+    if (document.getElementById("pay_online").checked) onlineMsg.classList.remove('d-none');
+    else onlineMsg.classList.add('d-none');
+  }
+
+  fetch('../api/get_location.php?action=get_provinces').then(res => res.json()).then(data => {
+    city.innerHTML = '<option value="">Chọn Tỉnh</option>';
+    data.forEach(p => city.options.add(new Option(p.name, p.code)));
+  });
 
   city.onchange = () => {
     ward.length = 1;
     if (city.value) {
-      fetch(`../api/get_location.php?action=get_wards&province_code=${city.value}`)
-        .then(res => res.json())
-        .then(data => {
-          if (Array.isArray(data)) {
-            data.forEach(w => ward.options.add(new Option(w.name, w.code)));
-          }
+      fetch(`../api/get_location.php?action=get_wards&province_code=${city.value}`).then(res => res.json()).then(
+        data => {
+          if (Array.isArray(data)) data.forEach(w => ward.options.add(new Option(w.name, w.code)));
         });
     }
   };
-
-  function toggleForm() {
-    if (rdoNew.checked) {
-      section.classList.remove('d-none');
-    } else {
-      section.classList.add('d-none');
-    }
-  }
-  rdoNew.addEventListener('change', toggleForm);
-  rdoDef.addEventListener('change', toggleForm);
   </script>
 </body>
 

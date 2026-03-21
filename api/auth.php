@@ -13,8 +13,6 @@ class Auth {
     }
 
     private function tableExists($name) {
-        // Some MariaDB versions don’t allow parameter binding in SHOW TABLES.
-        // Use escaping and string interpolation instead.
         $nameEscaped = mysqli_real_escape_string($this->conn, $name);
         $sql = "SHOW TABLES LIKE '" . $nameEscaped . "'";
         $res = $this->conn->query($sql);
@@ -22,73 +20,61 @@ class Auth {
     }
 
     private function getUserTable() {
-        // Prefer the modern schema, but keep legacy support.
-        if (function_exists('get_user_table')) {
-            return get_user_table($this->conn);
-        }
         if ($this->tableExists('users')) return 'users';
         if ($this->tableExists('danh_sach_nguoi_dung')) return 'danh_sach_nguoi_dung';
         return null;
     }
 
-    // Register user (supports legacy schema `danh_sach_nguoi_dung` and newer `users` schema)
-public function register($data) {
+    // 1. ĐĂNG KÝ (Đã sửa cột address_default thành address)
+    public function register($data) {
+        $errors = validate_register($this->conn, $data);
+        if (!empty($errors)) {
+            return ['success' => false, 'errors' => $errors];
+        }
 
-    $errors = validate_register($this->conn, $data);
+        $table = $this->getUserTable();
+        if (!$table) {
+            return ['success' => false, 'error' => 'Bảng người dùng không tồn tại'];
+        }
 
-    if (!empty($errors)) {
-        return ['success'=>false,'errors'=>$errors];
-    }
+        $hash = password_hash($data['password'], PASSWORD_DEFAULT);
 
-    $table = get_user_table($this->conn);
+        // SỬA TẠI ĐÂY: Đổi address_default thành address để khớp DB
+        $stmt = $this->conn->prepare(
+            "INSERT INTO users (username, password, email, phone, address, role)
+             VALUES (?, ?, ?, ?, ?, 'customer')"
+        );
 
-    if (!$table) {
-        return ['success'=>false,'error'=>'Users table not found'];
-    }
+        $stmt->bind_param(
+            "sssss",
+            $data['username'],
+            $hash,
+            $data['email'],
+            $data['phone'],
+            $data['address'] // Chuỗi địa chỉ đã nối từ form đăng ký
+        );
 
-    $hash = password_hash($data['password'], PASSWORD_DEFAULT);
+        if (!$stmt->execute()) {
+            return ['success' => false, 'error' => $stmt->error];
+        }
 
-    $stmt = $this->conn->prepare(
-        "INSERT INTO users (username,password,email,phone,address_default,role)
-         VALUES (?,?,?,?,?, 'customer')"
-    );
+        $user_id = $this->conn->insert_id;
 
-    $stmt->bind_param(
-        "sssss",
-        $data['username'],
-        $hash,
-        $data['email'],
-        $data['phone'],
-        $data['address']
-    );
+        // Lưu Session để đăng nhập ngay sau khi đăng ký
+        $_SESSION['user_id'] = $user_id;
+        $_SESSION['username'] = $data['username'];
+        $_SESSION['user_type'] = 'user';
 
-    if (!$stmt->execute()) {
         return [
-            'success'=>false,
-            'error'=>$stmt->error
+            'success' => true,
+            'user' => ['id' => $user_id, 'username' => $data['username']]
         ];
     }
 
-    $user_id = $this->conn->insert_id;
-
-    $_SESSION['user_id'] = $user_id;
-    $_SESSION['username'] = $data['username'];
-    $_SESSION['user_type'] = 'user';
-
-    return [
-        'success'=>true,
-        'user'=>[
-            'id'=>$user_id,
-            'username'=>$data['username']
-        ]
-    ];
-}
-    // User login
+    // 2. ĐĂNG NHẬP NGƯỜI DÙNG
     public function userLogin($username, $password) {
         $table = $this->getUserTable();
-        if (!$table) {
-            return ['success' => false, 'error' => 'Authentication unavailable'];
-        }
+        if (!$table) return ['success' => false, 'error' => 'Hệ thống bận'];
 
         $stmt = $this->conn->prepare("SELECT * FROM $table WHERE username = ?");
         $stmt->bind_param("s", $username);
@@ -104,27 +90,22 @@ public function register($data) {
         return ['success' => false, 'error' => 'Sai tên đăng nhập hoặc mật khẩu'];
     }
 
-    // Admin login (supports `account`, `admins`, or legacy `danh_sach_nguoi_dung`)
+    // 3. ĐĂNG NHẬP ADMIN
     public function adminLogin($username, $password) {
         $table = $this->tableExists('account') ? 'account' : ($this->tableExists('admins') ? 'admins' : $this->getUserTable());
-        if (!$table) {
-            return ['success' => false, 'error' => 'Authentication unavailable'];
-        }
-
+        
         $stmt = $this->conn->prepare("SELECT * FROM $table WHERE username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $admin = $stmt->get_result()->fetch_assoc();
 
-if ($admin && ($password == $admin['password'] || password_verify($password,$admin['password']))) {
-
-    $_SESSION['admin_id'] = $admin['id'];
-    $_SESSION['username'] = $admin['username'];
-    $_SESSION['user_type'] = 'admin';
-
-    return ['success' => true];
-}
-        return ['success' => false, 'error' => 'Sai tên đăng nhập hoặc mật khẩu'];
+        if ($admin && ($password == $admin['password'] || password_verify($password, $admin['password']))) {
+            $_SESSION['admin_id'] = $admin['id'];
+            $_SESSION['username'] = $admin['username'];
+            $_SESSION['user_type'] = 'admin';
+            return ['success' => true];
+        }
+        return ['success' => false, 'error' => 'Sai tài khoản Admin'];
     }
 
     public function isLoggedIn($type = null) {
@@ -140,12 +121,12 @@ if ($admin && ($password == $admin['password'] || password_verify($password,$adm
         return true;
     }
 
+    // 4. LẤY THÔNG TIN USER HIỆN TẠI
     public function getCurrentUser() {
         if (isset($_SESSION['user_id'])) {
             $id = $_SESSION['user_id'];
             $table = $this->getUserTable();
-            if (!$table) return null;
-
+            
             $stmt = $this->conn->prepare("SELECT * FROM $table WHERE id = ?");
             $stmt->bind_param("i", $id);
             $stmt->execute();
@@ -155,6 +136,4 @@ if ($admin && ($password == $admin['password'] || password_verify($password,$adm
     }
 }
 
-// Usage
 $auth = new Auth($conn);
-?>

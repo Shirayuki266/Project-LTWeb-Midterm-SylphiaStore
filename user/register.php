@@ -9,29 +9,31 @@ require_once '../includes/functions.php';
 
 $auth = new Auth($conn);
 
-/* Nếu đã đăng nhập thì chuyển về trang chủ */
 if ($auth->isLoggedIn()) {
-    header('Location: index.php'); // Sửa lại thành index.php cho hợp lý
+    header('Location: index.php');
     exit;
 }
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Thu thập dữ liệu và nối chuỗi địa chỉ đầy đủ trước khi gửi vào Auth
-    $p_code = $_POST['city'] ?? '';
-    $w_code = $_POST['ward'] ?? '';
+    // 1. Lấy thông tin từ form
     $street = trim($_POST['address'] ?? '');
+    $ward_name = $_POST['ward_name'] ?? ''; // Lấy tên chữ từ input ẩn
+    $city_name = $_POST['city_name'] ?? ''; // Lấy tên chữ từ input ẩn
 
-    // Bạn có thể xử lý nối chuỗi ở đây hoặc trong Class Auth tùy thiết kế của bạn
+    // 2. Nối chuỗi địa chỉ đầy đủ để lưu vào cột 'address'
+    // Kết quả sẽ có dạng: "123 Đường ABC, Phường X, Tỉnh Y"
+    $full_address = $street;
+    if (!empty($ward_name)) $full_address .= ", " . $ward_name;
+    if (!empty($city_name)) $full_address .= ", " . $city_name;
+
     $data = [
         'username' => trim($_POST['username'] ?? ''),
         'email' => trim($_POST['email'] ?? ''),
         'phone' => trim($_POST['phone'] ?? ''),
         'password' => $_POST['password'] ?? '',
         'confirm_password' => $_POST['confirm_password'] ?? '',
-        'address' => $street,
-        'ward' => $w_code,      // Gửi mã code phường/xã
-        'city' => $p_code       // Gửi mã code tỉnh/tp
+        'address' => $full_address, // Gửi chuỗi đầy đủ vào Class Auth
     ];
 
     $result = $auth->register($data);
@@ -62,6 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
 
         <form method="POST" id="registerForm">
+          <input type="hidden" name="city_name" id="city_name">
+          <input type="hidden" name="ward_name" id="ward_name">
+
           <div class="row">
             <div class="col-md-6 mb-3">
               <label class="form-label small fw-bold">Tên đăng nhập</label>
@@ -81,6 +86,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               value="<?php echo htmlspecialchars($_POST['phone'] ?? ''); ?>">
           </div>
 
+          <div class="mb-3">
+            <label class="form-label small fw-bold">Số nhà, tên đường</label>
+            <input type="text" name="address" class="form-control" placeholder="VD: 123 Đường ABC..."
+              value="<?php echo htmlspecialchars($_POST['address'] ?? ''); ?>">
+          </div>
+
           <div class="row">
             <div class="col-md-6 mb-3">
               <label class="form-label small fw-bold text-primary">Tỉnh/Thành phố</label>
@@ -92,12 +103,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <option value="">Chọn Phường/Xã</option>
               </select>
             </div>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label small fw-bold">Số nhà, tên đường</label>
-            <input type="text" name="address" class="form-control" placeholder="VD: 123 Đường ABC..."
-              value="<?php echo htmlspecialchars($_POST['address'] ?? ''); ?>">
           </div>
 
           <div class="mb-3">
@@ -128,8 +133,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script>
 const city = document.getElementById("city");
 const ward = document.getElementById("ward");
+const city_name = document.getElementById("city_name");
+const ward_name = document.getElementById("ward_name");
 
-// 1. Tải danh sách 34 tỉnh
+// 1. Tải danh sách tỉnh
 fetch('../api/get_location.php?action=get_provinces')
   .then(res => res.json())
   .then(data => {
@@ -137,9 +144,12 @@ fetch('../api/get_location.php?action=get_provinces')
     data.forEach(p => city.options.add(new Option(p.name, p.code)));
   });
 
-// 2. Khi chọn Tỉnh -> Tải thẳng Xã (Bỏ qua Huyện)
+// 2. Khi chọn Tỉnh -> Lưu tên tỉnh và tải xã
 city.onchange = () => {
   ward.length = 1;
+  // Lưu tên chữ của Tỉnh vào ô ẩn
+  city_name.value = city.options[city.selectedIndex].text;
+
   if (city.value) {
     fetch(`../api/get_location.php?action=get_wards&province_code=${city.value}`)
       .then(res => res.json())
@@ -149,5 +159,10 @@ city.onchange = () => {
         }
       });
   }
+};
+
+// 3. Khi chọn Xã -> Lưu tên xã vào ô ẩn
+ward.onchange = () => {
+  ward_name.value = ward.options[ward.selectedIndex].text;
 };
 </script>
