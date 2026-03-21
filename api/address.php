@@ -1,58 +1,50 @@
 <?php
-require_once __DIR__ . '/../api/db.php';
+// api/address.php
+require_once __DIR__ . '/db.php'; 
 
 class Address {
-    private $conn;
+    private $db;
 
     public function __construct($conn) {
-        $this->conn = $conn;
+        $this->db = $conn;
     }
 
+    // 1. Lấy danh sách Tỉnh/Thành
     public function getProvinces() {
-        $result = $this->conn->query("SELECT id, name, code FROM provinces ORDER BY name");
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $result = $this->db->query("SELECT code, name FROM provinces ORDER BY name ASC");
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
-    public function getDistricts($provinceId) {
-        $stmt = $this->conn->prepare("SELECT id, name, code FROM districts WHERE province_id = ? ORDER BY name");
-        $stmt->bind_param("i", $provinceId);
+    // 2. Lấy Phường/Xã TRỰC TIẾP từ mã Tỉnh (Bỏ qua Huyện)
+    public function getWardsByProvince($provinceCode) {
+        // Câu lệnh SQL tìm trong bảng wards nơi có province_code khớp
+        $stmt = $this->db->prepare("SELECT code, name FROM wards WHERE province_code = ? ORDER BY name ASC");
+        $stmt->bind_param("s", $provinceCode);
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getWards($districtId) {
-        $stmt = $this->conn->prepare("SELECT id, name, code FROM wards WHERE district_id = ? ORDER BY name");
-        $stmt->bind_param("i", $districtId);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    }
-
-    public function getFullAddress($provinceId, $districtId, $wardId, $streetAddress = '') {
-        $address = [];
-
-        if ($wardId) {
-            $stmt = $this->conn->prepare("
-                SELECT w.name as ward, d.name as district, p.name as province
+    // 3. Hàm nối chuỗi địa chỉ (Chỉ còn Tỉnh và Xã)
+    public function getFullAddressShort($pCode, $wCode, $street = '') {
+        $addressParts = [];
+        if ($wCode) {
+            $stmt = $this->db->prepare("
+                SELECT w.name as ward, p.name as province
                 FROM wards w
-                JOIN districts d ON w.district_id = d.id
-                JOIN provinces p ON d.province_id = p.id
-                WHERE w.id = ?
+                JOIN provinces p ON w.province_code = p.code
+                WHERE w.code = ?
             ");
-            $stmt->bind_param("i", $wardId);
+            $stmt->bind_param("s", $wCode);
             $stmt->execute();
-            $result = $stmt->get_result()->fetch_assoc();
-            if ($result) {
-                $address[] = $result['ward'];
-                $address[] = $result['district'];
-                $address[] = $result['province'];
+            $res = $stmt->get_result()->fetch_assoc();
+            
+            if ($res) {
+                if (!empty(trim($street))) $addressParts[] = trim($street);
+                $addressParts[] = $res['ward'];
+                $addressParts[] = $res['province'];
             }
         }
-
-        if ($streetAddress) {
-            array_unshift($address, $streetAddress);
-        }
-
-        return implode(', ', $address);
+        return implode(', ', $addressParts);
     }
 }
 ?>
