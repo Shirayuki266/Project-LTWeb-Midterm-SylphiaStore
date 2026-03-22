@@ -12,7 +12,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 /* 2. XỬ LÝ RESET MẬT KHẨU */
 if (isset($_GET['reset_id'])) {
     $id = (int)$_GET['reset_id'];
-    $new_password = password_hash('123456', PASSWORD_DEFAULT); // Mật khẩu mặc định sau khi reset
+    $new_password = password_hash('123456', PASSWORD_DEFAULT); 
     
     $stmt = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
     $stmt->bind_param("si", $new_password, $id);
@@ -22,7 +22,8 @@ if (isset($_GET['reset_id'])) {
     } else {
         $_SESSION['error'] = "Lỗi khi reset mật khẩu!";
     }
-    header("Location: admin-QLKH.php");
+    // Chuyển hướng về chính trang này để tránh lặp lại hành động khi F5
+    header("Location: " . strtok($_SERVER["REQUEST_URI"], '?'));
     exit();
 }
 
@@ -33,7 +34,7 @@ if (isset($_GET['delete']) && isset($_GET['id'])) {
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $_SESSION['message'] = "Đã xóa khách hàng thành công";
-    header("Location: admin-QLKH.php");
+    header("Location: " . strtok($_SERVER["REQUEST_URI"], '?'));
     exit();
 }
 
@@ -55,6 +56,13 @@ $customers = $conn->query("SELECT * FROM users ORDER BY created_at DESC")->fetch
   <?php if ($message): ?>
   <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 mb-4" role="alert">
     <i class="fas fa-check-circle me-2"></i><?php echo $message; ?>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+  <?php endif; ?>
+
+  <?php if ($error): ?>
+  <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0 mb-4" role="alert">
+    <i class="fas fa-exclamation-circle me-2"></i><?php echo $error; ?>
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
   </div>
   <?php endif; ?>
@@ -94,8 +102,10 @@ $customers = $conn->query("SELECT * FROM users ORDER BY created_at DESC")->fetch
               <div class="small text-muted"><i
                   class="fas fa-phone me-1"></i><?php echo htmlspecialchars($c['phone'] ?? 'N/A'); ?></div>
             </td>
-            <td><span
-                class="badge bg-light text-dark border"><?php echo isset($c['created_at']) ? date('d/m/Y', strtotime($c['created_at'])) : '--'; ?></span>
+            <td>
+              <span class="badge bg-light text-dark border">
+                <?php echo isset($c['created_at']) ? date('d/m/Y', strtotime($c['created_at'])) : '--'; ?>
+              </span>
             </td>
             <td class="text-end pe-3">
               <div class="btn-group">
@@ -122,7 +132,7 @@ $customers = $conn->query("SELECT * FROM users ORDER BY created_at DESC")->fetch
   </div>
 </div>
 
-<div class="modal fade" id="customerModal" tabindex="-1">
+<div class="modal fade" id="customerModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content border-0 shadow">
       <div class="modal-header">
@@ -134,6 +144,10 @@ $customers = $conn->query("SELECT * FROM users ORDER BY created_at DESC")->fetch
     </div>
   </div>
 </div>
+
+<?php include 'admin-footer.php'; ?>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
 // Search thực tế
@@ -152,18 +166,24 @@ function viewCustomer(id) {
       if (data.success) {
         const c = data.customer;
         document.getElementById("customerDetails").innerHTML = `
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between"><span>ID:</span> <strong>#${c.id}</strong></li>
-                    <li class="list-group-item d-flex justify-content-between"><span>Username:</span> <strong>${c.username}</strong></li>
-                    <li class="list-group-item d-flex justify-content-between"><span>Email:</span> <strong>${c.email}</strong></li>
-                    <li class="list-group-item d-flex justify-content-between"><span>SĐT:</span> <strong>${c.phone || 'N/A'}</strong></li>
-                    <li class="list-group-item d-flex justify-content-between"><span>Ngày đăng ký:</span> <strong>${new Date(c.created_at).toLocaleDateString('vi-VN')}</strong></li>
-                </ul>
-            `;
-        new bootstrap.Modal(document.getElementById("customerModal")).show();
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between"><span>ID:</span> <strong>#${c.id}</strong></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Username:</span> <strong>${c.username}</strong></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Email:</span> <strong>${c.email}</strong></li>
+                <li class="list-group-item d-flex justify-content-between"><span>SĐT:</span> <strong>${c.phone || 'N/A'}</strong></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Ngày đăng ký:</span> <strong>${new Date(c.created_at).toLocaleDateString('vi-VN')}</strong></li>
+            </ul>
+        `;
+        // Hiển thị Modal
+        var myModal = new bootstrap.Modal(document.getElementById('customerModal'));
+        myModal.show();
+      } else {
+        alert("Lỗi: " + data.message);
       }
+    })
+    .catch(err => {
+      console.error("Lỗi Fetch:", err);
+      alert("Không thể kết nối tới máy chủ!");
     });
 }
 </script>
-
-<?php include 'admin-footer.php'; ?>

@@ -4,17 +4,17 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once '../api/db.php';
-// require_once '../api/products.php'; // Use AJAX instead
 require_once '../includes/functions.php';
 
-/* HOT PRODUCTS - Direct query to avoid class */
-$hotProducts = $conn->query("SELECT id, name, price, image FROM products ORDER BY id DESC LIMIT 8")->fetch_all(MYSQLI_ASSOC);
+/* HOT PRODUCTS - Thêm điều kiện WHERE status = 1 */
+$hotProducts = $conn->query("SELECT id, name, price, image FROM products WHERE status = 1 ORDER BY id DESC LIMIT 8")->fetch_all(MYSQLI_ASSOC);
 
-/* FLASH SALE */
-$flashSaleProducts = $conn->query("SELECT id, name, price, image FROM products ORDER BY RAND() LIMIT 4")->fetch_all(MYSQLI_ASSOC);
+/* FLASH SALE - Thêm điều kiện WHERE status = 1 */
+$flashSaleProducts = $conn->query("SELECT id, name, price, image FROM products WHERE status = 1 ORDER BY RAND() LIMIT 4")->fetch_all(MYSQLI_ASSOC);
 
-/* CATEGORIES */
-$cats = $conn->query("SELECT * FROM categories LIMIT 8")->fetch_all(MYSQLI_ASSOC);
+/* CATEGORIES - Chỉ lấy các danh mục đang hiển thị (nếu bảng categories có cột status) */
+$cats = $conn->query("SELECT * FROM categories WHERE status = 1 LIMIT 8")->fetch_all(MYSQLI_ASSOC);
+
 $page_title = 'Trang chủ';
 include 'header.php';
 ?>
