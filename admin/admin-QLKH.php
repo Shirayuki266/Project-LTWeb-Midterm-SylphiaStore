@@ -12,57 +12,46 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 /* 2. XỬ LÝ RESET MẬT KHẨU */
 if (isset($_GET['reset_id'])) {
     $id = (int)$_GET['reset_id'];
-    $new_password = password_hash('123456', PASSWORD_DEFAULT); 
-    
+    $new_pw = password_hash('123456', PASSWORD_DEFAULT); 
     $stmt = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
-    $stmt->bind_param("si", $new_password, $id);
-    
+    $stmt->bind_param("si", $new_pw, $id);
     if ($stmt->execute()) {
-        $_SESSION['message'] = "Đã reset mật khẩu khách hàng #$id về mặc định: 123456";
-    } else {
-        $_SESSION['error'] = "Lỗi khi reset mật khẩu!";
+        $_SESSION['msg'] = "Đã reset mật khẩu KH #$id về: 123456";
     }
-    // Chuyển hướng về chính trang này để tránh lặp lại hành động khi F5
-    header("Location: " . strtok($_SERVER["REQUEST_URI"], '?'));
+    header("Location: admin-QLKH.php");
     exit();
 }
 
-/* 3. XỬ LÝ XÓA KHÁCH HÀNG */
-if (isset($_GET['delete']) && isset($_GET['id'])) {
+/* 3. XỬ LÝ KHÓA/MỞ KHÓA (Điều khiển cột status có sẵn) */
+if (isset($_GET['toggle_status'])) {
     $id = (int)$_GET['id'];
-    $stmt = $conn->prepare("DELETE FROM users WHERE id=?");
-    $stmt->bind_param("i", $id);
+    $new_status = (int)$_GET['set']; // 0: Khóa, 1: Mở
+    $stmt = $conn->prepare("UPDATE users SET status = ? WHERE id = ?");
+    $stmt->bind_param("ii", $new_status, $id);
     $stmt->execute();
-    $_SESSION['message'] = "Đã xóa khách hàng thành công";
-    header("Location: " . strtok($_SERVER["REQUEST_URI"], '?'));
+    $_SESSION['msg'] = ($new_status == 0) ? "Đã khóa tài khoản #$id" : "Đã mở khóa tài khoản #$id";
+    header("Location: admin-QLKH.php");
     exit();
 }
 
-$message = $_SESSION['message'] ?? '';
-$error = $_SESSION['error'] ?? '';
-unset($_SESSION['message'], $_SESSION['error']);
+$message = $_SESSION['msg'] ?? '';
+unset($_SESSION['msg']);
 
-/* 4. LẤY DANH SÁCH */
-$customers = $conn->query("SELECT * FROM users ORDER BY created_at DESC")->fetch_all(MYSQLI_ASSOC);
+/* 4. LẤY DANH SÁCH KHÁCH HÀNG (Chỉ lấy role 'customer') */
+$sql = "SELECT * FROM users WHERE role = 'customer' ORDER BY created_at DESC";
+$customers = $conn->query($sql)->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <?php include 'header.php'; ?>
 
 <div class="container-fluid py-4 px-md-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="h3 mb-0 fw-bold"><i class="fas fa-users-cog me-2"></i>Quản lý khách hàng</h2>
+    <h2 class="h3 mb-0 fw-bold text-dark"><i class="fas fa-users-cog me-2 text-primary"></i>Quản lý Khách hàng</h2>
   </div>
 
   <?php if ($message): ?>
-  <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 mb-4" role="alert">
-    <i class="fas fa-check-circle me-2"></i><?php echo $message; ?>
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-  </div>
-  <?php endif; ?>
-
-  <?php if ($error): ?>
-  <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0 mb-4" role="alert">
-    <i class="fas fa-exclamation-circle me-2"></i><?php echo $error; ?>
+  <div class="alert alert-success border-0 shadow-sm alert-dismissible fade show">
+    <i class="fas fa-check-circle me-2"></i><?= $message ?>
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
   </div>
   <?php endif; ?>
@@ -72,7 +61,7 @@ $customers = $conn->query("SELECT * FROM users ORDER BY created_at DESC")->fetch
       <div class="input-group">
         <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
         <input type="text" id="searchInput" class="form-control border-start-0"
-          placeholder="Tìm tên, email hoặc số điện thoại...">
+          placeholder="Tìm tên, email, SĐT hoặc mã khách hàng...">
       </div>
     </div>
   </div>
@@ -84,44 +73,48 @@ $customers = $conn->query("SELECT * FROM users ORDER BY created_at DESC")->fetch
           <tr>
             <th class="ps-3">ID</th>
             <th>Khách hàng</th>
-            <th>Liên hệ</th>
-            <th>Ngày tạo</th>
+            <th>Trạng thái</th>
+            <th>Ngày tham gia</th>
             <th class="text-end pe-3">Hành động</th>
           </tr>
         </thead>
         <tbody id="customersTable">
           <?php foreach ($customers as $c): ?>
-          <tr>
-            <td class="ps-3 text-muted">#<?php echo $c['id']; ?></td>
+          <tr class="<?= ($c['status'] == 0) ? 'table-light opacity-75' : '' ?>">
+            <td class="ps-3 text-muted">#<?= $c['id'] ?></td>
             <td>
-              <div class="fw-bold"><?php echo htmlspecialchars($c['username'] ?? 'User'); ?></div>
-              <small class="text-muted">Tài khoản khách</small>
+              <div class="fw-bold"><?= htmlspecialchars($c['username']) ?></div>
+              <small class="text-muted"><?= htmlspecialchars($c['email']) ?></small>
             </td>
             <td>
-              <div><i class="fas fa-envelope me-1 small"></i><?php echo htmlspecialchars($c['email'] ?? 'N/A'); ?></div>
-              <div class="small text-muted"><i
-                  class="fas fa-phone me-1"></i><?php echo htmlspecialchars($c['phone'] ?? 'N/A'); ?></div>
+              <?php if($c['status'] == 1): ?>
+              <span class="badge bg-success shadow-sm">Hoạt động</span>
+              <?php else: ?>
+              <span class="badge bg-danger shadow-sm">Bị khóa</span>
+              <?php endif; ?>
             </td>
-            <td>
-              <span class="badge bg-light text-dark border">
-                <?php echo isset($c['created_at']) ? date('d/m/Y', strtotime($c['created_at'])) : '--'; ?>
-              </span>
-            </td>
+            <td><small><?= date('d/m/Y', strtotime($c['created_at'])) ?></small></td>
             <td class="text-end pe-3">
-              <div class="btn-group">
-                <button class="btn btn-sm btn-outline-info" onclick="viewCustomer(<?php echo $c['id']; ?>)"
-                  title="Chi tiết">
-                  <i class="fas fa-eye"></i>
+              <div class="btn-group shadow-sm bg-white rounded">
+                <button class="btn btn-sm btn-outline-secondary" onclick="viewCustomer(<?= $c['id'] ?>)"
+                  title="Xem chi tiết">
+                  <i class="fas fa-eye text-info"></i>
                 </button>
-                <a href="?reset_id=<?php echo $c['id']; ?>" class="btn btn-sm btn-outline-warning"
-                  onclick="return confirm('Bạn có chắc muốn đặt lại mật khẩu khách hàng này về 123456?')"
-                  title="Reset mật khẩu">
-                  <i class="fas fa-key"></i>
+                <a href="?reset_id=<?= $c['id'] ?>" class="btn btn-sm btn-outline-secondary"
+                  onclick="return confirm('Đặt lại mật khẩu về 123456?')" title="Reset mật khẩu">
+                  <i class="fas fa-key text-warning"></i>
                 </a>
-                <a href="?delete=1&id=<?php echo $c['id']; ?>" class="btn btn-sm btn-outline-danger"
-                  onclick="return confirm('Xác nhận xóa vĩnh viễn khách hàng này?')" title="Xóa">
-                  <i class="fas fa-trash"></i>
+                <?php if($c['status'] == 1): ?>
+                <a href="?toggle_status=1&id=<?= $c['id'] ?>&set=0" class="btn btn-sm btn-outline-secondary"
+                  onclick="return confirm('Khóa tài khoản này?')" title="Khóa tài khoản">
+                  <i class="fas fa-user-slash text-danger"></i>
                 </a>
+                <?php else: ?>
+                <a href="?toggle_status=1&id=<?= $c['id'] ?>&set=1" class="btn btn-sm btn-outline-secondary"
+                  onclick="return confirm('Mở khóa tài khoản này?')" title="Mở khóa tài khoản">
+                  <i class="fas fa-user-check text-success"></i>
+                </a>
+                <?php endif; ?>
               </div>
             </td>
           </tr>
@@ -135,22 +128,19 @@ $customers = $conn->query("SELECT * FROM users ORDER BY created_at DESC")->fetch
 <div class="modal fade" id="customerModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content border-0 shadow">
-      <div class="modal-header">
-        <h5 class="modal-title fw-bold">Thông tin chi tiết</h5>
+      <div class="modal-header bg-light">
+        <h5 class="modal-title fw-bold">Chi tiết khách hàng</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-      <div class="modal-body" id="customerDetails">
-      </div>
+      <div class="modal-body p-0" id="customerDetails"></div>
     </div>
   </div>
 </div>
 
 <?php include 'admin-footer.php'; ?>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
-// Search thực tế
+// Search Client-side
 document.getElementById("searchInput").addEventListener("input", function() {
   let val = this.value.toLowerCase();
   document.querySelectorAll("#customersTable tr").forEach(row => {
@@ -158,7 +148,7 @@ document.getElementById("searchInput").addEventListener("input", function() {
   });
 });
 
-// View chi tiết
+// Load Modal chi tiết
 function viewCustomer(id) {
   fetch(`../api/get_customer.php?id=${id}`)
     .then(r => r.json())
@@ -166,24 +156,17 @@ function viewCustomer(id) {
       if (data.success) {
         const c = data.customer;
         document.getElementById("customerDetails").innerHTML = `
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between"><span>ID:</span> <strong>#${c.id}</strong></li>
-                <li class="list-group-item d-flex justify-content-between"><span>Username:</span> <strong>${c.username}</strong></li>
-                <li class="list-group-item d-flex justify-content-between"><span>Email:</span> <strong>${c.email}</strong></li>
-                <li class="list-group-item d-flex justify-content-between"><span>SĐT:</span> <strong>${c.phone || 'N/A'}</strong></li>
-                <li class="list-group-item d-flex justify-content-between"><span>Ngày đăng ký:</span> <strong>${new Date(c.created_at).toLocaleDateString('vi-VN')}</strong></li>
-            </ul>
-        `;
-        // Hiển thị Modal
-        var myModal = new bootstrap.Modal(document.getElementById('customerModal'));
-        myModal.show();
-      } else {
-        alert("Lỗi: " + data.message);
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item d-flex justify-content-between"><span>ID:</span> <strong>#${c.id}</strong></div>
+                    <div class="list-group-item d-flex justify-content-between"><span>Hạng:</span> <strong class="text-uppercase text-primary">${c.vip_level}</strong></div>
+                    <div class="list-group-item d-flex justify-content-between"><span>Họ tên:</span> <strong>${c.username}</strong></div>
+                    <div class="list-group-item d-flex justify-content-between"><span>Email:</span> <strong>${c.email}</strong></div>
+                    <div class="list-group-item d-flex justify-content-between"><span>SĐT:</span> <strong>${c.phone || 'N/A'}</strong></div>
+                    <div class="list-group-item d-flex justify-content-between"><span>Địa chỉ:</span> <strong>${c.address || 'N/A'}</strong></div>
+                </div>
+            `;
+        new bootstrap.Modal(document.getElementById('customerModal')).show();
       }
-    })
-    .catch(err => {
-      console.error("Lỗi Fetch:", err);
-      alert("Không thể kết nối tới máy chủ!");
     });
 }
 </script>

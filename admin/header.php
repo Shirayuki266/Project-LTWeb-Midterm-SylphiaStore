@@ -50,6 +50,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
   .nav-link:hover {
     color: #fff;
     background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
   }
 
   .nav-link.active {
@@ -58,6 +59,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
     font-weight: 600;
   }
 
+  .nav-link i {
+    width: 20px;
+    text-align: center;
+  }
+
+  /* Giúp các icon thẳng hàng */
   .main-content {
     flex-grow: 1;
     min-height: 100vh;
@@ -68,7 +75,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
 <body>
   <div class="d-flex">
-
     <aside class="sidebar bg-dark text-white vh-100 p-3 shadow-lg flex-shrink-0 position-sticky top-0">
 
       <div class="sidebar-header p-3 pb-4 mb-4 border-bottom border-secondary">
@@ -107,6 +113,17 @@ $current_page = basename($_SERVER['PHP_SELF']);
           href="admin-QLGia.php">
           <i class="fas fa-tags me-2"></i> Giá cả
         </a>
+
+        <a class="nav-link rounded px-3 py-2 <?php echo ($current_page == 'admin-QLPhieuNH.php') ? 'active' : ''; ?>"
+          href="admin-QLPhieuNH.php">
+          <i class="fas fa-file-import me-2"></i> Phiếu Nhập Hàng
+        </a>
+
+        <a class="nav-link rounded px-3 py-2 <?php echo ($current_page == 'admin-inventory.php') ? 'active' : ''; ?>"
+          href="admin-inventory.php">
+          <i class="fa-solid fa-chart-line me-2"></i> Thống kê Kho và Báo cáo
+        </a>
+
       </nav>
 
       <div class="sidebar-footer mt-auto pt-4 border-top border-secondary">
@@ -123,6 +140,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
       <header class="navbar navbar-white sticky-top bg-white p-3 shadow-sm mb-4">
         <div class="container-fluid">
           <span class="navbar-brand mb-0 h1 fs-6 text-muted">Hệ thống quản trị /
-            <?php echo str_replace('admin-', '', str_replace('.php', '', $current_page)); ?></span>
+            <span class="text-dark fw-bold"><?php echo str_replace(['admin-', '.php'], '', $current_page); ?></span>
+          </span>
         </div>
       </header>

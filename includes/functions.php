@@ -222,5 +222,38 @@ function getStock($conn, $id)
     return 100;
 }
 }
+/* =============================
+    CHECK USER STATUS (Sửa lỗi vẫn vào được khi bị khóa)
+============================= */
 
+if (!function_exists('check_user_active')) {
+    function check_user_active($conn)
+    {
+        // Nếu chưa đăng nhập thì không cần check
+        if (!isset($_SESSION['user_id'])) return true;
+
+        $user_id = (int)$_SESSION['user_id'];
+        $table = get_user_table($conn);
+
+        if (!$table) return true;
+
+        // Truy vấn trực tiếp từ DB để lấy trạng thái mới nhất
+        $stmt = $conn->prepare("SELECT status FROM $table WHERE id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $user = $res->fetch_assoc();
+        $stmt->close();
+
+        // Nếu user không tồn tại hoặc status = 0 (Bị khóa)
+        if (!$user || (isset($user['status']) && (int)$user['status'] === 0)) {
+            // Hủy toàn bộ phiên làm việc
+            session_unset();
+            session_destroy();
+            return false;
+        }
+
+        return true;
+    }
+}
 ?>

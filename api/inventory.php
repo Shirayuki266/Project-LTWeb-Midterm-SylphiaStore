@@ -1,44 +1,46 @@
 <?php
 session_start();
+require_once 'db.php';
 header('Content-Type: application/json');
 
-// 1. Kiểm tra đăng nhập Admin
-if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    echo json_encode(['success' => false, 'error' => 'Bạn không có quyền truy cập']);
-    exit();
-}
-
-require_once 'db.php'; // Đảm bảo đường dẫn này đúng tới file kết nối database của bạn
-
-// 2. Kiểm tra dữ liệu đầu vào
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $product_id = isset($_POST['id']) ? intval($_POST['id']) : 0;
-    $quantity_to_add = isset($_POST['quantity']) ? intval($_POST['quantity']) : 0;
+    $product_id = (int)$_POST['id'];
+    $quantity = (int)$_POST['quantity'];
+    $admin_id = $_SESSION['admin_id'] ?? 1; // ID admin đang thực hiện
 
-    if ($product_id <= 0 || $quantity_to_add <= 0) {
-        echo json_encode(['success' => false, 'error' => 'Dữ liệu không hợp lệ (ID hoặc số lượng phải lớn hơn 0)']);
-        exit();
+    if ($quantity <= 0) {
+        echo json_encode(['success' => false, 'error' => 'Số lượng nhập phải lớn hơn 0']);
+        exit;
     }
+
+    // Bắt đầu Transaction để tránh lỗi dữ liệu không đồng bộ
+    $conn->begin_transaction();
 
     try {
-    // Sử dụng INSERT ... ON DUPLICATE KEY UPDATE 
-    // Nếu sản phẩm chưa có trong bảng inventory thì thêm mới, nếu có rồi thì cộng dồn stock
-    $sql = "INSERT INTO inventory (product_id, stock) 
-            VALUES (?, ?) 
-            ON DUPLICATE KEY UPDATE stock = stock + ?";
-    
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iii", $product_id, $quantity_to_add, $quantity_to_add);
+        // BƯỚC 1: Tạo Phiếu nhập (import_receipts)
+        // Lưu ý: Kiểm tra lại tên cột trong bảng của bạn (ví dụ: admin_id hay created_by)
+        $stmt1 = $conn->prepare("INSERT INTO import_receipts (admin_id, created_at) VALUES (?, NOW())");
+        $stmt1->bind_param("i", $admin_id);
+        $stmt1->execute();
+        $receipt_id = $conn->insert_id;
 
-    if ($stmt->execute()) {
+        // BƯỚC 2: Thêm Chi tiết phiếu nhập (import_items)
+        // Giả sử bảng import_items có các cột: import_receipt_id, product_id, quantity
+        $stmt2 = $conn->prepare("INSERT INTO import_items (import_receipt_id, product_id, quantity) VALUES (?, ?, ?)");
+        $stmt2->bind_param("iii", $receipt_id, $product_id, $quantity);
+        $stmt2->execute();
+
+        // BƯỚC 3: Cập nhật tồn kho thực tế của sản phẩm
+        $stmt3 = $conn->prepare("UPDATE products SET stock = stock + ? WHERE id = ?");
+        $stmt3->bind_param("ii", $quantity, $product_id);
+        $stmt3->execute();
+
+        $conn->commit(); // Xác nhận lưu mọi thay đổi
         echo json_encode(['success' => true]);
-    } else {
-        echo json_encode(['success' => false, 'error' => 'Lỗi SQL: ' . $conn->error]);
+
+    } catch (Exception $e) {
+        $conn->rollback(); // Nếu có lỗi, hủy toàn bộ các bước trên
+        echo json_encode(['success' => false, 'error' => "Lỗi hệ thống: " . $e->getMessage()]);
     }
-    $stmt->close();
-} catch (Exception $e) {
-    echo json_encode(['success' => false, 'error' => 'Lỗi hệ thống: ' . $e->getMessage()]);
-}
-} else {
-    echo json_encode(['success' => false, 'error' => 'Phương thức yêu cầu không hợp lệ']);
+    exit;
 }

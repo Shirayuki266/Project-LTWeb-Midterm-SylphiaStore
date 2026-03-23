@@ -111,26 +111,44 @@ function viewDetails(poId) {
   document.getElementById('displayPoId').innerText = poId;
   const content = document.getElementById('detailContent');
   content.innerHTML =
-    '<tr><td colspan="4" class="text-center py-4"><div class="spinner-border text-secondary"></div></td></tr>';
+    '<tr><td colspan="4" class="text-center py-4"><div class="spinner-border text-primary spinner-border-sm me-2"></div> Đang tải...</td></tr>';
 
-  const myModal = new bootstrap.Modal(document.getElementById('detailModal'));
+  const detailModalElement = document.getElementById('detailModal');
+  const myModal = bootstrap.Modal.getOrCreateInstance(detailModalElement);
   myModal.show();
 
-  // Bạn cần tạo file api/get_purchase_details.php để trả về dữ liệu này
   fetch(`../api/get_purchase_details.php?id=${poId}`)
     .then(r => r.json())
     .then(data => {
+      if (data.length === 0) {
+        content.innerHTML =
+          '<tr><td colspan="4" class="text-center py-4 text-muted">Không có dữ liệu chi tiết.</td></tr>';
+        return;
+      }
       content.innerHTML = '';
+      let totalAmount = 0;
       data.forEach(item => {
+        let subtotal = item.import_price * item.quantity;
+        totalAmount += subtotal;
         content.innerHTML += `
-                <tr>
-                    <td>${item.product_name}</td>
-                    <td class="text-center">${item.quantity}</td>
-                    <td class="text-end">${new Intl.NumberFormat('vi-VN').format(item.import_price)}₫</td>
-                    <td class="text-end fw-bold pe-3">${new Intl.NumberFormat('vi-VN').format(item.import_price * item.quantity)}₫</td>
+                    <tr>
+                        <td class="fw-medium">${item.product_name}</td>
+                        <td class="text-center">${item.quantity}</td>
+                        <td class="text-end">${new Intl.NumberFormat('vi-VN').format(item.import_price)}₫</td>
+                        <td class="text-end fw-bold pe-3">${new Intl.NumberFormat('vi-VN').format(subtotal)}₫</td>
+                    </tr>
+                `;
+      });
+      // Thêm dòng tổng cộng ở cuối bảng trong Modal
+      content.innerHTML += `
+                <tr class="table-light">
+                    <td colspan="3" class="text-end fw-bold">Tổng tiền phiếu:</td>
+                    <td class="text-end fw-bold text-primary pe-3 fs-5">${new Intl.NumberFormat('vi-VN').format(totalAmount)}₫</td>
                 </tr>
             `;
-      });
+    })
+    .catch(err => {
+      content.innerHTML = '<tr><td colspan="4" class="text-center py-4 text-danger">Lỗi kết nối dữ liệu!</td></tr>';
     });
 }
 </script>
