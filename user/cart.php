@@ -40,32 +40,44 @@ $current_page = "cart";
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+  /* 1. Sửa lỗi Sticky đè lên Header */
+  .sticky-summary {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 100px;
+    /* Khoảng cách an toàn để không chạm vào Header */
+    z-index: 10;
+    margin-bottom: 2rem;
+  }
+
+  /* 2. Style cho ảnh sản phẩm trong giỏ */
   .product-img {
     width: 80px;
     height: 80px;
     object-fit: contain;
-    background: #ffffff;
+    background: #fff;
     border-radius: 12px;
     padding: 5px;
-    border: 1px solid #eee;
+    border: 1px solid #f0f0f0;
   }
 
-  .qty-input {
-    max-width: 110px;
-  }
-
-  .card {
-    border-radius: 15px;
+  /* 3. Tinh chỉnh Card tóm tắt */
+  .card-summary {
     border: none;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
   }
 
-  .btn-primary {
-    background-color: #0066cc;
+  .btn-checkout {
+    background: #0066cc;
     border: none;
+    transition: all 0.3s ease;
   }
 
-  .btn-primary:hover {
-    background-color: #004499;
+  .btn-checkout:hover {
+    background: #0052a3;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
   }
   </style>
 </head>
@@ -156,26 +168,51 @@ $current_page = "cart";
       </div>
 
       <div class="col-lg-4">
-        <div class="card shadow-sm sticky-top" style="top:100px">
-          <div class="card-body p-4 text-center">
-            <h5 class="fw-bold mb-4 text-start">Tóm tắt đơn hàng</h5>
-            <div class="d-flex justify-content-between mb-3 text-secondary">
-              <span>Tạm tính:</span>
-              <span class="fw-bold text-dark"><?php echo formatPrice($total); ?></span>
+        <div class="sticky-summary">
+          <div class="card card-summary">
+            <div class="card-body p-4">
+              <h5 class="fw-bold mb-4 border-bottom pb-2">Tóm tắt đơn hàng</h5>
+
+              <div class="d-flex justify-content-between mb-3 text-secondary">
+                <span>Tạm tính (<?php echo $total_items; ?> sản phẩm):</span>
+                <span class="fw-bold text-dark"><?php echo number_format($total, 0, ',', '.'); ?>₫</span>
+              </div>
+
+              <div class="d-flex justify-content-between mb-3 text-secondary">
+                <span>Phí vận chuyển:</span>
+                <span class="fw-bold text-success">30.000₫</span>
+              </div>
+
+              <hr class="my-4 opacity-25">
+
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <span class="fw-bold fs-5">Tổng cộng:</span>
+                <div class="text-end">
+                  <span class="text-primary fw-bold fs-3 d-block">
+                    <?php echo number_format($total + 30000, 0, ',', '.'); ?>₫
+                  </span>
+                  <small class="text-muted">(Đã bao gồm VAT)</small>
+                </div>
+              </div>
+
+              <a href="checkout.php" class="btn btn-primary btn-lg w-100 py-3 rounded-pill fw-bold">
+                Thanh toán ngay
+              </a>
+
+              <a href="products.php"
+                class="btn btn-light btn-lg w-100 py-3 rounded-pill mt-3 border text-muted shadow-sm">
+                <i class="fas fa-arrow-left me-2 small"></i>Quay lại mua sắm
+              </a>
+
+              <div class="mt-4 pt-3 border-top text-center">
+                <small class="text-muted d-block mb-2">Hỗ trợ thanh toán:</small>
+                <div class="d-flex justify-content-center gap-3 opacity-50 fs-4">
+                  <i class="fab fa-cc-visa"></i>
+                  <i class="fab fa-cc-mastercard"></i>
+                  <i class="fas fa-money-bill-wave"></i>
+                </div>
+              </div>
             </div>
-            <div class="d-flex justify-content-between mb-3 text-secondary">
-              <span>Phí vận chuyển:</span>
-              <span class="fw-bold text-dark">30,000₫</span>
-            </div>
-            <hr class="my-4">
-            <div class="d-flex justify-content-between fw-bold fs-4 mb-4">
-              <span>Tổng cộng:</span>
-              <span class="text-primary"><?php echo formatPrice($total + 30000); ?></span>
-            </div>
-            <a href="checkout.php" class="btn btn-primary w-100 py-3 rounded-pill fw-bold shadow-sm mb-3">
-              Thanh toán ngay
-            </a>
-            <a href="products.php" class="btn btn-light w-100 py-2 rounded-pill text-muted border">Quay lại mua sắm</a>
           </div>
         </div>
       </div>
