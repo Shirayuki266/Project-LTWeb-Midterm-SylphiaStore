@@ -1,6 +1,6 @@
 <?php
 // setup_db.php - Create/Setup Demo DB for Sylphia Shop
-// Run: http://localhost/web%20b/setup_db.php or php setup_db.php
+// Run: http://localhost/web b/setup_db.php or php setup_db.php
 // Uses phpMyAdmin DB 'Sylphia_Shop' convention. Imports enhanced_schema.sql fake data.
 
 echo "<h2>Sylphia Shop - Demo DB Setup</h2>";
