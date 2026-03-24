@@ -226,7 +226,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="d-flex justify-content-between mb-3"><span>Phí
                 ship</span><span><?php echo formatPrice($shipping); ?></span></div>
             <h5 class="d-flex justify-content-between fw-bold text-danger">
-              <span>Tổng:</span><span><?php echo formatPrice($total); ?></span></h5>
+              <span>Tổng:</span><span><?php echo formatPrice($total); ?></span>
+            </h5>
           </div>
         </div>
       </div>

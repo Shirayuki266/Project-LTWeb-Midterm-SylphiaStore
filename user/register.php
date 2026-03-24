@@ -86,12 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               value="<?php echo htmlspecialchars($_POST['phone'] ?? ''); ?>">
           </div>
 
-          <div class="mb-3">
-            <label class="form-label small fw-bold">Số nhà, tên đường</label>
-            <input type="text" name="address" class="form-control" placeholder="VD: 123 Đường ABC..."
-              value="<?php echo htmlspecialchars($_POST['address'] ?? ''); ?>">
-          </div>
-
           <div class="row">
             <div class="col-md-6 mb-3">
               <label class="form-label small fw-bold text-primary">Tỉnh/Thành phố</label>
@@ -103,6 +97,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <option value="">Chọn Phường/Xã</option>
               </select>
             </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small fw-bold">Số nhà, tên đường</label>
+            <input type="text" name="address" class="form-control" placeholder="VD: 123 Đường ABC..."
+              value="<?php echo htmlspecialchars($_POST['address'] ?? ''); ?>">
           </div>
 
           <div class="mb-3">

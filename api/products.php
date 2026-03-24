@@ -51,10 +51,6 @@ $result = $conn->query($sql);
 $products = [];
 
 while($row = $result->fetch_assoc()){
-
-    /* TÍNH GIÁ BÁN */
-    $row['price'] = $row['cost_price'] * (1 + $row['profit_percent']/100);
-
     $products[] = $row;
 }
 

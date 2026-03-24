@@ -57,7 +57,7 @@ $sql = "SELECT o.*, u.username, u.phone
         FROM orders o 
         JOIN users u ON o.user_id = u.id 
         $whereSql 
-        ORDER BY o.created_at DESC LIMIT 100";
+        ORDER BY o.created_at DESC LIMIT 1000";
 
 $stmt = $conn->prepare($sql);
 if (!empty($params)) {

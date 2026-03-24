@@ -217,10 +217,16 @@ function renderStars($rating)
 ============================= */
 
 if (!function_exists('getStock')) {
-function getStock($conn, $id)
-{
-    return 100;
-}
+    function getStock($conn, $id)
+    {
+        if (!$conn) return 0;
+        $id = (int)$id;
+        $res = $conn->query("SELECT stock FROM products WHERE id = $id");
+        if ($res && $row = $res->fetch_assoc()) {
+            return (int)$row['stock'];
+        }
+        return 0;
+    }
 }
 /* =============================
     CHECK USER STATUS (Sửa lỗi vẫn vào được khi bị khóa)
