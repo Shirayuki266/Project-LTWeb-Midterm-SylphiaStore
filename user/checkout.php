@@ -197,9 +197,8 @@ include 'header.php';
                       <?php echo time(); ?></span></p>
                 </div>
                 <div class="col-sm-5 text-center mt-3 mt-sm-0">
-                  <img
-                    src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=2|99|0123456789|||NGUYEN THE BAO|0|0"
-                    alt="QR Payment" class="img-fluid border p-2 bg-white rounded-3 shadow-sm">
+                  <img src="../images/qr.jpg" alt="QR Payment"
+                    class="img-fluid border p-2 bg-white rounded-3 shadow-sm">
                   <div class="small text-muted mt-2">Quét mã để thanh toán</div>
                 </div>
               </div>
