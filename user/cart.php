@@ -8,270 +8,281 @@ require_once '../api/cart.php';
 require_once '../api/auth.php';
 require_once '../includes/functions.php';
 
-/* 1. KHỞI TẠO ĐỐI TƯỢNG AUTH TRƯỚC */
 $auth = new Auth($conn);
 
-/* 2. GẮN Ổ KHÓA TẠI ĐÂY */
+// 1. Kiểm tra đăng nhập
 if (!$auth->isLoggedIn()) {
-    // Nếu chưa đăng nhập, đuổi ngay ra trang login
-    // Thêm return_url để sau khi login xong nó tự quay lại giỏ hàng
-    header("Location: login.php?return_url=cart.php");
+    header("Location: login.php?from=cart.php");
     exit(); 
 }
 
-/* 3. NẾU ĐÃ ĐĂNG NHẬP THÌ MỚI CHẠY TIẾP CODE DƯỚI NÀY */
 $cart = new Cart($conn);
 $items = $cart->getItems();
-$total = $cart->getTotal();
-$total_items = $cart->getTotalItems();
+$total_items_in_cart = $cart->getTotalItems();
 
-$_SESSION['cart_count'] = $total_items;
-$page_title = "Giỏ hàng";
-$current_page = "cart";
+$_SESSION['cart_count'] = $total_items_in_cart;
+$page_title = "Giỏ hàng - Sylphia Shop";
+include 'header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="vi">
+<style>
+/* Hiệu ứng checkbox chuyên nghiệp */
+.cart-checkbox {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  border: 2px solid #dee2e6;
+  border-radius: 6px;
+}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Giỏ hàng - Sylphia Shop</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-  /* 1. Sửa lỗi Sticky đè lên Header */
-  .sticky-summary {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 100px;
-    /* Khoảng cách an toàn để không chạm vào Header */
-    z-index: 10;
-    margin-bottom: 2rem;
-  }
+.cart-checkbox:checked {
+  background-color: #0066cc;
+  border-color: #0066cc;
+}
 
-  /* 2. Style cho ảnh sản phẩm trong giỏ */
-  .product-img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    background: #fff;
-    border-radius: 12px;
-    padding: 5px;
-    border: 1px solid #f0f0f0;
-  }
+.product-img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #eee;
+}
 
-  /* 3. Tinh chỉnh Card tóm tắt */
-  .card-summary {
-    border: none;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
-  }
+.sticky-summary {
+  position: sticky;
+  top: 90px;
+  z-index: 10;
+}
 
-  .btn-checkout {
-    background: #0066cc;
-    border: none;
-    transition: all 0.3s ease;
-  }
+.cart-item-row.selected {
+  background-color: #f8fbff;
+}
+</style>
 
-  .btn-checkout:hover {
-    background: #0052a3;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
-  }
-  </style>
-</head>
-
-<body class="bg-light">
-  <?php include 'header.php'; ?>
-
-  <main class="container my-5">
-    <h2 class="mb-4 fw-bold">
-      <i class="fas fa-shopping-bag text-primary me-2"></i>
-      Giỏ hàng của bạn (<?php echo $total_items; ?>)
+<main class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">
+      <i class="fas fa-shopping-cart text-primary me-2"></i>Giỏ hàng
     </h2>
+    <span class="badge bg-primary rounded-pill px-3 py-2">Tổng <?php echo $total_items_in_cart; ?> món</span>
+  </div>
 
-    <?php if (empty($items)): ?>
-    <div class="card shadow-sm text-center py-5">
-      <div class="card-body">
-        <i class="fas fa-cart-plus fa-4x text-muted mb-3"></i>
-        <h4 class="text-muted">Giỏ hàng đang trống</h4>
-        <p class="mb-4 text-secondary">Hãy chọn những món đồ ưng ý cho mình nhé!</p>
-        <a href="products.php" class="btn btn-primary px-5 rounded-pill shadow-sm">Mua sắm ngay</a>
-      </div>
+  <?php if (empty($items)): ?>
+  <div class="card border-0 shadow-sm text-center py-5 rounded-4">
+    <div class="card-body">
+      <img src="https://cdn-icons-png.flaticon.com/512/11329/11329060.png" width="120" class="mb-3 opacity-50">
+      <h4 class="text-muted">Giỏ hàng của bạn đang trống</h4>
+      <a href="products.php" class="btn btn-primary px-4 mt-3 rounded-pill">Tiếp tục mua sắm</a>
     </div>
-    <?php else: ?>
+  </div>
+  <?php else: ?>
 
-    <div class="row g-4">
-      <div class="col-lg-8">
-        <div class="card shadow-sm overflow-hidden">
-          <div class="table-responsive">
-            <table class="table align-middle mb-0">
-              <thead class="table-light">
-                <tr>
-                  <th class="ps-4 py-3">Sản phẩm</th>
-                  <th>Giá</th>
-                  <th>Số lượng</th>
-                  <th>Tổng</th>
-                  <th class="text-center">Xóa</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php foreach ($items as $item): ?>
-                <tr>
-                  <td class="ps-4">
-                    <div class="d-flex align-items-center py-2">
-                      <?php 
-                                                $imgRaw = trim($item['image']);
-                                                // LOGIC THÔNG MINH: Kiểm tra nếu là Link Web (http/https)
-                                                if (strpos($imgRaw, 'http') === 0) {
-                                                    $finalPath = $imgRaw;
-                                                } else {
-                                                    // Nếu là file nội bộ, xử lý dọn dẹp tên file
-                                                    $imgFile = str_replace('images/', '', $imgRaw);
-                                                    $finalPath = "../images/" . $imgFile;
-                                                }
-                                            ?>
-                      <img src="<?php echo $finalPath; ?>" class="product-img me-3 shadow-sm"
-                        onerror="this.src='https://placehold.co/80x80?text=Loi+Anh'">
-                      <div>
-                        <div class="fw-bold text-dark"><?php echo htmlspecialchars($item['name']); ?></div>
-                        <small class="text-muted d-block text-truncate" style="max-width: 150px;">
-                          <?php echo htmlspecialchars($item['description']); ?>
-                        </small>
-                      </div>
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="table-responsive">
+          <table class="table align-middle mb-0" id="cartTable">
+            <thead class="table-light">
+              <tr>
+                <th class="ps-4" width="50">
+                  <input type="checkbox" class="form-check-input cart-checkbox" id="checkAll" checked>
+                </th>
+                <th>Sản phẩm</th>
+                <th>Đơn giá</th>
+                <th width="130">Số lượng</th>
+                <th>Thành tiền</th>
+                <th class="text-center">Xóa</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($items as $item): ?>
+              <tr class="cart-item-row selected" data-id="<?php echo $item['id']; ?>"
+                data-price="<?php echo $item['price']; ?>">
+                <td class="ps-4">
+                  <input type="checkbox" class="form-check-input cart-checkbox item-checkbox"
+                    value="<?php echo $item['id']; ?>" checked>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center py-2">
+                    <img src="<?php echo htmlspecialchars($item['image']); ?>" class="product-img me-3">
+                    <div>
+                      <div class="fw-bold text-dark mb-0"><?php echo htmlspecialchars($item['name']); ?></div>
+                      <small class="text-muted">ID: #<?php echo $item['id']; ?></small>
                     </div>
-                  </td>
-                  <td><span class="fw-medium"><?php echo formatPrice($item['price']); ?></span></td>
-                  <td>
-                    <div class="input-group input-group-sm qty-input border rounded-pill overflow-hidden">
-                      <button class="btn btn-light border-0 qty-dec" data-id="<?php echo $item['id']; ?>"><i
-                          class="fas fa-minus"></i></button>
-                      <input type="text" class="form-control border-0 text-center qty fw-bold bg-white"
-                        value="<?php echo $item['quantity']; ?>" readonly>
-                      <button class="btn btn-light border-0 qty-inc" data-id="<?php echo $item['id']; ?>"><i
-                          class="fas fa-plus"></i></button>
-                    </div>
-                  </td>
-                  <td><span class="text-primary fw-bold"><?php echo formatPrice($item['subtotal']); ?></span></td>
-                  <td class="text-center pe-3">
-                    <button class="btn btn-link text-danger remove-cart-item p-0" data-id="<?php echo $item['id']; ?>">
-                      <i class="fas fa-trash-alt"></i>
-                    </button>
-                  </td>
-                </tr>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
-          </div>
+                  </div>
+                </td>
+                <td><span class="fw-medium"><?php echo formatPrice($item['price']); ?></span></td>
+                <td>
+                  <div class="input-group input-group-sm border rounded-pill overflow-hidden">
+                    <button class="btn btn-link text-dark border-0 qty-dec" data-id="<?php echo $item['id']; ?>"><i
+                        class="fas fa-minus"></i></button>
+                    <input type="text" class="form-control border-0 text-center qty-val fw-bold bg-white"
+                      value="<?php echo $item['quantity']; ?>" readonly>
+                    <button class="btn btn-link text-dark border-0 qty-inc" data-id="<?php echo $item['id']; ?>"><i
+                        class="fas fa-plus"></i></button>
+                  </div>
+                </td>
+                <td><span
+                    class="text-primary fw-bold subtotal-item"><?php echo formatPrice($item['price'] * $item['quantity']); ?></span>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-link text-danger p-0 remove-item" data-id="<?php echo $item['id']; ?>">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
         </div>
       </div>
+    </div>
 
-      <div class="col-lg-4">
-        <div class="sticky-summary">
-          <div class="card card-summary">
-            <div class="card-body p-4">
-              <h5 class="fw-bold mb-4 border-bottom pb-2">Tóm tắt đơn hàng</h5>
+    <div class="col-lg-4">
+      <div class="sticky-summary">
+        <div class="card border-0 shadow-sm rounded-4 p-4">
+          <h5 class="fw-bold mb-4">Chi tiết thanh toán</h5>
 
-              <div class="d-flex justify-content-between mb-3 text-secondary">
-                <span>Tạm tính (<?php echo $total_items; ?> sản phẩm):</span>
-                <span class="fw-bold text-dark"><?php echo number_format($total, 0, ',', '.'); ?>₫</span>
-              </div>
+          <div class="d-flex justify-content-between mb-3 text-muted">
+            <span>Tạm tính (<span id="selected-count">0</span> món):</span>
+            <span class="fw-bold text-dark" id="summary-subtotal">0₫</span>
+          </div>
 
-              <div class="d-flex justify-content-between mb-3 text-secondary">
-                <span>Phí vận chuyển:</span>
-                <span class="fw-bold text-success">30.000₫</span>
-              </div>
+          <div class="d-flex justify-content-between mb-3 text-muted">
+            <span>Phí giao hàng:</span>
+            <span class="fw-bold text-success" id="summary-shipping">30.000₫</span>
+          </div>
 
-              <hr class="my-4 opacity-25">
+          <hr class="my-4 opacity-50">
 
-              <div class="d-flex justify-content-between align-items-center mb-4">
-                <span class="fw-bold fs-5">Tổng cộng:</span>
-                <div class="text-end">
-                  <span class="text-primary fw-bold fs-3 d-block">
-                    <?php echo number_format($total + 30000, 0, ',', '.'); ?>₫
-                  </span>
-                  <small class="text-muted">(Đã bao gồm VAT)</small>
-                </div>
-              </div>
-
-              <a href="checkout.php" class="btn btn-primary btn-lg w-100 py-3 rounded-pill fw-bold">
-                Thanh toán ngay
-              </a>
-
-              <a href="products.php"
-                class="btn btn-light btn-lg w-100 py-3 rounded-pill mt-3 border text-muted shadow-sm">
-                <i class="fas fa-arrow-left me-2 small"></i>Quay lại mua sắm
-              </a>
-
-              <div class="mt-4 pt-3 border-top text-center">
-                <small class="text-muted d-block mb-2">Hỗ trợ thanh toán:</small>
-                <div class="d-flex justify-content-center gap-3 opacity-50 fs-4">
-                  <i class="fab fa-cc-visa"></i>
-                  <i class="fab fa-cc-mastercard"></i>
-                  <i class="fas fa-money-bill-wave"></i>
-                </div>
-              </div>
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <span class="fw-bold fs-5">Tổng cộng:</span>
+            <div class="text-end">
+              <span class="text-danger fw-bold fs-3 d-block" id="summary-total">0₫</span>
+              <small class="text-muted small">(Đã bao gồm VAT)</small>
             </div>
           </div>
+
+          <button onclick="goToCheckout()"
+            class="btn btn-primary btn-lg w-100 py-3 rounded-pill fw-bold shadow-sm mb-3">
+            MUA HÀNG NGAY
+          </button>
+
+          <a href="products.php" class="btn btn-outline-secondary w-100 py-2 rounded-pill border-0">
+            <i class="fas fa-arrow-left me-2"></i>Tiếp tục mua sắm
+          </a>
         </div>
       </div>
     </div>
-    <?php endif; ?>
-  </main>
+  </div>
+  <?php endif; ?>
+</main>
 
-  <?php include 'footer.php'; ?>
+<?php include 'footer.php'; ?>
 
-  <script>
-  /* Xử lý tăng giảm số lượng AJAX */
-  function updateCart(id, qty) {
-    fetch('../api/cart.php', {
+<script>
+// 1. HÀM TÍNH TOÁN TIỀN ĐỘNG
+function updateCartUI() {
+  let subtotal = 0;
+  let count = 0;
+
+  document.querySelectorAll('.item-checkbox:checked').forEach(cb => {
+    const row = cb.closest('.cart-item-row');
+    const price = parseFloat(row.dataset.price);
+    const qty = parseInt(row.querySelector('.qty-val').value);
+    subtotal += (price * qty);
+    count++;
+    row.classList.add('selected');
+  });
+
+  document.querySelectorAll('.item-checkbox:not(:checked)').forEach(cb => {
+    cb.closest('.cart-item-row').classList.remove('selected');
+  });
+
+  const shipping = (subtotal > 0) ? 30000 : 0;
+  const total = subtotal + shipping;
+
+  // Cập nhật lên giao diện
+  document.getElementById('selected-count').innerText = count;
+  document.getElementById('summary-subtotal').innerText = subtotal.toLocaleString('vi-VN') + '₫';
+  document.getElementById('summary-shipping').innerText = shipping.toLocaleString('vi-VN') + '₫';
+  document.getElementById('summary-total').innerText = total.toLocaleString('vi-VN') + '₫';
+}
+
+// 2. XỬ LÝ CHECKBOX "CHỌN TẤT CẢ"
+document.getElementById('checkAll')?.addEventListener('change', function() {
+  document.querySelectorAll('.item-checkbox').forEach(cb => {
+    cb.checked = this.checked;
+  });
+  updateCartUI();
+});
+
+// 3. XỬ LÝ CHỌN LẺ TỪNG MÓN
+document.querySelectorAll('.item-checkbox').forEach(cb => {
+  cb.onchange = updateCartUI;
+});
+
+// 4. HÀM ĐIỀU HƯỚNG SANG CHECKOUT KÈM IDS
+function goToCheckout() {
+  const selectedIds = Array.from(document.querySelectorAll('.item-checkbox:checked'))
+    .map(cb => cb.value);
+
+  if (selectedIds.length === 0) {
+    alert("Vui lòng chọn ít nhất 1 sản phẩm để mua!");
+    return;
+  }
+
+  // Gửi danh sách ID qua URL
+  window.location.href = `checkout.php?ids=${selectedIds.join(',')}`;
+}
+
+// 5. AJAX CẬP NHẬT SỐ LƯỢNG (Giữ logic cũ của bạn)
+function ajaxUpdateCart(id, qty) {
+  fetch('../api/cart.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      action: 'update',
+      id: id,
+      qty: qty
+    })
+  }).then(res => res.json()).then(data => {
+    if (data.success) location.reload();
+  });
+}
+
+document.querySelectorAll('.qty-inc, .qty-dec').forEach(btn => {
+  btn.onclick = function() {
+    const input = this.parentNode.querySelector('.qty-val');
+    let qty = parseInt(input.value);
+    qty = this.classList.contains('qty-inc') ? qty + 1 : (qty > 1 ? qty - 1 : 1);
+    ajaxUpdateCart(this.dataset.id, qty);
+  }
+});
+
+// 6. XỬ LÝ XÓA MÓN
+document.querySelectorAll('.remove-item').forEach(btn => {
+  btn.onclick = function() {
+    if (confirm('Bạn muốn bỏ sản phẩm này khỏi giỏ hàng?')) {
+      fetch('../api/cart.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          action: 'update',
-          id: id,
-          qty: qty
+          action: 'remove',
+          id: this.dataset.id
         })
-      })
-      .then(res => res.json())
-      .then(data => {
+      }).then(res => res.json()).then(data => {
         if (data.success) location.reload();
       });
+    }
   }
+});
 
-  document.querySelectorAll('.qty-inc, .qty-dec').forEach(btn => {
-    btn.onclick = function() {
-      const input = this.parentNode.querySelector('.qty');
-      let qty = parseInt(input.value);
-      qty = this.classList.contains('qty-inc') ? qty + 1 : (qty > 1 ? qty - 1 : 1);
-      updateCart(this.dataset.id, qty);
-    }
-  });
-
-  document.querySelectorAll('.remove-cart-item').forEach(btn => {
-    btn.onclick = function() {
-      if (confirm('Bạn có muốn xóa sản phẩm này?')) {
-        fetch('../api/cart.php', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              action: 'remove',
-              id: this.dataset.id
-            })
-          })
-          .then(res => res.json())
-          .then(data => {
-            if (data.success) location.reload();
-          });
-      }
-    }
-  });
-  </script>
-</body>
-
-</html>
+// Chạy tính toán lần đầu khi load trang
+updateCartUI();
+</script>

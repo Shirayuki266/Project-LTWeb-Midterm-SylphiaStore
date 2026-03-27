@@ -1,38 +1,49 @@
 <?php
-// 1. Khởi động session đầu tiên để tránh lỗi Headers already sent
+// 1. Khởi động session
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// 2. KIỂM TRA ĐĂNG NHẬP (Bắt buộc)
-// Nếu không có user_id trong session, đá ngay sang trang login
+// 2. KIỂM TRA ĐĂNG NHẬP
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php?from=checkout');
-    exit; // Dừng mọi hoạt động xử lý bên dưới
+    exit;
 }
 
-// 3. Import các file cấu hình và lớp xử lý
+// 3. Import các file cấu hình
 require_once '../api/db.php';
 require_once '../api/cart.php';
 require_once '../api/auth.php';
 require_once '../api/address.php'; 
 require_once '../includes/functions.php';
 
-// 4. Khởi tạo đối tượng và kiểm tra giỏ hàng
+// 4. Khởi tạo đối tượng
 $cart = new Cart($conn);
-$items = $cart->getItems();
+$allItems = $cart->getItems(); // Lấy tất cả sản phẩm trong giỏ
 
-// Nếu giỏ hàng trống, không cho thanh toán, quay về trang giỏ hàng
+// --- MỚI: LỌC SẢN PHẨM ĐƯỢC CHỌN ---
+$selectedIds = isset($_GET['ids']) ? explode(',', $_GET['ids']) : [];
+
+if (!empty($selectedIds)) {
+    // Chỉ giữ lại những sản phẩm có ID nằm trong danh sách được chọn
+    $items = array_filter($allItems, function($item) use ($selectedIds) {
+        return in_array($item['id'], $selectedIds);
+    });
+} else {
+    // Nếu không có tham số ids, mặc định lấy toàn bộ (hoặc có thể đuổi về giỏ hàng)
+    $items = $allItems;
+}
+
+// Nếu sau khi lọc mà không có sản phẩm nào, quay về giỏ hàng
 if (empty($items)) {
     header('Location: cart.php');
     exit;
 }
 
-// 5. Lấy thông tin người dùng và tính toán
+// 5. Lấy thông tin người dùng
 $auth = new Auth($conn);
 $user = $auth->getCurrentUser();
 
-// Kiểm tra nếu session tồn tại nhưng user không có trong DB (trường hợp bị xóa/khóa tài khoản)
 if (!$user) {
     session_destroy();
     header('Location: login.php');
@@ -40,12 +51,10 @@ if (!$user) {
 }
 
 $address_tool = new Address($conn);
-
-// Lấy thông tin mặc định từ profile
 $address_default = !empty($user['address']) ? $user['address'] : '';
 $phone_default = !empty($user['phone']) ? $user['phone'] : 'Chưa cập nhật SĐT';
 
-// --- TÍNH TOÁN HÓA ĐƠN ---
+// --- TÍNH TOÁN HÓA ĐƠN (Dựa trên danh sách đã lọc) ---
 $subtotal = 0;
 foreach ($items as $item) {
     $subtotal += $item['price'] * $item['quantity'];
@@ -65,7 +74,7 @@ $discount_amount = ($subtotal * $discount_percent) / 100;
 $shipping = 30000;
 $total = ($subtotal - $discount_amount) + $shipping;
 
-// --- XỬ LÝ ĐẶT HÀNG KHI SUBMIT FORM ---
+// --- XỬ LÝ ĐẶT HÀNG ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $address_option = $_POST['address_option'] ?? 'default';
     
@@ -73,9 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $p_code = $_POST['city'] ?? '';
         $w_code = $_POST['ward'] ?? '';
         $house = $_POST['house_number'] ?? '';
-        $note = $_POST['order_note'] ?? '';
         $final_address = $address_tool->getFullAddressShort($p_code, $w_code, $house);
-        if (!empty($note)) $final_address .= " (Ghi chú: $note)";
     } else {
         $final_address = $address_default;
     }
@@ -94,8 +101,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt_item = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
                 $stmt_item->bind_param("iiid", $order_id, $item['id'], $item['quantity'], $item['price']);
                 $stmt_item->execute();
+                
+                // MỚI: Xóa sản phẩm ĐÃ MUA ra khỏi giỏ hàng (không xóa cả giỏ)
+                $cart->removeItem($item['id']); 
             }
-            $cart->clear();
             $success = true;
         }
     }
@@ -109,9 +118,7 @@ include 'header.php';
   <div class="container">
     <?php if (isset($success)): ?>
     <div class="card border-0 shadow-lg p-5 text-center rounded-4 animate__animated animate__zoomIn">
-      <div class="mb-4">
-        <i class="fas fa-check-circle fa-5x text-success"></i>
-      </div>
+      <div class="mb-4"><i class="fas fa-check-circle fa-5x text-success"></i></div>
       <h2 class="fw-bold text-dark">Đặt hàng thành công!</h2>
       <p class="text-muted fs-5">Mã đơn hàng: <span class="text-primary fw-bold">#<?php echo $order_id; ?></span></p>
       <div class="d-flex justify-content-center gap-3 mt-4">
@@ -124,10 +131,9 @@ include 'header.php';
     <div class="row g-4">
       <div class="col-lg-7">
         <h4 class="mb-4 fw-bold"><i class="fas fa-file-invoice-dollar text-primary me-2"></i>Thanh toán đơn hàng</h4>
-
         <form method="POST" id="checkoutForm">
           <?php if(isset($error)): ?>
-          <div class="alert alert-danger border-0 shadow-sm mb-4"><?php echo $error; ?></div>
+          <div class="alert alert-danger"><?php echo $error; ?></div>
           <?php endif; ?>
 
           <div class="card shadow-sm border-0 rounded-4 p-4 mb-4">
@@ -146,8 +152,7 @@ include 'header.php';
                   <div><strong><?php echo htmlspecialchars($user['username']); ?></strong> |
                     <?php echo htmlspecialchars($phone_default); ?></div>
                   <div class="text-muted small">
-                    <i class="fas fa-map-marker-alt text-danger me-1"></i>
-                    <?php echo !empty($address_default) ? htmlspecialchars($address_default) : '<span class="text-danger">Bạn chưa cập nhật địa chỉ!</span>'; ?>
+                    <?php echo !empty($address_default) ? htmlspecialchars($address_default) : 'Chưa cập nhật địa chỉ'; ?>
                   </div>
                 </div>
               </div>
@@ -155,27 +160,17 @@ include 'header.php';
 
             <div class="border rounded-4 p-3 mb-2" style="cursor: pointer;"
               onclick="document.getElementById('addr_new').click()">
-              <div class="d-flex align-items-center">
-                <input class="form-check-input me-2" type="radio" name="address_option" id="addr_new" value="new"
-                  onchange="toggleAddressNew()">
-                <label class="form-check-label fw-bold" for="addr_new">Giao đến địa chỉ khác</label>
-              </div>
+              <input class="form-check-input me-2" type="radio" name="address_option" id="addr_new" value="new"
+                onchange="toggleAddressNew()">
+              <label class="form-check-label fw-bold" for="addr_new">Giao đến địa chỉ khác</label>
               <div id="new_address_section" class="mt-3 d-none border-top pt-3">
                 <div class="row g-3">
-                  <div class="col-md-6">
-                    <label class="small fw-bold mb-1">Tỉnh/Thành phố</label>
-                    <select class="form-select" id="city" name="city"></select>
-                  </div>
-                  <div class="col-md-6">
-                    <label class="small fw-bold mb-1">Phường/Xã</label>
-                    <select class="form-select" id="ward" name="ward">
-                      <option value="">Chọn Phường/Xã</option>
-                    </select>
-                  </div>
-                  <div class="col-12">
-                    <input type="text" name="house_number" class="form-control"
-                      placeholder="Số nhà, tên đường chi tiết...">
-                  </div>
+                  <div class="col-md-6"><select class="form-select" id="city" name="city"></select></div>
+                  <div class="col-md-6"><select class="form-select" id="ward" name="ward">
+                      <option>Chọn Phường/Xã</option>
+                    </select></div>
+                  <div class="col-12"><input type="text" name="house_number" class="form-control"
+                      placeholder="Số nhà, tên đường..."></div>
                 </div>
               </div>
             </div>
@@ -185,13 +180,11 @@ include 'header.php';
             <h5 class="fw-bold mb-3">Phương thức thanh toán</h5>
             <div class="row g-2">
               <div class="col-md-6">
-                <input type="radio" class="btn-check" name="payment" id="pay_cash" value="cash" checked
-                  onchange="toggleBankInfo()">
+                <input type="radio" class="btn-check" name="payment" id="pay_cash" value="cash" checked>
                 <label class="btn btn-outline-primary w-100 py-3 rounded-4" for="pay_cash">Tiền mặt (COD)</label>
               </div>
               <div class="col-md-6">
-                <input type="radio" class="btn-check" name="payment" id="pay_bank" value="transfer"
-                  onchange="toggleBankInfo()">
+                <input type="radio" class="btn-check" name="payment" id="pay_bank" value="transfer">
                 <label class="btn btn-outline-primary w-100 py-3 rounded-4" for="pay_bank">Chuyển khoản</label>
               </div>
             </div>
@@ -204,7 +197,7 @@ include 'header.php';
 
       <div class="col-lg-5">
         <div class="sticky-top" style="top: 100px;">
-          <h4 class="fw-bold mb-4">Đơn hàng của bạn</h4>
+          <h4 class="fw-bold mb-4">Sản phẩm đã chọn</h4>
           <div class="card border-0 shadow-sm rounded-4 p-4">
             <?php foreach ($items as $item): ?>
             <div class="d-flex justify-content-between mb-2">
@@ -214,9 +207,11 @@ include 'header.php';
             </div>
             <?php endforeach; ?>
             <hr>
+            <div class="d-flex justify-content-between mb-2 small text-muted">
+              <span>Tạm tính:</span><span><?php echo formatPrice($subtotal); ?></span>
+            </div>
             <div class="d-flex justify-content-between text-danger fw-bold fs-4">
-              <span>Tổng tiền:</span>
-              <span><?php echo formatPrice($total); ?></span>
+              <span>Tổng cộng:</span><span><?php echo formatPrice($total); ?></span>
             </div>
           </div>
         </div>
@@ -231,12 +226,8 @@ include 'header.php';
 <script>
 function toggleAddressNew() {
   const section = document.getElementById("new_address_section");
-  if (document.getElementById("addr_new").checked) {
-    section.classList.remove('d-none');
-    loadProvinces();
-  } else {
-    section.classList.add('d-none');
-  }
+  section.classList.toggle('d-none', !document.getElementById("addr_new").checked);
+  if (!section.classList.contains('d-none')) loadProvinces();
 }
 
 function loadProvinces() {
@@ -248,6 +239,5 @@ function loadProvinces() {
       citySelect.innerHTML = '<option value="">Chọn Tỉnh/Thành</option>';
       data.forEach(p => citySelect.options.add(new Option(p.name, p.code)));
     });
-  // Tương tự cho Ward...
 }
 </script>
