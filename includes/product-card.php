@@ -59,28 +59,3 @@ $unit = htmlspecialchars($product['unit'] ?? 'Chiếc');
   </div>
 </a>
 
-<style>
-/* CSS bổ trợ để tăng tính tương tác khi hover */
-.product-entry-card {
-  transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
-  border: 1px solid transparent !important;
-}
-
-.product-entry-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12) !important;
-  border: 1px solid #0d6efd22 !important;
-}
-
-.product-entry-card .main-img {
-  transition: transform 0.5s ease;
-}
-
-.product-entry-card:hover .main-img {
-  transform: scale(1.08);
-}
-
-.product-entry-card:hover .card-title {
-  color: #0d6efd !important;
-}
-</style>

@@ -269,11 +269,7 @@ include 'header.php';
 
 <script>
 const allItems = [];
-<?php if (!empty($editItems)): ?>
-const editPayload = <?php echo json_encode($editItems, JSON_UNESCAPED_UNICODE); ?>;
-<?php else: ?>
-const editPayload = [];
-<?php endif; ?>
+const editPayload = <?php echo json_encode(!empty($editItems) ? $editItems : [], JSON_UNESCAPED_UNICODE); ?>;
 
 function toggleAvailableList() {
     const block = document.getElementById('availableProducts');

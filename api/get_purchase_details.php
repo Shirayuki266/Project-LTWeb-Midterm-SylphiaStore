@@ -1,6 +1,8 @@
 <?php
 require_once 'db.php';
 
+header('Content-Type: application/json; charset=utf-8');
+
 $id = (int)($_GET['id'] ?? 0);
 
 $sql = "SELECT p.name AS product_name, d.quantity, d.import_price
@@ -18,4 +20,4 @@ if ($result) {
     }
 }
 
-echo json_encode($data);
+echo json_encode($data, JSON_UNESCAPED_UNICODE);

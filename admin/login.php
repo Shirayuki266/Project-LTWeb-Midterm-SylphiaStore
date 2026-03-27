@@ -6,11 +6,6 @@ require_once '../api/auth.php';
 $auth = new Auth($conn);
 $error = '';
 
-// 1. Nếu đã đăng nhập rồi thì chuyển thẳng vào trang quản trị
-if ($auth->isLoggedIn('admin')) {
-    header('Location: dashboard.php'); // Sửa từ dashboard.php thành admin-TongQuan.php
-    exit;
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';

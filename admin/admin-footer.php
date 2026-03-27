@@ -66,13 +66,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (urlParams.has('msg')) {
     const msgType = urlParams.get('msg');
+    const detailMessage = urlParams.get('detail');
 
     if (msgType === 'success') {
-      showAdminToast('Thực hiện thao tác thành công!');
+      showAdminToast(detailMessage || 'Thực hiện thao tác thành công!');
     } else if (msgType === 'error') {
-      showAdminToast('Đã có lỗi xảy ra, vui lòng thử lại.', 'danger');
+      showAdminToast(detailMessage || 'Đã có lỗi xảy ra, vui lòng thử lại.', 'danger');
     } else if (msgType === 'warning') {
-      showAdminToast('Lưu ý: Dữ liệu có thể chưa hoàn thiện.', 'warning');
+      showAdminToast(detailMessage || 'Lưu ý: Dữ liệu có thể chưa hoàn thiện.', 'warning');
     }
 
     // Làm sạch URL (xóa tham số msg) để tránh hiện lại khi F5 trang

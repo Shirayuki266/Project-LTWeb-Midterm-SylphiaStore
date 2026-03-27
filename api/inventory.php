@@ -1,46 +1,71 @@
 <?php
 session_start();
 require_once 'db.php';
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $product_id = (int)$_POST['id'];
-    $quantity = (int)$_POST['quantity'];
-    $admin_id = $_SESSION['admin_id'] ?? 1; // ID admin đang thực hiện
-
-    if ($quantity <= 0) {
-        echo json_encode(['success' => false, 'error' => 'Số lượng nhập phải lớn hơn 0']);
-        exit;
-    }
-
-    // Bắt đầu Transaction để tránh lỗi dữ liệu không đồng bộ
-    $conn->begin_transaction();
-
-    try {
-        // BƯỚC 1: Tạo Phiếu nhập (import_receipts)
-        // Lưu ý: Kiểm tra lại tên cột trong bảng của bạn (ví dụ: admin_id hay created_by)
-        $stmt1 = $conn->prepare("INSERT INTO import_receipts (admin_id, created_at) VALUES (?, NOW())");
-        $stmt1->bind_param("i", $admin_id);
-        $stmt1->execute();
-        $receipt_id = $conn->insert_id;
-
-        // BƯỚC 2: Thêm Chi tiết phiếu nhập (import_items)
-        // Giả sử bảng import_items có các cột: import_receipt_id, product_id, quantity
-        $stmt2 = $conn->prepare("INSERT INTO import_items (import_receipt_id, product_id, quantity) VALUES (?, ?, ?)");
-        $stmt2->bind_param("iii", $receipt_id, $product_id, $quantity);
-        $stmt2->execute();
-
-        // BƯỚC 3: Cập nhật tồn kho thực tế của sản phẩm
-        $stmt3 = $conn->prepare("UPDATE products SET stock = stock + ? WHERE id = ?");
-        $stmt3->bind_param("ii", $quantity, $product_id);
-        $stmt3->execute();
-
-        $conn->commit(); // Xác nhận lưu mọi thay đổi
-        echo json_encode(['success' => true]);
-
-    } catch (Exception $e) {
-        $conn->rollback(); // Nếu có lỗi, hủy toàn bộ các bước trên
-        echo json_encode(['success' => false, 'error' => "Lỗi hệ thống: " . $e->getMessage()]);
-    }
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['success' => false, 'error' => 'Phương thức không hợp lệ.'], JSON_UNESCAPED_UNICODE);
     exit;
+}
+
+$product_id = (int)($_POST['id'] ?? 0);
+$quantity = (int)($_POST['quantity'] ?? 0);
+
+if ($product_id <= 0) {
+    echo json_encode(['success' => false, 'error' => 'Sản phẩm không hợp lệ.'], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+if ($quantity <= 0) {
+    echo json_encode(['success' => false, 'error' => 'Số lượng nhập phải lớn hơn 0.'], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+$conn->begin_transaction();
+
+try {
+    // Lấy giá vốn hiện tại để lưu vào chi tiết phiếu nhập nhanh
+    $stmtProduct = $conn->prepare("SELECT cost_price FROM products WHERE id = ?");
+    $stmtProduct->bind_param('i', $product_id);
+    $stmtProduct->execute();
+    $product = $stmtProduct->get_result()->fetch_assoc();
+
+    if (!$product) {
+        throw new Exception('Không tìm thấy sản phẩm cần nhập kho.');
+    }
+
+    $import_price = (float)($product['cost_price'] ?? 0);
+
+    // Ghi nhận 1 phiếu nhập hoàn thành để đồng bộ lịch sử với toàn hệ thống
+    $supplier_name = 'Nhập kho nhanh (QLKho)';
+    $total_amount = $import_price * $quantity;
+    $status = 'completed';
+
+    $stmtOrder = $conn->prepare("INSERT INTO purchase_orders (supplier_name, total_amount, status, created_at) VALUES (?, ?, ?, NOW())");
+    $stmtOrder->bind_param('sds', $supplier_name, $total_amount, $status);
+    $stmtOrder->execute();
+    $order_id = $conn->insert_id;
+
+    $stmtDetail = $conn->prepare("INSERT INTO purchase_order_details (purchase_order_id, product_id, quantity, import_price) VALUES (?, ?, ?, ?)");
+    $stmtDetail->bind_param('iiid', $order_id, $product_id, $quantity, $import_price);
+    $stmtDetail->execute();
+
+    // Tăng tồn kho trực tiếp
+    $stmtStock = $conn->prepare("UPDATE products SET stock = stock + ? WHERE id = ?");
+    $stmtStock->bind_param('ii', $quantity, $product_id);
+    $stmtStock->execute();
+
+    $conn->commit();
+
+    echo json_encode([
+        'success' => true,
+        'message' => 'Đã nhập thêm hàng thành công.',
+        'purchase_order_id' => $order_id
+    ], JSON_UNESCAPED_UNICODE);
+} catch (Throwable $e) {
+    $conn->rollback();
+    echo json_encode([
+        'success' => false,
+        'error' => 'Lỗi hệ thống: ' . $e->getMessage()
+    ], JSON_UNESCAPED_UNICODE);
 }

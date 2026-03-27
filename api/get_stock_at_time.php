@@ -1,49 +1,78 @@
 <?php
 require_once 'db.php';
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
-$id = (int)$_GET['id'];
-$date = $_GET['date'] . " 23:59:59"; // Tính đến hết ngày được chọn
+try {
+    $id = (int)($_GET['id'] ?? 0);
+    $rawDate = trim($_GET['date'] ?? '');
 
-// 1. Lấy tồn hiện tại trong bảng products
-$p = $conn->query("SELECT stock FROM products WHERE id = $id")->fetch_assoc();
-if (!$p) {
-    echo json_encode(['success' => false, 'message' => 'Sản phẩm không tồn tại']);
-    exit;
+    if ($id <= 0) {
+        throw new Exception('Thiếu mã sản phẩm hợp lệ.');
+    }
+
+    $selectedDate = DateTime::createFromFormat('Y-m-d', $rawDate);
+    if (!$selectedDate || $selectedDate->format('Y-m-d') !== $rawDate) {
+        throw new Exception('Ngày tra cứu không hợp lệ.');
+    }
+
+    $date = $selectedDate->format('Y-m-d') . ' 23:59:59';
+
+    $stmtProduct = $conn->prepare("SELECT stock FROM products WHERE id = ?");
+    $stmtProduct->bind_param('i', $id);
+    $stmtProduct->execute();
+    $product = $stmtProduct->get_result()->fetch_assoc();
+
+    if (!$product) {
+        throw new Exception('Sản phẩm không tồn tại.');
+    }
+
+    $currentStock = (int)$product['stock'];
+
+    $stmtSold = $conn->prepare("
+        SELECT IFNULL(SUM(oi.quantity), 0) AS total
+        FROM order_items oi
+        JOIN orders o ON oi.order_id = o.id
+        WHERE oi.product_id = ?
+          AND o.created_at > ?
+          AND o.status != 'cancelled'
+    ");
+    if (!$stmtSold) {
+        throw new Exception('Không thể chuẩn bị truy vấn lịch sử xuất kho.');
+    }
+    $stmtSold->bind_param('is', $id, $date);
+    $stmtSold->execute();
+    $soldSince = (int)($stmtSold->get_result()->fetch_assoc()['total'] ?? 0);
+
+    $stmtImport = $conn->prepare("
+        SELECT IFNULL(SUM(pod.quantity), 0) AS total
+        FROM purchase_order_details pod
+        JOIN purchase_orders po ON pod.purchase_order_id = po.id
+        WHERE pod.product_id = ?
+          AND po.created_at > ?
+          AND po.status = 'completed'
+    ");
+    if (!$stmtImport) {
+        throw new Exception('Không thể chuẩn bị truy vấn lịch sử nhập kho.');
+    }
+    $stmtImport->bind_param('is', $id, $date);
+    $stmtImport->execute();
+    $importedSince = (int)($stmtImport->get_result()->fetch_assoc()['total'] ?? 0);
+
+    $stockAtTime = $currentStock + $soldSince - $importedSince;
+
+    echo json_encode([
+        'success' => true,
+        'stock' => max(0, $stockAtTime),
+        'details' => [
+            'current' => $currentStock,
+            'sold_after' => $soldSince,
+            'imported_after' => $importedSince
+        ]
+    ], JSON_UNESCAPED_UNICODE);
+} catch (Throwable $error) {
+    http_response_code(400);
+    echo json_encode([
+        'success' => false,
+        'message' => $error->getMessage()
+    ], JSON_UNESCAPED_UNICODE);
 }
-$current_stock = (int)$p['stock'];
-
-// 2. Tính lượng đã BÁN RA (Xuất kho) từ sau ngày X đến nay
-$stmt_sold = $conn->prepare("
-    SELECT IFNULL(SUM(oi.quantity), 0) as total 
-    FROM order_items oi 
-    JOIN orders o ON oi.order_id = o.id 
-    WHERE oi.product_id = ? AND o.created_at > ? AND o.status != 'cancelled'
-");
-$stmt_sold->bind_param("is", $id, $date);
-$stmt_sold->execute();
-$sold_since = $stmt_sold->get_result()->fetch_assoc()['total'];
-
-// 3. Tính lượng đã NHẬP VÀO từ sau ngày X đến nay (Dựa trên phiếu nhập)
-$stmt_import = $conn->prepare("
-    SELECT IFNULL(SUM(ii.quantity), 0) as total 
-    FROM import_items ii 
-    JOIN import_receipts ir ON ii.import_receipt_id = ir.id 
-    WHERE ii.product_id = ? AND ir.created_at > ?
-");
-$stmt_import->bind_param("is", $id, $date);
-$stmt_import->execute();
-$imported_since = $stmt_import->get_result()->fetch_assoc()['total'];
-
-// 4. Áp dụng công thức ngược
-$stock_at_time = $current_stock + $sold_since - $imported_since;
-
-echo json_encode([
-    'success' => true, 
-    'stock' => max(0, $stock_at_time), // Đảm bảo không hiện số âm
-    'details' => [
-        'current' => $current_stock,
-        'sold_after' => $sold_since,
-        'imported_after' => $imported_since
-    ]
-]);
