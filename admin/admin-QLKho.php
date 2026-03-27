@@ -14,6 +14,9 @@ $search     = $_GET['search'] ?? '';
 $fromDate   = $_GET['from_date'] ?? date('Y-m-01');
 $toDate     = $_GET['to_date']   ?? date('Y-m-d');
 $alertLimit = isset($_GET['alert_limit']) ? (int)$_GET['alert_limit'] : 10;
+$categoryId = isset($_GET['category_id']) ? (int)$_GET['category_id'] : 0;
+
+$categories = $conn->query("SELECT id, name FROM categories ORDER BY name ASC")->fetch_all(MYSQLI_ASSOC);
 
 /* 3. TRUY VẤN SQL TỔNG HỢP */
 $sql = "
@@ -28,6 +31,17 @@ $sql = "
     FROM products p 
     LEFT JOIN categories c ON p.category_id = c.id 
     WHERE p.name LIKE ?
+  ";
+
+  $types = "sss";
+
+  if ($categoryId > 0) {
+    $sql .= " AND p.category_id = ?";
+    $types .= "i";
+    $params[] = $categoryId;
+  }
+
+  $sql .= "
     ORDER BY p.stock ASC
 ";
 
@@ -35,7 +49,12 @@ $stmt = $conn->prepare($sql);
 $start = $fromDate . " 00:00:00";
 $end   = $toDate . " 23:59:59";
 $searchTerm = "%$search%";
-$stmt->bind_param("sss", $start, $end, $searchTerm);
+$params = [$start, $end, $searchTerm];
+if ($categoryId > 0) {
+    $params[] = $categoryId;
+}
+
+$stmt->bind_param($types, ...$params);
 $stmt->execute();
 $products = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
@@ -45,14 +64,14 @@ include 'header.php';
 <div class="container-fluid py-4 px-md-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="h4 mb-0 fw-bold text-dark">
-      <i class="fas fa-warehouse me-2 text-primary"></i>Quản lý Tồn kho & Báo cáo
+      <i class="fas fa-warehouse me-2 text-primary"></i>Quản lý Tồn kho
     </h2>
   </div>
 
   <div class="card shadow-sm border-0 mb-4 bg-light">
     <div class="card-body">
       <form method="GET" class="row g-3 align-items-end">
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="form-label small fw-bold text-secondary">Tìm kiếm sản phẩm</label>
           <div class="input-group shadow-sm">
             <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
@@ -60,7 +79,7 @@ include 'header.php';
               value="<?= htmlspecialchars($search) ?>">
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label class="form-label small fw-bold text-secondary">Khoảng thời gian báo cáo</label>
           <div class="input-group shadow-sm">
             <input type="date" name="from_date" class="form-control" value="<?= $fromDate ?>">
@@ -69,6 +88,17 @@ include 'header.php';
           </div>
         </div>
         <div class="col-md-3">
+          <label class="form-label small fw-bold text-secondary">Loại sản phẩm</label>
+          <select name="category_id" class="form-select shadow-sm">
+            <option value="0">Tất cả danh mục</option>
+            <?php foreach ($categories as $cat): ?>
+            <option value="<?= (int)$cat['id'] ?>" <?= $categoryId === (int)$cat['id'] ? 'selected' : '' ?>>
+              <?= htmlspecialchars($cat['name']) ?>
+            </option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <div class="col-md-2">
           <label class="form-label small fw-bold text-danger">Cảnh báo nếu tồn ≤</label>
           <input type="number" name="alert_limit" class="form-control shadow-sm" value="<?= $alertLimit ?>">
         </div>

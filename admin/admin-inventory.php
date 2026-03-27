@@ -13,6 +13,10 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 $fromDate   = $_GET['from_date'] ?? date('Y-m-01'); // Mặc định từ đầu tháng
 $toDate     = $_GET['to_date']   ?? date('Y-m-d');    // Mặc định đến hôm nay
 $alertLimit = isset($_GET['alert_limit']) ? (int)$_GET['alert_limit'] : 10; // Hạn mức cảnh báo
+$categoryFilter = isset($_GET['category_id']) ? (int)$_GET['category_id'] : 0;
+
+$categories = $conn->query("SELECT id, name FROM categories ORDER BY name ASC")->fetch_all(MYSQLI_ASSOC);
+$whereCategorySql = $categoryFilter > 0 ? "WHERE p.category_id = $categoryFilter" : "";
 
 // 3. TRUY VẤN DỮ LIỆU THỐNG KÊ
 // Truy vấn này lấy tồn hiện tại và tính toán lượng xuất dựa trên hóa đơn thành công
@@ -26,9 +30,17 @@ $sql = "
          JOIN orders o ON oi.order_id = o.id 
          WHERE oi.product_id = p.id 
          AND o.status != 'cancelled' 
-         AND o.created_at BETWEEN ? AND ?) as total_exported
+     AND o.created_at BETWEEN ? AND ?) as total_exported,
+    -- Tính tổng lượng nhập (phiếu nhập đã hoàn thành) trong khoảng thời gian
+    (SELECT IFNULL(SUM(pod.quantity), 0)
+     FROM purchase_order_details pod
+     JOIN purchase_orders po ON pod.purchase_order_id = po.id
+     WHERE pod.product_id = p.id
+     AND po.status = 'completed'
+     AND po.created_at BETWEEN ? AND ?) as total_imported
     FROM products p
     LEFT JOIN categories c ON p.category_id = c.id
+    $whereCategorySql
     ORDER BY p.stock ASC
 ";
 
@@ -39,7 +51,7 @@ if (!$stmt) {
 
 $startTime = $fromDate . " 00:00:00";
 $endTime   = $toDate . " 23:59:59";
-$stmt->bind_param("ss", $startTime, $endTime);
+$stmt->bind_param("ssss", $startTime, $endTime, $startTime, $endTime);
 
 if (!$stmt->execute()) {
     die("Lỗi thực thi câu lệnh: " . $stmt->error);
@@ -86,6 +98,17 @@ include 'header.php';
           </div>
         </div>
         <div class="col-md-3">
+          <label class="form-label small fw-bold">Loại sản phẩm</label>
+          <select name="category_id" class="form-select shadow-sm">
+            <option value="0">Tất cả danh mục</option>
+            <?php foreach ($categories as $cat): ?>
+            <option value="<?= (int)$cat['id'] ?>" <?= $categoryFilter === (int)$cat['id'] ? 'selected' : '' ?>>
+              <?= htmlspecialchars($cat['name']) ?>
+            </option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <div class="col-md-3">
           <label class="form-label small fw-bold text-danger">Hạn mức cảnh báo sắp hết hàng</label>
           <input type="number" name="alert_limit" class="form-control shadow-sm" value="<?= $alertLimit ?>" min="0">
         </div>
@@ -103,10 +126,11 @@ include 'header.php';
   if (!empty($inventory)) {
     $total_stock = array_sum(array_column($inventory, 'current_stock'));
     $total_sold = array_sum(array_column($inventory, 'total_exported'));
+    $total_imported = array_sum(array_column($inventory, 'total_imported'));
     $low_items = count(array_filter($inventory, function($item) use ($alertLimit) { return $item['current_stock'] <= $alertLimit; }));
   ?>
-  <div class="row g-3 mb-4">
-    <div class="col-md-3">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-5 g-3 mb-4">
+    <div class="col">
       <div class="card border-0 shadow-sm bg-white">
         <div class="card-body text-center">
           <div class="text-primary mb-2"><i class="fas fa-box fa-2x"></i></div>
@@ -115,7 +139,16 @@ include 'header.php';
         </div>
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col">
+      <div class="card border-0 shadow-sm bg-white">
+        <div class="card-body text-center">
+          <div class="text-primary mb-2"><i class="fas fa-download fa-2x"></i></div>
+          <div class="small text-muted">Lượng đã nhập</div>
+          <div class="h5 fw-bold text-primary"><?= number_format($total_imported) ?></div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
       <div class="card border-0 shadow-sm bg-white">
         <div class="card-body text-center">
           <div class="text-success mb-2"><i class="fas fa-plus-circle fa-2x"></i></div>
@@ -124,7 +157,7 @@ include 'header.php';
         </div>
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col">
       <div class="card border-0 shadow-sm bg-white">
         <div class="card-body text-center">
           <div class="text-info mb-2"><i class="fas fa-warehouse fa-2x"></i></div>
@@ -133,7 +166,7 @@ include 'header.php';
         </div>
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col">
       <div class="card border-0 shadow-sm bg-white">
         <div class="card-body text-center">
           <div class="text-danger mb-2"><i class="fas fa-exclamation-circle fa-2x"></i></div>
@@ -151,6 +184,7 @@ include 'header.php';
         <thead class="table-dark">
           <tr>
             <th class="ps-4 py-3">Sản phẩm</th>
+            <th class="text-center">Đã nhập</th>
             <th class="text-center">Đã xuất (Bán)</th>
             <th class="text-center">Tồn hiện tại</th>
             <th>Trạng thái & Cảnh báo</th>
@@ -160,7 +194,7 @@ include 'header.php';
         <tbody>
           <?php if (empty($inventory)): ?>
           <tr>
-            <td colspan="5" class="text-center py-5 text-muted">
+            <td colspan="6" class="text-center py-5 text-muted">
               <i class="fas fa-inbox fa-3x mb-3 d-block opacity-50"></i>
               <strong>Không có dữ liệu</strong>
               <p class="small mt-2">Khoảng thời gian từ <strong><?= date('d/m/Y', strtotime($fromDate)) ?></strong> đến <strong><?= date('d/m/Y', strtotime($toDate)) ?></strong> không có sản phẩm nào</p>
@@ -182,6 +216,7 @@ include 'header.php';
                 </div>
               </div>
             </td>
+            <td class="text-center fw-bold text-primary fs-5"><?= number_format($item['total_imported']) ?></td>
             <td class="text-center fw-bold text-primary fs-5"><?= number_format($item['total_exported']) ?></td>
             <td class="text-center fw-bold fs-5"><?= number_format($item['current_stock']) ?></td>
             <td>
