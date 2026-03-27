@@ -15,6 +15,14 @@ if (!$auth->isLoggedIn('admin')) {
 
 $message = '';
 
+/* 1.1 BỘ LỌC TÌM KIẾM */
+$keyword = trim($_GET['q'] ?? '');
+$filterCategoryId = (int)($_GET['category_id'] ?? 0);
+$filterStatus = $_GET['status_filter'] ?? 'all';
+if (!in_array($filterStatus, ['all', '1', '0'], true)) {
+  $filterStatus = 'all';
+}
+
 /* 2. XỬ LÝ XOÁ SẢN PHẨM */
 if (isset($_GET['delete']) && isset($_GET['id'])) {
   try {
@@ -97,8 +105,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 /* 4. LẤY DỮ LIỆU */
-$products = $conn->query("SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.id DESC")->fetch_all(MYSQLI_ASSOC);
 $categories = $conn->query("SELECT * FROM categories ORDER BY name")->fetch_all(MYSQLI_ASSOC);
+
+$sql = "SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE 1=1";
+$types = '';
+$params = [];
+
+if ($keyword !== '') {
+  $sql .= " AND (p.name LIKE ? OR p.unit LIKE ? OR c.name LIKE ?)";
+  $kw = "%$keyword%";
+  $types .= 'sss';
+  $params[] = $kw;
+  $params[] = $kw;
+  $params[] = $kw;
+}
+
+if ($filterCategoryId > 0) {
+  $sql .= " AND p.category_id = ?";
+  $types .= 'i';
+  $params[] = $filterCategoryId;
+}
+
+if ($filterStatus !== 'all') {
+  $sql .= " AND p.status = ?";
+  $types .= 'i';
+  $params[] = (int)$filterStatus;
+}
+
+$sql .= " ORDER BY p.id DESC";
+
+$stmtProducts = $conn->prepare($sql);
+if ($types !== '') {
+  $stmtProducts->bind_param($types, ...$params);
+}
+$stmtProducts->execute();
+$products = $stmtProducts->get_result()->fetch_all(MYSQLI_ASSOC);
+
+$preserveParams = [];
+if ($keyword !== '') $preserveParams['q'] = $keyword;
+if ($filterCategoryId > 0) $preserveParams['category_id'] = $filterCategoryId;
+if ($filterStatus !== 'all') $preserveParams['status_filter'] = $filterStatus;
+$preserveQuery = http_build_query($preserveParams);
 ?>
 
 <?php include 'header.php'; ?>
@@ -128,6 +175,41 @@ $categories = $conn->query("SELECT * FROM categories ORDER BY name")->fetch_all(
   </div>
   <?php endif; ?>
 
+  <div class="card border-0 shadow-sm rounded-3 mb-4">
+    <div class="card-body">
+      <form method="GET" class="row g-3 align-items-end">
+        <div class="col-md-5">
+          <label class="form-label fw-semibold">Tìm kiếm</label>
+          <input type="text" name="q" class="form-control" placeholder="Tên sản phẩm, đơn vị, danh mục..."
+            value="<?php echo htmlspecialchars($keyword); ?>">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label fw-semibold">Danh mục</label>
+          <select name="category_id" class="form-select">
+            <option value="0">Tất cả danh mục</option>
+            <?php foreach ($categories as $c): ?>
+            <option value="<?php echo (int)$c['id']; ?>" <?php echo $filterCategoryId === (int)$c['id'] ? 'selected' : ''; ?>>
+              <?php echo htmlspecialchars($c['name']); ?>
+            </option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label class="form-label fw-semibold">Trạng thái</label>
+          <select name="status_filter" class="form-select">
+            <option value="all" <?php echo $filterStatus === 'all' ? 'selected' : ''; ?>>Tất cả</option>
+            <option value="1" <?php echo $filterStatus === '1' ? 'selected' : ''; ?>>Đang bán</option>
+            <option value="0" <?php echo $filterStatus === '0' ? 'selected' : ''; ?>>Ẩn</option>
+          </select>
+        </div>
+        <div class="col-md-2 d-flex gap-2">
+          <button type="submit" class="btn btn-primary w-100"><i class="fas fa-search me-1"></i>Lọc</button>
+          <a href="admin-QLSP.php" class="btn btn-outline-secondary">Reset</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div class="card border-0 shadow-sm rounded-3">
     <div class="table-responsive text-nowrap">
       <table class="table table-hover align-middle mb-0">
@@ -142,6 +224,11 @@ $categories = $conn->query("SELECT * FROM categories ORDER BY name")->fetch_all(
           </tr>
         </thead>
         <tbody>
+          <?php if (empty($products)): ?>
+          <tr>
+            <td colspan="6" class="text-center text-muted py-4">Không tìm thấy sản phẩm phù hợp bộ lọc.</td>
+          </tr>
+          <?php endif; ?>
           <?php foreach ($products as $p): ?>
           <tr class="<?php echo $p['status'] == 0 ? 'bg-light opacity-75' : ''; ?>">
             <td class="ps-3 text-muted">#<?php echo $p['id']; ?></td>
@@ -180,12 +267,12 @@ $categories = $conn->query("SELECT * FROM categories ORDER BY name")->fetch_all(
                   <i class="fas fa-edit"></i>
                 </button>
                 <?php if($p['status'] == 1): ?>
-                <a href="?delete=1&id=<?php echo $p['id']; ?>" class="btn btn-sm btn-outline-danger"
+                <a href="?delete=1&id=<?php echo $p['id']; ?><?php echo $preserveQuery ? '&' . $preserveQuery : ''; ?>" class="btn btn-sm btn-outline-danger"
                   onclick="return confirm('Xác nhận xoá/ẩn?')">
                   <i class="fas fa-trash"></i>
                 </a>
                 <?php else: ?>
-                <a href="?restore=1&id=<?php echo $p['id']; ?>" class="btn btn-sm btn-outline-success">
+                <a href="?restore=1&id=<?php echo $p['id']; ?><?php echo $preserveQuery ? '&' . $preserveQuery : ''; ?>" class="btn btn-sm btn-outline-success">
                   <i class="fas fa-undo"></i>
                 </a>
                 <?php endif; ?>
