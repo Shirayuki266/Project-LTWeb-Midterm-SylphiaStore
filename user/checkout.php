@@ -196,28 +196,27 @@ include 'header.php';
       </div>
 
       <div class="col-lg-5">
-        <div class="sticky-top" style="top: 100px;">
-          <h4 class="fw-bold mb-4">Sản phẩm đã chọn</h4>
-          <div class="card border-0 shadow-sm rounded-4 p-4">
-            <?php foreach ($items as $item): ?>
-            <div class="d-flex justify-content-between mb-2">
-              <span class="small"><?php echo htmlspecialchars($item['name']); ?>
-                x<?php echo $item['quantity']; ?></span>
-              <span class="fw-bold"><?php echo formatPrice($item['price'] * $item['quantity']); ?></span>
-            </div>
-            <?php endforeach; ?>
-            <hr>
-            <div class="d-flex justify-content-between mb-2 small text-muted">
-              <span>Tạm tính:</span><span><?php echo formatPrice($subtotal); ?></span>
-            </div>
-            <div class="d-flex justify-content-between text-danger fw-bold fs-4">
-              <span>Tổng cộng:</span><span><?php echo formatPrice($total); ?></span>
-            </div>
+        <h4 class="fw-bold mb-4">Sản phẩm đã chọn</h4>
+        <div class="card border-0 shadow-sm rounded-4 p-4">
+          <?php foreach ($items as $item): ?>
+          <div class="d-flex justify-content-between mb-2">
+            <span class="small"><?php echo htmlspecialchars($item['name']); ?>
+              x<?php echo $item['quantity']; ?></span>
+            <span class="fw-bold"><?php echo formatPrice($item['price'] * $item['quantity']); ?></span>
+          </div>
+          <?php endforeach; ?>
+          <hr>
+          <div class="d-flex justify-content-between mb-2 small text-muted">
+            <span>Tạm tính:</span><span><?php echo formatPrice($subtotal); ?></span>
+          </div>
+          <div class="d-flex justify-content-between text-danger fw-bold fs-4">
+            <span>Tổng cộng:</span><span><?php echo formatPrice($total); ?></span>
           </div>
         </div>
       </div>
     </div>
-    <?php endif; ?>
+  </div>
+  <?php endif; ?>
   </div>
 </main>
 
