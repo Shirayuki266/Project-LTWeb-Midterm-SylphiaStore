@@ -87,17 +87,16 @@ include 'header.php';
   <div class="card shadow-sm border-0 mb-4">
     <div class="card-body">
       <form action="" method="POST" class="row g-3 align-items-end">
-        <input type="hidden" name="id" id="category-id" value="0">
         <div class="col-md-4">
           <label class="form-label">Tên danh mục</label>
-          <input type="text" name="name" id="category-name" class="form-control" placeholder="Ví dụ: Điện thoại" required>
+          <input type="text" name="name" class="form-control" placeholder="Ví dụ: Điện thoại" required>
         </div>
         <div class="col-md-5">
           <label class="form-label">Mô tả</label>
-          <input type="text" name="description" id="category-description" class="form-control" placeholder="Ví dụ: Điện thoại Apple iPhone">
+          <input type="text" name="description" class="form-control" placeholder="Ví dụ: Điện thoại Apple iPhone">
         </div>
         <div class="col-md-3">
-          <button type="submit" class="btn btn-primary w-100" id="category-submit">Thêm danh mục</button>
+          <button type="submit" class="btn btn-primary w-100">Thêm danh mục</button>
         </div>
       </form>
     </div>
@@ -121,7 +120,7 @@ include 'header.php';
             <td><?php echo htmlspecialchars($cat['name']); ?></td>
             <td><?php echo htmlspecialchars($cat['description'] ?? ''); ?></td>
             <td class="text-end">
-              <button class="btn btn-sm btn-outline-primary me-1" data-id="<?php echo $cat['id']; ?>" data-name="<?php echo htmlspecialchars($cat['name'], ENT_QUOTES); ?>" data-description="<?php echo htmlspecialchars($cat['description'] ?? '', ENT_QUOTES); ?>" onclick="editCategory(this)">Sửa</button>
+              <button type="button" class="btn btn-sm btn-outline-primary me-1" data-id="<?php echo $cat['id']; ?>" data-name="<?php echo htmlspecialchars($cat['name'], ENT_QUOTES); ?>" data-description="<?php echo htmlspecialchars($cat['description'] ?? '', ENT_QUOTES); ?>" data-bs-toggle="modal" data-bs-target="#editCategoryModal" onclick="openEditCategoryModal(this)">Sửa</button>
               <a href="?delete=<?php echo $cat['id']; ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Xác nhận xóa?')">Xóa</a>
             </td>
           </tr>
@@ -132,15 +131,43 @@ include 'header.php';
   </div>
 </div>
 
+<div class="modal fade" id="editCategoryModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <form action="" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title">Sửa danh mục</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="id" id="edit-category-id" value="0">
+          <div class="mb-3">
+            <label class="form-label">Tên danh mục</label>
+            <input type="text" name="name" id="edit-category-name" class="form-control" required>
+          </div>
+          <div>
+            <label class="form-label">Mô tả</label>
+            <input type="text" name="description" id="edit-category-description" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
-function editCategory(button) {
+function openEditCategoryModal(button) {
     const id = button.dataset.id;
     const name = button.dataset.name;
-  const description = button.dataset.description || '';
-    document.getElementById('category-id').value = id;
-    document.getElementById('category-name').value = name;
-  document.getElementById('category-description').value = description;
-    document.getElementById('category-submit').innerText = 'Lưu thay đổi';
+    const description = button.dataset.description || '';
+
+    document.getElementById('edit-category-id').value = id;
+    document.getElementById('edit-category-name').value = name;
+    document.getElementById('edit-category-description').value = description;
 }
 </script>
 
