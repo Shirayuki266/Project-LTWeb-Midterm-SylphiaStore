@@ -91,10 +91,9 @@
           <span class="badge bg-success">COD</span>
         </div>
       </div>
-      <div class="col-md-6 text-md-end">
+      <div class="col-md-9 text-md-end">
         <p class="mb-0">&copy; 2024 <strong>Sylphia Shop</strong>. Tất cả quyền được bảo lưu. |
-          <a href="#" class="text-light text-decoration-none">Chính sách bảo mật</a> |
-          <a href="#" class="text-light text-decoration-none">Điều khoản dịch vụ</a>
+          <a href="#" class="text-light text-decoration-none">Chính sách bảo mật & Điều khoản dịch vụ</a> |
         </p>
       </div>
     </div>
