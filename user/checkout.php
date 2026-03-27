@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt_item = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
                 $stmt_item->bind_param("iiid", $order_id, $item['id'], $item['quantity'], $item['price']);
                 $stmt_item->execute();
-                $cart->removeItem($item['id']); 
+                $cart->remove($item['id']); 
             }
             $success = true;
         }
