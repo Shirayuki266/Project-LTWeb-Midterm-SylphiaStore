@@ -33,11 +33,27 @@ $sql = "
 ";
 
 $stmt = $conn->prepare($sql);
+if (!$stmt) {
+    die("Lỗi chuẩn bị câu lệnh: " . $conn->error);
+}
+
 $startTime = $fromDate . " 00:00:00";
 $endTime   = $toDate . " 23:59:59";
 $stmt->bind_param("ss", $startTime, $endTime);
-$stmt->execute();
-$inventory = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+if (!$stmt->execute()) {
+    die("Lỗi thực thi câu lệnh: " . $stmt->error);
+}
+
+$result = $stmt->get_result();
+if (!$result) {
+    die("Lỗi lấy kết quả: " . $stmt->error);
+}
+
+$inventory = $result->fetch_all(MYSQLI_ASSOC);
+if (!is_array($inventory)) {
+    $inventory = [];
+}
 
 include 'header.php';
 ?>
@@ -46,6 +62,17 @@ include 'header.php';
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="h3 mb-0 fw-bold"><i class="fa-solid fa-chart-pie me-2 text-primary"></i>Thống kê Kho & Báo cáo</h2>
   </div>
+
+  <!-- Thông báo báo cáo đã được lọc -->
+  <?php if (!empty($_GET)): ?>
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    <i class="fas fa-info-circle me-2"></i>
+    <strong>Báo cáo được lọc:</strong> Từ ngày <strong><?= date('d/m/Y', strtotime($fromDate)) ?></strong> 
+    đến ngày <strong><?= date('d/m/Y', strtotime($toDate)) ?></strong> 
+    (Hạn mức cảnh báo: ≤ <strong><?= $alertLimit ?></strong> sản phẩm)
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <?php endif; ?>
 
   <div class="card shadow-sm border-0 mb-4 bg-light">
     <div class="card-body">
@@ -71,6 +98,53 @@ include 'header.php';
     </div>
   </div>
 
+  <!-- Thống kê tóm tắt -->
+  <?php 
+  if (!empty($inventory)) {
+    $total_stock = array_sum(array_column($inventory, 'current_stock'));
+    $total_sold = array_sum(array_column($inventory, 'total_exported'));
+    $low_items = count(array_filter($inventory, function($item) use ($alertLimit) { return $item['current_stock'] <= $alertLimit; }));
+  ?>
+  <div class="row g-3 mb-4">
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm bg-white">
+        <div class="card-body text-center">
+          <div class="text-primary mb-2"><i class="fas fa-box fa-2x"></i></div>
+          <div class="small text-muted">Tổng số sản phẩm</div>
+          <div class="h5 fw-bold"><?= count($inventory) ?></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm bg-white">
+        <div class="card-body text-center">
+          <div class="text-success mb-2"><i class="fas fa-plus-circle fa-2x"></i></div>
+          <div class="small text-muted">Lượng bán được</div>
+          <div class="h5 fw-bold text-success"><?= number_format($total_sold) ?></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm bg-white">
+        <div class="card-body text-center">
+          <div class="text-info mb-2"><i class="fas fa-warehouse fa-2x"></i></div>
+          <div class="small text-muted">Tổng tồn kho</div>
+          <div class="h5 fw-bold text-info"><?= number_format($total_stock) ?></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm bg-white">
+        <div class="card-body text-center">
+          <div class="text-danger mb-2"><i class="fas fa-exclamation-circle fa-2x"></i></div>
+          <div class="small text-muted">Sắp hết hàng</div>
+          <div class="h5 fw-bold text-danger"><?= $low_items ?></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <?php } ?>
+
   <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
     <div class="table-responsive">
       <table class="table table-hover align-middle mb-0">
@@ -84,6 +158,15 @@ include 'header.php';
           </tr>
         </thead>
         <tbody>
+          <?php if (empty($inventory)): ?>
+          <tr>
+            <td colspan="5" class="text-center py-5 text-muted">
+              <i class="fas fa-inbox fa-3x mb-3 d-block opacity-50"></i>
+              <strong>Không có dữ liệu</strong>
+              <p class="small mt-2">Khoảng thời gian từ <strong><?= date('d/m/Y', strtotime($fromDate)) ?></strong> đến <strong><?= date('d/m/Y', strtotime($toDate)) ?></strong> không có sản phẩm nào</p>
+            </td>
+          </tr>
+          <?php else: ?>
           <?php foreach ($inventory as $item): 
                         $isLow = ($item['current_stock'] <= $alertLimit);
                     ?>
@@ -118,6 +201,7 @@ include 'header.php';
             </td>
           </tr>
           <?php endforeach; ?>
+          <?php endif; ?>
         </tbody>
       </table>
     </div>
