@@ -19,22 +19,19 @@ require_once '../includes/functions.php';
 
 // 4. Khởi tạo đối tượng
 $cart = new Cart($conn);
-$allItems = $cart->getItems(); // Lấy tất cả sản phẩm trong giỏ
+$allItems = $cart->getItems(); 
 
-// --- MỚI: LỌC SẢN PHẨM ĐƯỢC CHỌN ---
+// --- LỌC SẢN PHẨM ĐƯỢC CHỌN ---
 $selectedIds = isset($_GET['ids']) ? explode(',', $_GET['ids']) : [];
 
 if (!empty($selectedIds)) {
-    // Chỉ giữ lại những sản phẩm có ID nằm trong danh sách được chọn
     $items = array_filter($allItems, function($item) use ($selectedIds) {
         return in_array($item['id'], $selectedIds);
     });
 } else {
-    // Nếu không có tham số ids, mặc định lấy toàn bộ (hoặc có thể đuổi về giỏ hàng)
     $items = $allItems;
 }
 
-// Nếu sau khi lọc mà không có sản phẩm nào, quay về giỏ hàng
 if (empty($items)) {
     header('Location: cart.php');
     exit;
@@ -54,13 +51,12 @@ $address_tool = new Address($conn);
 $address_default = !empty($user['address']) ? $user['address'] : '';
 $phone_default = !empty($user['phone']) ? $user['phone'] : 'Chưa cập nhật SĐT';
 
-// --- TÍNH TOÁN HÓA ĐƠN (Dựa trên danh sách đã lọc) ---
+// --- TÍNH TOÁN HÓA ĐƠN ---
 $subtotal = 0;
 foreach ($items as $item) {
     $subtotal += $item['price'] * $item['quantity'];
 }
 
-// Tính giảm giá theo VIP
 $vip_level = $user['vip_level'] ?? 'none';
 $discount_percent = 0;
 switch (mb_strtolower($vip_level, 'UTF-8')) {
@@ -101,8 +97,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt_item = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
                 $stmt_item->bind_param("iiid", $order_id, $item['id'], $item['quantity'], $item['price']);
                 $stmt_item->execute();
-                
-                // MỚI: Xóa sản phẩm ĐÃ MUA ra khỏi giỏ hàng (không xóa cả giỏ)
                 $cart->removeItem($item['id']); 
             }
             $success = true;
@@ -180,12 +174,34 @@ include 'header.php';
             <h5 class="fw-bold mb-3">Phương thức thanh toán</h5>
             <div class="row g-2">
               <div class="col-md-6">
-                <input type="radio" class="btn-check" name="payment" id="pay_cash" value="cash" checked>
+                <input type="radio" class="btn-check" name="payment" id="pay_cash" value="cash" checked
+                  onchange="togglePaymentInfo()">
                 <label class="btn btn-outline-primary w-100 py-3 rounded-4" for="pay_cash">Tiền mặt (COD)</label>
               </div>
               <div class="col-md-6">
-                <input type="radio" class="btn-check" name="payment" id="pay_bank" value="transfer">
+                <input type="radio" class="btn-check" name="payment" id="pay_bank" value="transfer"
+                  onchange="togglePaymentInfo()">
                 <label class="btn btn-outline-primary w-100 py-3 rounded-4" for="pay_bank">Chuyển khoản</label>
+              </div>
+            </div>
+
+            <div id="bank_info" class="mt-3 p-4 rounded-4 d-none animate__animated animate__fadeIn"
+              style="background: #f0f7ff; border: 2px dashed #0066cc;">
+              <div class="row align-items-center">
+                <div class="col-sm-7">
+                  <h6 class="fw-bold text-primary mb-3">Thông tin tài khoản:</h6>
+                  <p class="mb-1"><strong>Ngân hàng:</strong> MB Bank</p>
+                  <p class="mb-1"><strong>Số TK:</strong> 0123456789</p>
+                  <p class="mb-1"><strong>Chủ TK:</strong> NGUYEN THE BAO</p>
+                  <p class="mb-0 text-muted small">Nội dung: <span class="text-danger fw-bold">THANHTOAN
+                      <?php echo time(); ?></span></p>
+                </div>
+                <div class="col-sm-5 text-center mt-3 mt-sm-0">
+                  <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=2|99|0123456789|||NGUYEN THE BAO|0|0"
+                    alt="QR Payment" class="img-fluid border p-2 bg-white rounded-3 shadow-sm">
+                  <div class="small text-muted mt-2">Quét mã để thanh toán</div>
+                </div>
               </div>
             </div>
           </div>
@@ -200,8 +216,7 @@ include 'header.php';
         <div class="card border-0 shadow-sm rounded-4 p-4">
           <?php foreach ($items as $item): ?>
           <div class="d-flex justify-content-between mb-2">
-            <span class="small"><?php echo htmlspecialchars($item['name']); ?>
-              x<?php echo $item['quantity']; ?></span>
+            <span class="small"><?php echo htmlspecialchars($item['name']); ?> x<?php echo $item['quantity']; ?></span>
             <span class="fw-bold"><?php echo formatPrice($item['price'] * $item['quantity']); ?></span>
           </div>
           <?php endforeach; ?>
@@ -215,20 +230,22 @@ include 'header.php';
         </div>
       </div>
     </div>
-  </div>
-  <?php endif; ?>
+    <?php endif; ?>
   </div>
 </main>
 
 <?php include 'footer.php'; ?>
 
 <script>
+// Xử lý ẩn hiện địa chỉ mới
 function toggleAddressNew() {
   const section = document.getElementById("new_address_section");
-  section.classList.toggle('d-none', !document.getElementById("addr_new").checked);
-  if (!section.classList.contains('d-none')) loadProvinces();
+  const isNew = document.getElementById("addr_new").checked;
+  section.classList.toggle('d-none', !isNew);
+  if (isNew) loadProvinces();
 }
 
+// Load danh sách tỉnh thành
 function loadProvinces() {
   const citySelect = document.getElementById("city");
   if (citySelect.options.length > 0) return;
@@ -238,5 +255,21 @@ function loadProvinces() {
       citySelect.innerHTML = '<option value="">Chọn Tỉnh/Thành</option>';
       data.forEach(p => citySelect.options.add(new Option(p.name, p.code)));
     });
+}
+
+// Xử lý ẩn hiện thông tin ngân hàng và QR
+function togglePaymentInfo() {
+  const bankInfo = document.getElementById("bank_info");
+  const isTransfer = document.getElementById("pay_bank").checked;
+
+  if (isTransfer) {
+    bankInfo.classList.remove('d-none');
+    bankInfo.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest'
+    });
+  } else {
+    bankInfo.classList.add('d-none');
+  }
 }
 </script>
