@@ -116,7 +116,7 @@ include 'header.php';
       <h2 class="fw-bold text-dark">Đặt hàng thành công!</h2>
       <p class="text-muted fs-5">Mã đơn hàng: <span class="text-primary fw-bold">#<?php echo $order_id; ?></span></p>
       <div class="d-flex justify-content-center gap-3 mt-4">
-        <a href="profile.php" class="btn btn-outline-primary rounded-pill px-4">Xem đơn hàng</a>
+        <a href="order_detail.php?id=<?php echo (int)$order_id; ?>" class="btn btn-outline-primary rounded-pill px-4">Xem đơn hàng</a>
         <a href="index.php" class="btn btn-primary rounded-pill px-4 shadow">Tiếp tục mua sắm</a>
       </div>
     </div>
