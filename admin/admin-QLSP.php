@@ -17,23 +17,40 @@ $message = '';
 
 /* 2. XỬ LÝ XOÁ SẢN PHẨM */
 if (isset($_GET['delete']) && isset($_GET['id'])) {
+  try {
     $id = (int)$_GET['id'];
-    $check_stmt = $conn->prepare("SELECT COUNT(*) as total FROM order_items WHERE product_id = ?");
-    $check_stmt->bind_param("i", $id);
-    $check_stmt->execute();
-    $has_history = $check_stmt->get_result()->fetch_assoc()['total'] > 0;
 
-    if (!$has_history) {
-        $stmt = $conn->prepare("DELETE FROM products WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $message = "Đã xoá vĩnh viễn sản phẩm khỏi hệ thống!";
-    } else {
-        $stmt = $conn->prepare("UPDATE products SET status = 0 WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $message = "Sản phẩm đã có đơn hàng nên hệ thống đã chuyển sang trạng thái ẨN.";
+    $dependencyQueries = [
+      "order_items" => "SELECT COUNT(*) AS total FROM order_items WHERE product_id = ?",
+      "purchase_order_details" => "SELECT COUNT(*) AS total FROM purchase_order_details WHERE product_id = ?"
+    ];
+
+    $hasDependencies = false;
+    foreach ($dependencyQueries as $query) {
+      $check_stmt = $conn->prepare($query);
+      $check_stmt->bind_param("i", $id);
+      $check_stmt->execute();
+
+      if ((int)($check_stmt->get_result()->fetch_assoc()['total'] ?? 0) > 0) {
+        $hasDependencies = true;
+        break;
+      }
     }
+
+    if (!$hasDependencies) {
+      $stmt = $conn->prepare("DELETE FROM products WHERE id = ?");
+      $stmt->bind_param("i", $id);
+      $stmt->execute();
+      $message = "Đã xoá vĩnh viễn sản phẩm khỏi hệ thống!";
+    } else {
+      $stmt = $conn->prepare("UPDATE products SET status = 0 WHERE id = ?");
+      $stmt->bind_param("i", $id);
+      $stmt->execute();
+      $message = "Sản phẩm đã có lịch sử phát sinh nên hệ thống chuyển sang trạng thái ẨN thay vì xoá.";
+    }
+  } catch (mysqli_sql_exception $e) {
+    $message = "Không thể xoá sản phẩm vì vẫn còn dữ liệu liên quan. Hệ thống nên chuyển sản phẩm sang ẨN.";
+  }
 }
 
 /* 2.1 KHÔI PHỤC */
