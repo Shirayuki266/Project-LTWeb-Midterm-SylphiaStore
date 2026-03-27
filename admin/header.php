@@ -89,6 +89,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
           <i class="fas fa-tachometer-alt me-2"></i> Dashboard
         </a>
 
+        <a class="nav-link rounded px-3 py-2 <?php echo ($current_page == 'admin-QLDanhMuc.php') ? 'active' : ''; ?>"
+          href="admin-QLDanhMuc.php">
+          <i class="fas fa-list me-2"></i> Danh mục
+        </a>
+
         <a class="nav-link rounded px-3 py-2 <?php echo ($current_page == 'admin-QLSP.php') ? 'active' : ''; ?>"
           href="admin-QLSP.php">
           <i class="fas fa-box me-2"></i> Sản phẩm
@@ -127,7 +132,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
       </nav>
 
       <div class="sidebar-footer mt-auto pt-4 border-top border-secondary">
-        <div class="px-3 mb-3 small text-secondary">Đang đăng nhập: <strong>Admin</strong></div>
+        <div class="px-3 mb-3 small text-secondary">Đang đăng nhập: <strong><?php echo htmlspecialchars($_SESSION['username'] ?? 'Admin'); ?></strong></div>
         <a href="admin-logout.php" class="btn btn-danger w-100 shadow-sm"
           onclick="return confirm('Bạn muốn đăng xuất?')">
           <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
@@ -142,5 +147,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
           <span class="navbar-brand mb-0 h1 fs-6 text-muted">Hệ thống quản trị /
             <span class="text-dark fw-bold"><?php echo str_replace(['admin-', '.php'], '', $current_page); ?></span>
           </span>
+
+          <div class="ms-auto text-muted small">
+            <i class="fas fa-user-shield me-1"></i>
+            Đăng nhập: <strong class="text-dark"><?php echo htmlspecialchars($_SESSION['username'] ?? 'Admin'); ?></strong>
+          </div>
         </div>
       </header>
