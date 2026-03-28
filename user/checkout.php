@@ -51,24 +51,6 @@ $address_tool = new Address($conn);
 $address_default = !empty($user['address']) ? $user['address'] : '';
 $phone_default = !empty($user['phone']) ? $user['phone'] : 'Chưa cập nhật SĐT';
 
-// --- TÍNH TOÁN HÓA ĐƠN ---
-$subtotal = 0;
-foreach ($items as $item) {
-    $subtotal += $item['price'] * $item['quantity'];
-}
-
-$vip_level = $user['vip_level'] ?? 'none';
-$discount_percent = 0;
-switch (mb_strtolower($vip_level, 'UTF-8')) {
-    case 'đồng': $discount_percent = 2; break;
-    case 'bạc':   $discount_percent = 5; break;
-    case 'vàng':  $discount_percent = 10; break;
-    default:      $discount_percent = 0; break;
-}
-
-$discount_amount = ($subtotal * $discount_percent) / 100;
-$shipping = 30000;
-$total = ($subtotal - $discount_amount) + $shipping;
 
 // --- XỬ LÝ ĐẶT HÀNG ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -116,7 +98,8 @@ include 'header.php';
       <h2 class="fw-bold text-dark">Đặt hàng thành công!</h2>
       <p class="text-muted fs-5">Mã đơn hàng: <span class="text-primary fw-bold">#<?php echo $order_id; ?></span></p>
       <div class="d-flex justify-content-center gap-3 mt-4">
-        <a href="order_detail.php?id=<?php echo (int)$order_id; ?>" class="btn btn-outline-primary rounded-pill px-4">Xem đơn hàng</a>
+        <a href="order_detail.php?id=<?php echo (int)$order_id; ?>"
+          class="btn btn-outline-primary rounded-pill px-4">Xem đơn hàng</a>
         <a href="index.php" class="btn btn-primary rounded-pill px-4 shadow">Tiếp tục mua sắm</a>
       </div>
     </div>
