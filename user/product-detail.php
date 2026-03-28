@@ -43,13 +43,14 @@ include 'header.php';
 <div class="container py-5">
   <div class="row g-5">
     <div class="col-lg-6">
-      <div class="card border-0 shadow-sm">
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
         <img id="mainImage" src="<?php echo htmlspecialchars($product['image']); ?>" class="img-fluid p-4"
           style="height:420px;object-fit:contain">
       </div>
       <div class="d-flex gap-2 mt-3">
-        <img src="<?php echo htmlspecialchars($product['image']); ?>" style="width:70px;height:70px;object-fit:contain"
-          class="border rounded p-1" onclick="changeImage(this.src)" style="cursor:pointer">
+        <img src="<?php echo htmlspecialchars($product['image']); ?>"
+          style="width:70px;height:70px;object-fit:contain;cursor:pointer" class="border rounded p-1 shadow-sm"
+          onclick="changeImage(this.src)">
       </div>
     </div>
 
@@ -65,7 +66,7 @@ include 'header.php';
       <div class="mb-3">
         <i class="fas fa-box me-2"></i>
         <?php if($product['stock'] > 0): ?>
-        Còn <b><?php echo $product['stock']; ?></b> sản phẩm
+        Còn <b id="stockDisplay"><?php echo $product['stock']; ?></b> sản phẩm trong kho
         <?php else: ?>
         <span class="text-danger fw-bold">Hết hàng</span>
         <?php endif; ?>
@@ -73,22 +74,26 @@ include 'header.php';
 
       <hr>
       <div class="mb-4">
-        <h5>Mô tả</h5>
+        <h5 class="fw-bold">Mô tả sản phẩm</h5>
         <p class="text-muted"><?php echo nl2br(htmlspecialchars($product['description'])); ?></p>
       </div>
 
       <div class="d-flex align-items-center mb-4">
-        <span class="me-3">Số lượng:</span>
-        <button class="btn btn-outline-secondary" onclick="changeQty(-1)">-</button>
-        <input id="qty" value="1" class="form-control text-center mx-2" style="width:70px" readonly>
-        <button class="btn btn-outline-secondary" onclick="changeQty(1)">+</button>
+        <span class="me-3 fw-semibold">Số lượng:</span>
+        <div class="input-group" style="width: 140px;">
+          <button class="btn btn-outline-secondary rounded-start-pill" type="button" onclick="changeQty(-1)">-</button>
+          <input id="qty" value="1" class="form-control text-center bg-white" readonly>
+          <button class="btn btn-outline-secondary rounded-end-pill" type="button" onclick="changeQty(1)">+</button>
+        </div>
       </div>
 
       <div class="d-flex gap-3">
-        <button class="btn btn-primary px-4 py-2" onclick="addToCart()">
+        <button class="btn btn-primary px-4 py-2 rounded-pill fw-bold" onclick="addToCart()"
+          <?php echo ($product['stock'] <= 0) ? 'disabled' : ''; ?>>
           <i class="fas fa-cart-plus me-2"></i> Thêm vào giỏ
         </button>
-        <button class="btn btn-success px-4 py-2" onclick="buyNow()">
+        <button class="btn btn-success px-4 py-2 rounded-pill fw-bold" onclick="buyNow()"
+          <?php echo ($product['stock'] <= 0) ? 'disabled' : ''; ?>>
           <i class="fas fa-bolt me-2"></i> Mua ngay
         </button>
       </div>
@@ -98,19 +103,19 @@ include 'header.php';
 
 <?php if(!empty($related)): ?>
 <div class="container pb-5">
-  <hr class="mb-5">
+  <hr class="my-5">
   <h3 class="mb-4 fw-bold">Sản phẩm liên quan</h3>
   <div class="row g-4">
     <?php foreach($related as $p): ?>
     <div class="col-md-3">
-      <div class="card h-100 shadow-sm border-0">
+      <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
         <img src="<?php echo htmlspecialchars($p['image']); ?>" class="card-img-top p-3"
           style="height:200px;object-fit:contain">
         <div class="card-body">
           <h6 class="fw-semibold text-truncate"><?php echo htmlspecialchars($p['name']); ?></h6>
           <div class="text-primary fw-bold mb-2"><?php echo formatPrice($p['price']); ?></div>
-          <a href="product-detail.php?id=<?php echo $p['id']; ?>" class="btn btn-outline-primary btn-sm w-100">Chi
-            tiết</a>
+          <a href="product-detail.php?id=<?php echo $p['id']; ?>"
+            class="btn btn-outline-primary btn-sm w-100 rounded-pill">Chi tiết</a>
         </div>
       </div>
     </div>
@@ -122,38 +127,53 @@ include 'header.php';
 <?php include 'footer.php'; ?>
 
 <script>
-// Chuyển biến đăng nhập từ PHP sang JS
+// Dữ liệu từ PHP
 const isLoggedIn = <?php echo $isLoggedIn ? 'true' : 'false'; ?>;
 const productId = <?php echo $id; ?>;
+const stockMax = <?php echo (int)$product['stock']; ?>;
 
 function changeImage(src) {
   document.getElementById("mainImage").src = src;
 }
 
+/**
+ * Xử lý tăng giảm số lượng tại giao diện
+ */
 function changeQty(delta) {
   let input = document.getElementById("qty");
-  let qty = parseInt(input.value);
-  qty += delta;
-  if (qty < 1) qty = 1;
-  // Có thể check thêm giới hạn tồn kho tại đây nếu muốn
-  input.value = qty;
+  let currentQty = parseInt(input.value);
+  let newQty = currentQty + delta;
+
+  if (newQty < 1) return;
+
+  if (newQty > stockMax) {
+    alert("⚠️ Rất tiếc, kho hàng chỉ còn " + stockMax + " sản phẩm.");
+    newQty = stockMax;
+  }
+
+  input.value = newQty;
 }
 
-// Hàm kiểm tra đăng nhập trước khi thực hiện hành động
+/**
+ * Kiểm tra quyền đăng nhập
+ */
 function checkAccess() {
   if (!isLoggedIn) {
-    alert("Bạn cần đăng nhập để thực hiện chức năng này!");
-    // Chuyển hướng kèm theo link gốc để quay lại sau khi login
+    alert("🔒 Bạn cần đăng nhập để thực hiện chức năng này!");
     window.location.href = "login.php?from=product-detail.php?id=" + productId;
     return false;
   }
   return true;
 }
 
+/**
+ * Thêm vào giỏ hàng
+ */
 function addToCart() {
   if (!checkAccess()) return;
+  if (stockMax <= 0) return alert("Hết hàng!");
 
-  let qty = document.getElementById("qty").value;
+  let qty = parseInt(document.getElementById("qty").value);
 
   fetch("../api/cart.php", {
       method: "POST",
@@ -163,26 +183,36 @@ function addToCart() {
       body: JSON.stringify({
         action: "add",
         id: productId,
-        qty: parseInt(qty)
+        qty: qty
       })
     })
     .then(res => res.json())
     .then(data => {
       if (data.success) {
-        alert("Đã thêm vào giỏ hàng!");
+        if (data.status === "warning") {
+          alert("⚠️ " + data.message);
+        } else {
+          alert("✅ Đã thêm vào giỏ hàng!");
+        }
+        // Cập nhật Badge giỏ hàng trên Header nếu có
+        const cartBadge = document.getElementById('cart-count-badge');
+        if (cartBadge) cartBadge.innerText = data.totalItems;
       } else {
-        alert(data.message || "Lỗi khi thêm vào giỏ hàng");
+        alert("❌ Lỗi: " + (data.message || "Không thể thêm vào giỏ"));
       }
     })
-    .catch(err => alert("Có lỗi xảy ra, vui lòng thử lại."));
+    .catch(err => console.error("Error:", err));
 }
 
+/**
+ * Mua ngay (Thêm vào giỏ và đi tới thanh toán)
+ */
 function buyNow() {
   if (!checkAccess()) return;
+  if (stockMax <= 0) return alert("Hết hàng!");
 
-  let qty = document.getElementById("qty").value;
+  let qty = parseInt(document.getElementById("qty").value);
 
-  // Thêm vào giỏ trước, thành công thì chuyển trang checkout
   fetch("../api/cart.php", {
       method: "POST",
       headers: {
@@ -191,15 +221,18 @@ function buyNow() {
       body: JSON.stringify({
         action: "add",
         id: productId,
-        qty: parseInt(qty)
+        qty: qty
       })
     })
     .then(res => res.json())
     .then(data => {
       if (data.success) {
+        if (data.status === "warning") {
+          alert("⚠️ " + data.message);
+        }
         window.location.href = "checkout.php";
       } else {
-        alert("Không thể xử lý yêu cầu Mua ngay.");
+        alert("❌ Có lỗi xảy ra khi xử lý Mua ngay.");
       }
     });
 }

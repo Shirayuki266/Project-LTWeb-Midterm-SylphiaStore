@@ -32,6 +32,14 @@ if (!empty($selectedIds)) {
     $items = $allItems;
 }
 
+// --- TÍNH TOÁN TỔNG TIỀN (Sửa lỗi Undefined variable) ---
+$subtotal = 0;
+foreach ($items as $item) {
+    $subtotal += $item['price'] * $item['quantity'];
+}
+$shipping_fee = 0; // Bạn có thể tùy chỉnh phí ship ở đây
+$total = $subtotal + $shipping_fee;
+
 if (empty($items)) {
     header('Location: cart.php');
     exit;
@@ -70,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $payment_method = $_POST['payment'] ?? 'cash';
 
+        // Sử dụng biến $total đã tính toán ở trên
         $stmt = $conn->prepare("INSERT INTO orders (user_id, address, payment_method, status, total) VALUES (?, ?, ?, 'pending', ?)");
         $stmt->bind_param("issd", $_SESSION['user_id'], $final_address, $payment_method, $total);
         
@@ -142,12 +151,19 @@ include 'header.php';
               <label class="form-check-label fw-bold" for="addr_new">Giao đến địa chỉ khác</label>
               <div id="new_address_section" class="mt-3 d-none border-top pt-3">
                 <div class="row g-3">
-                  <div class="col-md-6"><select class="form-select" id="city" name="city"></select></div>
-                  <div class="col-md-6"><select class="form-select" id="ward" name="ward">
-                      <option>Chọn Phường/Xã</option>
-                    </select></div>
-                  <div class="col-12"><input type="text" name="house_number" class="form-control"
-                      placeholder="Số nhà, tên đường..."></div>
+                  <div class="col-md-6">
+                    <select class="form-select" id="city" name="city" onchange="loadWards(this.value)">
+                      <option value="">Chọn Tỉnh/Thành</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <select class="form-select" id="ward" name="ward">
+                      <option value="">Chọn Phường/Xã</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <input type="text" name="house_number" class="form-control" placeholder="Số nhà, tên đường...">
+                  </div>
                 </div>
               </div>
             </div>
@@ -196,18 +212,30 @@ include 'header.php';
       <div class="col-lg-5">
         <h4 class="fw-bold mb-4">Sản phẩm đã chọn</h4>
         <div class="card border-0 shadow-sm rounded-4 p-4">
-          <?php foreach ($items as $item): ?>
-          <div class="d-flex justify-content-between mb-2">
-            <span class="small"><?php echo htmlspecialchars($item['name']); ?> x<?php echo $item['quantity']; ?></span>
-            <span class="fw-bold"><?php echo formatPrice($item['price'] * $item['quantity']); ?></span>
+          <div class="overflow-auto mb-3" style="max-height: 400px;">
+            <?php foreach ($items as $item): ?>
+            <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
+              <div class="pe-2">
+                <div class="small fw-bold text-dark"><?php echo htmlspecialchars($item['name']); ?></div>
+                <small class="text-muted">Số lượng: <?php echo $item['quantity']; ?></small>
+              </div>
+              <span class="fw-bold text-nowrap"><?php echo formatPrice($item['price'] * $item['quantity']); ?></span>
+            </div>
+            <?php endforeach; ?>
           </div>
-          <?php endforeach; ?>
-          <hr>
+
           <div class="d-flex justify-content-between mb-2 small text-muted">
-            <span>Tạm tính:</span><span><?php echo formatPrice($subtotal); ?></span>
+            <span>Tạm tính:</span>
+            <span><?php echo formatPrice($subtotal); ?></span>
           </div>
+          <div class="d-flex justify-content-between mb-3 small text-muted">
+            <span>Phí vận chuyển:</span>
+            <span><?php echo $shipping_fee > 0 ? formatPrice($shipping_fee) : 'Miễn phí'; ?></span>
+          </div>
+          <hr>
           <div class="d-flex justify-content-between text-danger fw-bold fs-4">
-            <span>Tổng cộng:</span><span><?php echo formatPrice($total); ?></span>
+            <span>Tổng cộng:</span>
+            <span><?php echo formatPrice($total); ?></span>
           </div>
         </div>
       </div>
@@ -230,12 +258,27 @@ function toggleAddressNew() {
 // Load danh sách tỉnh thành
 function loadProvinces() {
   const citySelect = document.getElementById("city");
-  if (citySelect.options.length > 0) return;
+  if (citySelect.options.length > 1) return;
   fetch('../api/get_location.php?action=get_provinces')
     .then(res => res.json())
     .then(data => {
-      citySelect.innerHTML = '<option value="">Chọn Tỉnh/Thành</option>';
       data.forEach(p => citySelect.options.add(new Option(p.name, p.code)));
+    });
+}
+
+// Load danh sách phường xã khi chọn tỉnh
+function loadWards(provinceCode) {
+  const wardSelect = document.getElementById("ward");
+  wardSelect.innerHTML = '<option value="">Đang tải...</option>';
+  if (!provinceCode) {
+    wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
+    return;
+  }
+  fetch('../api/get_location.php?action=get_wards&province_code=' + provinceCode)
+    .then(res => res.json())
+    .then(data => {
+      wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
+      data.forEach(w => wardSelect.options.add(new Option(w.name, w.code)));
     });
 }
 
