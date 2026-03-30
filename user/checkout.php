@@ -78,19 +78,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $payment_method = $_POST['payment'] ?? 'cash';
 
-        // Sử dụng biến $total đã tính toán ở trên
-        $stmt = $conn->prepare("INSERT INTO orders (user_id, address, payment_method, status, total) VALUES (?, ?, ?, 'pending', ?)");
-        $stmt->bind_param("issd", $_SESSION['user_id'], $final_address, $payment_method, $total);
-        
-        if ($stmt->execute()) {
+        if ($payment_method === 'online') {
+          $error = "Thanh toán trực tuyến đang bảo trì, vui lòng chọn phương thức khác!";
+        } else {
+
+          // Sử dụng biến $total đã tính toán ở trên
+          $stmt = $conn->prepare("INSERT INTO orders (user_id, address, payment_method, status, total) VALUES (?, ?, ?, 'pending', ?)");
+          $stmt->bind_param("issd", $_SESSION['user_id'], $final_address, $payment_method, $total);
+
+          if ($stmt->execute()) {
             $order_id = $conn->insert_id;
             foreach ($items as $item) {
-                $stmt_item = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
-                $stmt_item->bind_param("iiid", $order_id, $item['id'], $item['quantity'], $item['price']);
-                $stmt_item->execute();
-                $cart->remove($item['id']); 
+              $stmt_item = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
+              $stmt_item->bind_param("iiid", $order_id, $item['id'], $item['quantity'], $item['price']);
+              $stmt_item->execute();
+              $cart->remove($item['id']);
             }
             $success = true;
+            }
         }
     }
 }
@@ -172,15 +177,20 @@ include 'header.php';
           <div class="card shadow-sm border-0 rounded-4 p-4 mb-4">
             <h5 class="fw-bold mb-3">Phương thức thanh toán</h5>
             <div class="row g-2">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <input type="radio" class="btn-check" name="payment" id="pay_cash" value="cash" checked
                   onchange="togglePaymentInfo()">
                 <label class="btn btn-outline-primary w-100 py-3 rounded-4" for="pay_cash">Tiền mặt (COD)</label>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <input type="radio" class="btn-check" name="payment" id="pay_bank" value="transfer"
                   onchange="togglePaymentInfo()">
                 <label class="btn btn-outline-primary w-100 py-3 rounded-4" for="pay_bank">Chuyển khoản</label>
+              </div>
+              <div class="col-md-4">
+                <input type="radio" class="btn-check" name="payment" id="pay_online" value="online"
+                  onchange="togglePaymentInfo()">
+                <label class="btn btn-outline-primary w-100 py-3 rounded-4" for="pay_online">Thanh toán trực tuyến</label>
               </div>
             </div>
 
@@ -201,6 +211,10 @@ include 'header.php';
                   <div class="small text-muted mt-2">Quét mã để thanh toán</div>
                 </div>
               </div>
+            </div>
+
+            <div id="online_maintenance" class="mt-3 alert alert-warning d-none" role="alert">
+              Thanh toán trực tuyến đang bảo trì, vui lòng chọn phương thức khác.
             </div>
           </div>
 
@@ -285,7 +299,9 @@ function loadWards(provinceCode) {
 // Xử lý ẩn hiện thông tin ngân hàng và QR
 function togglePaymentInfo() {
   const bankInfo = document.getElementById("bank_info");
+  const onlineMaintenance = document.getElementById("online_maintenance");
   const isTransfer = document.getElementById("pay_bank").checked;
+  const isOnline = document.getElementById("pay_online").checked;
 
   if (isTransfer) {
     bankInfo.classList.remove('d-none');
@@ -296,5 +312,15 @@ function togglePaymentInfo() {
   } else {
     bankInfo.classList.add('d-none');
   }
+
+  if (isOnline) {
+    onlineMaintenance.classList.remove('d-none');
+  } else {
+    onlineMaintenance.classList.add('d-none');
+  }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  togglePaymentInfo();
+});
 </script>
