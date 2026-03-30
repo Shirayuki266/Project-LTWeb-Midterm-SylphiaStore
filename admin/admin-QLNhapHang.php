@@ -30,7 +30,7 @@ if (isset($_GET['complete_id'])) {
         while ($item = $details->fetch_assoc()) {
             $pid = (int)$item['product_id'];
             $qty = (int)$item['quantity'];
-            $imp_price = floatval($item['import_price']);
+            $original_cost = floatval($item['import_price']);
 
             $pRes = $conn->query("SELECT stock, cost_price, profit_percent FROM products WHERE id = $pid");
             $product = $pRes->fetch_assoc();
@@ -41,7 +41,7 @@ if (isset($_GET['complete_id'])) {
             $margin = floatval($product['profit_percent'] ?? 0);
 
             $totalQty = $stock_old + $qty;
-            $newCost = ($totalQty > 0) ? (($stock_old * $cost_old) + ($qty * $imp_price)) / $totalQty : $imp_price;
+            $newCost = ($totalQty > 0) ? (($stock_old * $cost_old) + ($qty * $original_cost)) / $totalQty : $original_cost;
             $newPrice = $newCost * (1 + ($margin/100));
 
             $upd = $conn->prepare("UPDATE products SET stock = ?, cost_price = ?, price = ? WHERE id = ?");
@@ -189,7 +189,7 @@ include 'header.php';
         <div class="col-12" id="availableProducts" style="display:none;max-height:240px;overflow:auto;">
           <div class="list-group">
             <?php foreach ($allProducts as $p): ?>
-            <button type="button" class="list-group-item list-group-item-action" data-id="<?php echo $p['id']; ?>" data-name="<?php echo htmlspecialchars($p['name']); ?>" data-price="<?php echo $p['cost_price']; ?>" onclick="addProductFromList(this)">
+            <button type="button" class="list-group-item list-group-item-action" data-id="<?php echo $p['id']; ?>" data-name="<?php echo htmlspecialchars($p['name']); ?>" data-cost="<?php echo $p['cost_price']; ?>" onclick="addProductFromList(this)">
               #<?php echo $p['id']; ?> <?php echo htmlspecialchars($p['name']); ?> - Tồn: <?php echo number_format($p['stock']); ?>
             </button>
             <?php endforeach; ?>
@@ -204,7 +204,7 @@ include 'header.php';
             <tr>
               <th>SP</th>
               <th class="text-center" style="width:100px;">Số lượng</th>
-              <th class="text-end" style="width:140px;">Giá nhập</th>
+              <th class="text-end" style="width:160px;">Giá gốc (giá nhập)</th>
               <th class="text-end" style="width:140px;">Thành tiền</th>
               <th class="text-end" style="width:80px;">Xóa</th>
             </tr>
@@ -281,7 +281,7 @@ function addProductFromList(btn) {
         product_id: btn.dataset.id,
         name: btn.dataset.name,
         quantity: 1,
-        import_price: Number(btn.dataset.price) || 0
+    import_price: Number(btn.dataset.cost) || 0
     };
     addOrderItem(item);
 }
@@ -308,7 +308,7 @@ function renderItems() {
             <tr>
                 <td>${item.name}</td>
                 <td class="text-center"><input type="number" class="form-control form-control-sm" min="1" value="${item.quantity}" onchange="updateQty(${index}, this.value)"></td>
-                <td class="text-end"><input type="number" class="form-control form-control-sm text-end" min="0" value="${item.import_price}" onchange="updatePrice(${index}, this.value)"></td>
+            <td class="text-end"><input type="number" class="form-control form-control-sm text-end" min="0" step="0.001" value="${item.import_price}" onchange="updatePrice(${index}, this.value)"></td>
                 <td class="text-end">${new Intl.NumberFormat('vi-VN').format(sub)} </td>
                 <td class="text-end"><button type="button" class="btn btn-sm btn-danger" onclick="removeItem(${index})">x</button></td>
             </tr>

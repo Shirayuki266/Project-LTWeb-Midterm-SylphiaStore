@@ -22,7 +22,7 @@ if (isset($_GET['complete_id'])) {
             while ($item = $items->fetch_assoc()) {
                 $pid = intval($item['product_id']);
                 $qty_new = intval($item['quantity']);
-                $price_new = floatval($item['import_price']);
+                $original_cost = floatval($item['import_price']);
 
                 $p_res = $conn->query("SELECT stock, cost_price, profit_percent FROM products WHERE id = $pid");
                 $p_old = $p_res->fetch_assoc();
@@ -33,8 +33,8 @@ if (isset($_GET['complete_id'])) {
 
                 $total_qty = $qty_old + $qty_new;
                 $new_cost_price = ($total_qty > 0)
-                    ? (($qty_old * $price_old) + ($qty_new * $price_new)) / $total_qty
-                    : $price_new;
+                    ? (($qty_old * $price_old) + ($qty_new * $original_cost)) / $total_qty
+                    : $original_cost;
 
                 $new_price = $new_cost_price * (1 + ($margin / 100));
 
@@ -215,7 +215,7 @@ include 'header.php';
               <tr>
                 <th>Tên sản phẩm</th>
                 <th class="text-center" width="120">Số lượng</th>
-                <th class="text-end" width="180">Giá nhập</th>
+                <th class="text-end" width="180">Giá gốc (giá nhập)</th>
                 <th class="text-end" width="180">Thành tiền</th>
               </tr>
             </thead>
