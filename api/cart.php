@@ -124,8 +124,20 @@ class Cart {
     }
 
     public function handleCart() {
-        header('Content-Type: application/json; charset=utf-8');
-        $input = json_decode(file_get_contents('php://input'), true) ?? [];
+    header('Content-Type: application/json; charset=utf-8');
+    
+    // --- THÊM ĐOẠN NÀY ĐỂ KÍCH HOẠT CHẾ ĐỘ "BẮT ĐĂNG NHẬP" ---
+    if (!isset($_SESSION['user_id'])) {
+        echo json_encode([
+            "code" => 401,
+            "success" => false,
+            "message" => "Vui lòng đăng nhập để thực hiện chức năng này!"
+        ]);
+        exit;
+    }
+    // -------------------------------------------------------
+
+    $input = json_decode(file_get_contents('php://input'), true) ?? [];
 
         $action = $_POST['action'] ?? $_GET['action'] ?? $input['action'] ?? '';
         $id = (int)($_POST['id'] ?? $_GET['id'] ?? $input['id'] ?? 0);
