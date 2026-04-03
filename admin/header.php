@@ -109,11 +109,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
           <i class="fas fa-users me-2"></i> Khách hàng
         </a>
 
-        <a class="nav-link rounded px-3 py-2 <?php echo ($current_page == 'admin-QLKho.php') ? 'active' : ''; ?>"
-          href="admin-QLKho.php">
-          <i class="fas fa-warehouse me-2"></i> Kho hàng
-        </a>
-
         <a class="nav-link rounded px-3 py-2 <?php echo ($current_page == 'admin-QLGia.php') ? 'active' : ''; ?>"
           href="admin-QLGia.php">
           <i class="fas fa-tags me-2"></i> Giá cả
@@ -132,7 +127,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
       </nav>
 
       <div class="sidebar-footer mt-auto pt-4 border-top border-secondary">
-        <div class="px-3 mb-3 small text-secondary">Đang đăng nhập: <strong><?php echo htmlspecialchars($_SESSION['username'] ?? 'Admin'); ?></strong></div>
+        <div class="px-3 mb-3 small text-secondary">Đang đăng nhập:
+          <strong><?php echo htmlspecialchars($_SESSION['username'] ?? 'Admin'); ?></strong></div>
         <a href="admin-logout.php" class="btn btn-danger w-100 shadow-sm"
           onclick="return confirm('Bạn muốn đăng xuất?')">
           <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
@@ -150,7 +146,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
           <div class="ms-auto text-muted small">
             <i class="fas fa-user-shield me-1"></i>
-            Đăng nhập: <strong class="text-dark"><?php echo htmlspecialchars($_SESSION['username'] ?? 'Admin'); ?></strong>
+            Đăng nhập: <strong
+              class="text-dark"><?php echo htmlspecialchars($_SESSION['username'] ?? 'Admin'); ?></strong>
           </div>
         </div>
       </header>

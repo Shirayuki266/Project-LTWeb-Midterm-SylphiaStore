@@ -79,8 +79,8 @@ include 'header.php';
   <?php if (!empty($_GET)): ?>
   <div class="alert alert-info alert-dismissible fade show" role="alert">
     <i class="fas fa-info-circle me-2"></i>
-    <strong>Báo cáo được lọc:</strong> Từ ngày <strong><?= date('d/m/Y', strtotime($fromDate)) ?></strong> 
-    đến ngày <strong><?= date('d/m/Y', strtotime($toDate)) ?></strong> 
+    <strong>Báo cáo được lọc:</strong> Từ ngày <strong><?= date('d/m/Y', strtotime($fromDate)) ?></strong>
+    đến ngày <strong><?= date('d/m/Y', strtotime($toDate)) ?></strong>
     (Hạn mức cảnh báo: ≤ <strong><?= $alertLimit ?></strong> sản phẩm)
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
@@ -197,7 +197,8 @@ include 'header.php';
             <td colspan="6" class="text-center py-5 text-muted">
               <i class="fas fa-inbox fa-3x mb-3 d-block opacity-50"></i>
               <strong>Không có dữ liệu</strong>
-              <p class="small mt-2">Khoảng thời gian từ <strong><?= date('d/m/Y', strtotime($fromDate)) ?></strong> đến <strong><?= date('d/m/Y', strtotime($toDate)) ?></strong> không có sản phẩm nào</p>
+              <p class="small mt-2">Khoảng thời gian từ <strong><?= date('d/m/Y', strtotime($fromDate)) ?></strong> đến
+                <strong><?= date('d/m/Y', strtotime($toDate)) ?></strong> không có sản phẩm nào</p>
             </td>
           </tr>
           <?php else: ?>
@@ -207,9 +208,6 @@ include 'header.php';
           <tr class="<?= $isLow ? 'table-danger' : '' ?>">
             <td class="ps-4">
               <div class="d-flex align-items-center">
-                <img src="../uploads/<?= htmlspecialchars($item['image'] ?? 'no-image.png') ?>"
-                  class="rounded-3 border me-3" width="50" height="50" style="object-fit: cover;"
-                  onerror="this.src='https://placehold.co/100x100?text=None'">
                 <div>
                   <div class="fw-bold text-dark"><?= htmlspecialchars($item['name']) ?></div>
                   <small class="text-muted"><?= htmlspecialchars($item['category_name'] ?? 'Chưa phân loại') ?></small>
