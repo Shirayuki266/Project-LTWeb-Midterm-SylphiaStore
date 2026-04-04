@@ -200,7 +200,7 @@ function updateCartUI() {
     cb.closest('.cart-item-row').classList.remove('selected');
   });
 
-  const shipping = (subtotal > 0) ? 30000 : 0;
+  const shipping = (subtotal > 0) ? 0 : 0;
   const total = subtotal + shipping;
 
   // Cập nhật lên giao diện
