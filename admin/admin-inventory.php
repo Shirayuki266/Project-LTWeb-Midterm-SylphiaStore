@@ -198,7 +198,8 @@ include 'header.php';
               <i class="fas fa-inbox fa-3x mb-3 d-block opacity-50"></i>
               <strong>Không có dữ liệu</strong>
               <p class="small mt-2">Khoảng thời gian từ <strong><?= date('d/m/Y', strtotime($fromDate)) ?></strong> đến
-                <strong><?= date('d/m/Y', strtotime($toDate)) ?></strong> không có sản phẩm nào</p>
+                <strong><?= date('d/m/Y', strtotime($toDate)) ?></strong> không có sản phẩm nào
+              </p>
             </td>
           </tr>
           <?php else: ?>
@@ -284,18 +285,23 @@ document.getElementById('btnRunLookup').addEventListener('click', function() {
   // Gọi API để tính tồn kho lùi ngày
   fetch(`../api/get_stock_at_time.php?id=${currentLookupId}&date=${date}`)
     .then(r => r.json())
+    // Tìm đến đoạn fetch dữ liệu trong script của bạn và sửa nội dung innerHTML
     .then(data => {
       if (data.success) {
+        // Tách chuỗi ngày YYYY-MM-DD thành mảng để đảo ngược
+        const dateParts = date.split('-');
+        const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`; // Chuyển thành DD/MM/YYYY
+
         resultBox.innerHTML = `
-                    <div class="small text-muted mb-1 text-uppercase">Số lượng tồn vào ngày ${date}</div>
-                    <h2 class="fw-bold text-dark mb-0">${data.stock} sản phẩm</h2>
-                `;
+        <div class="small text-muted mb-1 text-uppercase">Số lượng tồn vào ngày ${formattedDate}</div>
+        <div class="h2 fw-bold text-dark mb-0">${data.stock} sản phẩm</div>
+    `;
       } else {
         resultBox.innerHTML = `<div class="text-danger">${data.message}</div>`;
       }
     })
-    .catch(() => {
-      resultBox.innerHTML = '<div class="text-danger">Lỗi kết nối API!</div>';
+    .catch(err => {
+      resultBox.innerHTML = `<div class="text-danger">Lỗi khi lấy dữ liệu: ${err.message}</div>`;
     });
 });
 </script>
