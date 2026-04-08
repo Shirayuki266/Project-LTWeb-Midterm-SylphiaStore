@@ -102,3 +102,4 @@ include 'header.php';
 <script src="../sylphia_shop.js/common.js"></script>
 <script src="../sylphia_shop.js/cart.js"></script>
 <script src="../sylphia_shop.js/products.js"></script>
+<script src="../sylphia_shop.js/product-detail.js"></script>
