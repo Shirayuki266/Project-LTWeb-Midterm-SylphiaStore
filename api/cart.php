@@ -1,4 +1,7 @@
 <?php
+/**
+ * api/cart.php - COMPLETED & SECURE VERSION
+ */
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -24,6 +27,7 @@ class Cart {
         $stmt->bind_param("i", $product_id);
         $stmt->execute();
         $res = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
         return $res ? (int)$res['stock'] : 0;
     }
 
@@ -54,11 +58,10 @@ class Cart {
     }
 
     /**
-     * Cập nhật số lượng (Dùng cho trang Giỏ hàng - Có kiểm tra tồn kho)
+     * Cập nhật số lượng (Dùng cho trang Giỏ hàng)
      */
     public function update($product_id, $qty) {
         $stock = $this->getProductStock($product_id);
-        
         $status = "success";
         $message = "";
 
@@ -89,25 +92,35 @@ class Cart {
         return 0;
     }
 
+    /**
+     * [MODIFIED] Tối ưu hóa hiệu năng: Prepare 1 lần dùng cho cả vòng lặp
+     */
     public function getItems() {
         $items = [];
+        if (empty($_SESSION['cart'])) return $items;
+
+        $stmt = $this->conn->prepare("SELECT id, name, price, image, stock FROM products WHERE id = ?");
+
         foreach ($_SESSION['cart'] as $pid => $qty) {
-            $stmt = $this->conn->prepare("SELECT id, name, price, image, stock FROM products WHERE id = ?");
             $stmt->bind_param("i", $pid);
             $stmt->execute();
             $prod = $stmt->get_result()->fetch_assoc();
 
             if ($prod) {
-                // Đảm bảo số lượng trong giỏ không bao giờ lớn hơn kho (phòng trường hợp admin sửa kho sau khi khách đã bỏ hàng vào giỏ)
+                // Bảo mật: Đảm bảo số lượng trong giỏ <= tồn kho thực tế
                 if ($qty > $prod['stock']) {
                     $qty = $prod['stock'];
                     $_SESSION['cart'][$pid] = $qty;
                 }
-                $prod['quantity'] = $qty;
-                $prod['subtotal'] = $prod['price'] * $qty;
+                
+                if ($qty <= 0) continue;
+
+                $prod['quantity'] = (int)$qty;
+                $prod['subtotal'] = (float)$prod['price'] * $qty;
                 $items[] = $prod;
             }
         }
+        $stmt->close();
         return $items;
     }
 
@@ -123,47 +136,42 @@ class Cart {
         return isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0;
     }
 
+    /**
+     * [MODIFIED] Xử lý Request tập trung & Bảo mật Input
+     */
     public function handleCart() {
-    header('Content-Type: application/json; charset=utf-8');
-    
-    // --- THÊM ĐOẠN NÀY ĐỂ KÍCH HOẠT CHẾ ĐỘ "BẮT ĐĂNG NHẬP" ---
-    if (!isset($_SESSION['user_id'])) {
-        echo json_encode([
-            "code" => 401,
-            "success" => false,
-            "message" => "Vui lòng đăng nhập để thực hiện chức năng này!"
-        ]);
-        exit;
-    }
-    // -------------------------------------------------------
+        header('Content-Type: application/json; charset=utf-8');
+        
+        // Kiểm tra đăng nhập
+        if (!isset($_SESSION['user_id'])) {
+            http_response_code(401);
+            echo json_encode([
+                "success" => false,
+                "message" => "Vui lòng đăng nhập để thực hiện chức năng này!"
+            ]);
+            exit;
+        }
 
-    $input = json_decode(file_get_contents('php://input'), true) ?? [];
+        $input = json_decode(file_get_contents('php://input'), true) ?? [];
 
+        // Lấy action và bảo mật dữ liệu đầu vào
         $action = $_POST['action'] ?? $_GET['action'] ?? $input['action'] ?? '';
-        $id = (int)($_POST['id'] ?? $_GET['id'] ?? $input['id'] ?? 0);
-        $qty = (int)($_POST['qty'] ?? $_GET['qty'] ?? $input['qty'] ?? 1);
+        $id     = filter_var($_POST['id'] ?? $_GET['id'] ?? $input['id'] ?? 0, FILTER_VALIDATE_INT);
+        
+        /** Chặn lỗi số lượng âm bằng max(1, ...) */
+        $qty    = max(1, filter_var($_POST['qty'] ?? $_GET['qty'] ?? $input['qty'] ?? 1, FILTER_VALIDATE_INT));
 
         $response = ["success" => false];
 
         switch ($action) {
             case 'add':
                 $res = $this->add($id, $qty);
-                $response = [
-                    "success" => true,
-                    "status" => $res['status'],
-                    "message" => $res['message'],
-                    "totalItems" => $res['totalItems']
-                ];
+                $response = array_merge(["success" => true], $res);
                 break;
 
             case 'update':
                 $res = $this->update($id, $qty);
-                $response = [
-                    "success" => true,
-                    "status" => $res['status'],
-                    "message" => $res['message'],
-                    "totalItems" => $res['totalItems']
-                ];
+                $response = array_merge(["success" => true], $res);
                 break;
 
             case 'remove':
@@ -187,11 +195,13 @@ class Cart {
             default:
                 $response = ["success" => false, "error" => "Invalid action"];
         }
-        echo json_encode($response);
+        
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
         exit;
     }
 }
 
+// Khởi tạo và thực thi nếu gọi trực tiếp qua API
 $cart = new Cart($conn);
 if (realpath(__FILE__) === realpath($_SERVER['SCRIPT_FILENAME'])) {
     $cart->handleCart();
