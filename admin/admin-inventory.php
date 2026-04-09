@@ -14,9 +14,18 @@ $fromDate   = $_GET['from_date'] ?? date('Y-m-01'); // Mặc định từ đầu
 $toDate     = $_GET['to_date']   ?? date('Y-m-d');    // Mặc định đến hôm nay
 $alertLimit = isset($_GET['alert_limit']) ? (int)$_GET['alert_limit'] : 10; // Hạn mức cảnh báo
 $categoryFilter = isset($_GET['category_id']) ? (int)$_GET['category_id'] : 0;
+$productKeyword = trim($_GET['product_name'] ?? '');
 
 $categories = $conn->query("SELECT id, name FROM categories ORDER BY name ASC")->fetch_all(MYSQLI_ASSOC);
-$whereCategorySql = $categoryFilter > 0 ? "WHERE p.category_id = $categoryFilter" : "";
+$whereConditions = [];
+if ($categoryFilter > 0) {
+  $whereConditions[] = "p.category_id = $categoryFilter";
+}
+if ($productKeyword !== '') {
+  $safeKeyword = $conn->real_escape_string($productKeyword);
+  $whereConditions[] = "p.name LIKE '%$safeKeyword%'";
+}
+$whereSql = !empty($whereConditions) ? "WHERE " . implode(" AND ", $whereConditions) : "";
 
 // 3. TRUY VẤN DỮ LIỆU THỐNG KÊ
 // Truy vấn này lấy tồn hiện tại và tính toán lượng xuất dựa trên hóa đơn thành công
@@ -40,7 +49,7 @@ $sql = "
      AND po.created_at BETWEEN ? AND ?) as total_imported
     FROM products p
     LEFT JOIN categories c ON p.category_id = c.id
-    $whereCategorySql
+    $whereSql
     ORDER BY p.stock ASC
 ";
 
@@ -82,6 +91,9 @@ include 'header.php';
     <strong>Báo cáo được lọc:</strong> Từ ngày <strong><?= date('d/m/Y', strtotime($fromDate)) ?></strong> 
     đến ngày <strong><?= date('d/m/Y', strtotime($toDate)) ?></strong> 
     (Hạn mức cảnh báo: ≤ <strong><?= $alertLimit ?></strong> sản phẩm)
+    <?php if ($productKeyword !== ''): ?>
+    - Tên sản phẩm chứa: <strong><?= htmlspecialchars($productKeyword) ?></strong>
+    <?php endif; ?>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
   <?php endif; ?>
@@ -89,7 +101,7 @@ include 'header.php';
   <div class="card shadow-sm border-0 mb-4 bg-light">
     <div class="card-body">
       <form method="GET" class="row g-3 align-items-end">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label class="form-label small fw-bold">Khoảng thời gian báo cáo (Nhập - Xuất)</label>
           <div class="input-group shadow-sm">
             <input type="date" name="from_date" class="form-control" value="<?= $fromDate ?>">
@@ -97,7 +109,7 @@ include 'header.php';
             <input type="date" name="to_date" class="form-control" value="<?= $toDate ?>">
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="form-label small fw-bold">Loại sản phẩm</label>
           <select name="category_id" class="form-select shadow-sm">
             <option value="0">Tất cả danh mục</option>
@@ -109,6 +121,11 @@ include 'header.php';
           </select>
         </div>
         <div class="col-md-3">
+          <label class="form-label small fw-bold">Tên sản phẩm</label>
+          <input type="text" name="product_name" class="form-control shadow-sm" placeholder="Nhập tên sản phẩm..."
+            value="<?= htmlspecialchars($productKeyword) ?>">
+        </div>
+        <div class="col-md-2">
           <label class="form-label small fw-bold text-danger">Hạn mức cảnh báo sắp hết hàng</label>
           <input type="number" name="alert_limit" class="form-control shadow-sm" value="<?= $alertLimit ?>" min="0">
         </div>

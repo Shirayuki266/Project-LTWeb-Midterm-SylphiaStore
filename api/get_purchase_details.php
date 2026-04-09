@@ -3,9 +3,19 @@ require_once 'db.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
+function ensureImportCountColumn(mysqli $conn): void
+{
+    $check = $conn->query("SHOW COLUMNS FROM products LIKE 'import_count'");
+    if ($check && $check->num_rows === 0) {
+        $conn->query("ALTER TABLE products ADD COLUMN import_count INT NOT NULL DEFAULT 0");
+    }
+}
+
 $id = (int)($_GET['id'] ?? 0);
 
-$sql = "SELECT p.name AS product_name, d.quantity, d.import_price
+ensureImportCountColumn($conn);
+
+$sql = "SELECT p.name AS product_name, d.quantity, d.import_price, p.import_count
         FROM purchase_order_details d
         JOIN products p ON d.product_id = p.id
         WHERE d.purchase_order_id = $id";

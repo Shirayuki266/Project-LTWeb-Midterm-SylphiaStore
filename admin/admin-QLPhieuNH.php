@@ -3,11 +3,20 @@ session_start();
 require_once '../api/db.php';
 require_once '../includes/functions.php';
 
+function ensureImportCountColumn(mysqli $conn): void
+{
+  $check = $conn->query("SHOW COLUMNS FROM products LIKE 'import_count'");
+  if ($check && $check->num_rows === 0) {
+    $conn->query("ALTER TABLE products ADD COLUMN import_count INT NOT NULL DEFAULT 0");
+  }
+}
+
 /* ==========================================================
    1. XỬ LÝ HOÀN THÀNH PHIẾU NHẬP (CẬP NHẬT KHO & GIÁ VỐN)
    ========================================================== */
 if (isset($_GET['complete_id'])) {
     $id = intval($_GET['complete_id']);
+  ensureImportCountColumn($conn);
     $conn->begin_transaction();
 
     try {
@@ -24,12 +33,13 @@ if (isset($_GET['complete_id'])) {
                 $qty_new = intval($item['quantity']);
                 $original_cost = floatval($item['import_price']);
 
-                $p_res = $conn->query("SELECT stock, cost_price, profit_percent FROM products WHERE id = $pid");
+                $p_res = $conn->query("SELECT stock, cost_price, profit_percent, import_count FROM products WHERE id = $pid");
                 $p_old = $p_res->fetch_assoc();
 
                 $qty_old = intval($p_old['stock'] ?? 0);
                 $price_old = floatval($p_old['cost_price'] ?? 0);
                 $margin = floatval($p_old['profit_percent'] ?? 0);
+                $import_count_old = intval($p_old['import_count'] ?? 0);
 
                 $total_qty = $qty_old + $qty_new;
                 $new_cost_price = ($total_qty > 0)
@@ -37,9 +47,10 @@ if (isset($_GET['complete_id'])) {
                     : $original_cost;
 
                 $new_price = $new_cost_price * (1 + ($margin / 100));
+                $new_import_count = $import_count_old + 1;
 
-                $update_p = $conn->prepare("UPDATE products SET stock = ?, cost_price = ?, price = ? WHERE id = ?");
-                $update_p->bind_param("iddi", $total_qty, $new_cost_price, $new_price, $pid);
+                $update_p = $conn->prepare("UPDATE products SET stock = ?, cost_price = ?, price = ?, import_count = ? WHERE id = ?");
+                $update_p->bind_param("iddii", $total_qty, $new_cost_price, $new_price, $new_import_count, $pid);
                 $update_p->execute();
             }
 
@@ -216,12 +227,13 @@ include 'header.php';
                 <th>Tên sản phẩm</th>
                 <th class="text-center" width="120">Số lượng</th>
                 <th class="text-end" width="180">Giá gốc (giá nhập)</th>
+                <th class="text-center" width="140">lần nhập SP</th>
                 <th class="text-end" width="180">Thành tiền</th>
               </tr>
             </thead>
             <tbody id="detailContent">
               <tr>
-                <td colspan="4" class="text-center py-4 text-muted">Chọn phiếu nhập để xem chi tiết.</td>
+                <td colspan="5" class="text-center py-4 text-muted">Chọn phiếu nhập để xem chi tiết.</td>
               </tr>
             </tbody>
           </table>
@@ -252,7 +264,7 @@ function viewDetails(poId) {
 
   modalPurchaseOrderId.textContent = `#${poId}`;
   content.innerHTML =
-    '<tr><td colspan="4" class="text-center py-4"><div class="spinner-border text-primary spinner-border-sm me-2"></div>Đang tải...</td></tr>';
+    '<tr><td colspan="5" class="text-center py-4"><div class="spinner-border text-primary spinner-border-sm me-2"></div>Đang tải...</td></tr>';
 
   const myModal = bootstrap.Modal.getOrCreateInstance(detailModalElement);
   myModal.show();
@@ -267,7 +279,7 @@ function viewDetails(poId) {
     .then(data => {
       if (!Array.isArray(data) || data.length === 0) {
         content.innerHTML =
-          '<tr><td colspan="4" class="text-center py-4 text-muted">Không có dữ liệu chi tiết.</td></tr>';
+          '<tr><td colspan="5" class="text-center py-4 text-muted">Không có dữ liệu chi tiết.</td></tr>';
         return;
       }
 
@@ -285,6 +297,7 @@ function viewDetails(poId) {
             <td class="fw-medium">${escapeHtml(item.product_name)}</td>
             <td class="text-center">${quantity}</td>
             <td class="text-end">${new Intl.NumberFormat('vi-VN').format(importPrice)}₫</td>
+            <td class="text-center"><span class="badge bg-info-subtle text-info border border-info">${Number(item.import_count) || 0}</span></td>
             <td class="text-end fw-bold pe-3">${new Intl.NumberFormat('vi-VN').format(subtotal)}₫</td>
           </tr>
         `;
@@ -292,14 +305,14 @@ function viewDetails(poId) {
 
       content.innerHTML += `
         <tr class="table-light">
-          <td colspan="3" class="text-end fw-bold">Tổng tiền phiếu:</td>
+          <td colspan="4" class="text-end fw-bold">Tổng tiền phiếu:</td>
           <td class="text-end fw-bold text-primary pe-3 fs-5">${new Intl.NumberFormat('vi-VN').format(totalAmount)}₫</td>
         </tr>
       `;
     })
     .catch(() => {
       content.innerHTML =
-        '<tr><td colspan="4" class="text-center py-4 text-danger">Lỗi kết nối dữ liệu!</td></tr>';
+        '<tr><td colspan="5" class="text-center py-4 text-danger">Lỗi kết nối dữ liệu!</td></tr>';
     });
 }
 </script>

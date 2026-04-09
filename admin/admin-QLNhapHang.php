@@ -3,6 +3,14 @@ session_start();
 require_once '../api/db.php';
 require_once '../includes/functions.php';
 
+function ensureImportCountColumn(mysqli $conn): void
+{
+  $check = $conn->query("SHOW COLUMNS FROM products LIKE 'import_count'");
+  if ($check && $check->num_rows === 0) {
+    $conn->query("ALTER TABLE products ADD COLUMN import_count INT NOT NULL DEFAULT 0");
+  }
+}
+
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header('Location: login.php');
     exit();
@@ -16,6 +24,7 @@ $editItems = [];
 // Complete order request (chốt phiếu)
 if (isset($_GET['complete_id'])) {
     $complete_id = (int)$_GET['complete_id'];
+  ensureImportCountColumn($conn);
     $conn->begin_transaction();
     try {
         $stmt = $conn->prepare("SELECT status FROM purchase_orders WHERE id = ?");
@@ -32,20 +41,22 @@ if (isset($_GET['complete_id'])) {
             $qty = (int)$item['quantity'];
             $original_cost = floatval($item['import_price']);
 
-            $pRes = $conn->query("SELECT stock, cost_price, profit_percent FROM products WHERE id = $pid");
+            $pRes = $conn->query("SELECT stock, cost_price, profit_percent, import_count FROM products WHERE id = $pid");
             $product = $pRes->fetch_assoc();
             if (!$product) continue;
 
             $stock_old = (int)($product['stock'] ?? 0);
             $cost_old = floatval($product['cost_price'] ?? 0);
             $margin = floatval($product['profit_percent'] ?? 0);
+            $import_count_old = (int)($product['import_count'] ?? 0);
 
             $totalQty = $stock_old + $qty;
             $newCost = ($totalQty > 0) ? (($stock_old * $cost_old) + ($qty * $original_cost)) / $totalQty : $original_cost;
             $newPrice = $newCost * (1 + ($margin/100));
+            $newImportCount = $import_count_old + 1;
 
-            $upd = $conn->prepare("UPDATE products SET stock = ?, cost_price = ?, price = ? WHERE id = ?");
-            $upd->bind_param('iddi', $totalQty, $newCost, $newPrice, $pid);
+            $upd = $conn->prepare("UPDATE products SET stock = ?, cost_price = ?, price = ?, import_count = ? WHERE id = ?");
+            $upd->bind_param('iddii', $totalQty, $newCost, $newPrice, $newImportCount, $pid);
             $upd->execute();
         }
 

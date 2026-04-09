@@ -3,6 +3,14 @@ session_start();
 require_once 'db.php';
 header('Content-Type: application/json; charset=utf-8');
 
+function ensureImportCountColumn(mysqli $conn): void
+{
+    $check = $conn->query("SHOW COLUMNS FROM products LIKE 'import_count'");
+    if ($check && $check->num_rows === 0) {
+        $conn->query("ALTER TABLE products ADD COLUMN import_count INT NOT NULL DEFAULT 0");
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'error' => 'Phương thức không hợp lệ.'], JSON_UNESCAPED_UNICODE);
     exit;
@@ -20,6 +28,8 @@ if ($quantity <= 0) {
     echo json_encode(['success' => false, 'error' => 'Số lượng nhập phải lớn hơn 0.'], JSON_UNESCAPED_UNICODE);
     exit;
 }
+
+ensureImportCountColumn($conn);
 
 $conn->begin_transaction();
 
@@ -51,7 +61,7 @@ try {
     $stmtDetail->execute();
 
     // Tăng tồn kho trực tiếp
-    $stmtStock = $conn->prepare("UPDATE products SET stock = stock + ? WHERE id = ?");
+    $stmtStock = $conn->prepare("UPDATE products SET stock = stock + ?, import_count = import_count + 1 WHERE id = ?");
     $stmtStock->bind_param('ii', $quantity, $product_id);
     $stmtStock->execute();
 
