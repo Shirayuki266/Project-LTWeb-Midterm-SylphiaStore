@@ -160,11 +160,11 @@ include 'header.php';
             <div class="border-top pt-3 mb-4">
               <div class="d-flex justify-content-between mb-2 small">
                 <span class="text-muted">Tiền hàng:</span>
-                <span class="text-dark"><?php echo formatPrice($order['total'] - 30000); ?></span>
+                <span class="text-dark"><?php echo formatPrice($order['total'] ); ?></span>
               </div>
               <div class="d-flex justify-content-between mb-2 small">
                 <span class="text-muted">Phí ship:</span>
-                <span class="text-dark">30.000₫</span>
+                <span class="text-dark">0₫</span>
               </div>
               <div class="d-flex justify-content-between mt-3 align-items-center">
                 <span class="fw-bold text-dark">Tổng cộng:</span>

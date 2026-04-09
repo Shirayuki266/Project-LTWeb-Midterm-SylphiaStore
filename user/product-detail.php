@@ -57,7 +57,6 @@ include 'header.php';
     <div class="col-lg-6">
       <h2 class="fw-bold mb-3"><?php echo htmlspecialchars($product['name']); ?></h2>
       <div class="mb-3 text-warning fs-5">
-        ⭐ ⭐ ⭐ ⭐ ⭐ <span class="text-muted fs-6">(5.0)</span>
       </div>
       <div class="fs-2 fw-bold text-primary mb-4">
         <?php echo formatPrice($product['price']); ?>

@@ -1,37 +1,56 @@
 <?php
+/**
+ * user/index.php - Đã tối ưu hóa bảo mật (Junior-to-Senior level)
+ */
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// 1. Nạp file kết nối - Dùng đường dẫn tuyệt đối để tránh lỗi null
+// 1. Nạp file kết nối - Dùng đường dẫn tuyệt đối để tránh lỗi đường dẫn
 require_once __DIR__ . '/../api/db.php'; 
 require_once __DIR__ . '/../includes/functions.php';
 
+// Kiểm tra trạng thái tài khoản (Security Check)
 if (!check_user_active($conn)) {
     header("Location: login.php?error=account_locked");
     exit();
 }
 
-/* --- LOGIC PHÂN TRANG --- */
+/* --- [MODIFIED] LOGIC PHÂN TRANG AN TOÀN --- */
 $limit = 8; 
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-if ($page < 1) $page = 1;
+// Sử dụng filter_input để validate số nguyên và đảm bảo page >= 1
+$page = max(1, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT) ?: 1);
 $offset = ($page - 1) * $limit;
 
-// Đếm tổng số để chia trang
+// Đếm tổng số để chia trang (Dùng query trực tiếp vì không có input từ user)
 $total_result = $conn->query("SELECT COUNT(*) FROM products WHERE status = 1");
 $total_rows = $total_result->fetch_row()[0];
-$total_pages = ceil($total_rows / $limit);
+$total_pages = max(1, ceil($total_rows / $limit));
 
-// Truy vấn sản phẩm theo trang
+/* --- [MODIFIED] TRUY VẤN SẢN PHẨM (SECURE PREPARED STATEMENT) --- */
 $sql_hot = "SELECT p.*, c.name as category_name 
             FROM products p 
             LEFT JOIN categories c ON p.category_id = c.id 
             WHERE p.status = 1 
             ORDER BY p.id DESC 
-            LIMIT $limit OFFSET $offset";
-$hotProducts = $conn->query($sql_hot)->fetch_all(MYSQLI_ASSOC);
+            LIMIT ? OFFSET ?"; // Sử dụng dấu chấm hỏi thay vì nối chuỗi biến trực tiếp
 
+$stmt = $conn->prepare($sql_hot);
+
+if ($stmt) {
+    // Bind tham số: "ii" đại diện cho 2 giá trị kiểu integer (limit và offset)
+    $stmt->bind_param("ii", $limit, $offset); 
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $hotProducts = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close(); // Đóng statement để giải phóng tài nguyên
+} else {
+    // Xử lý lỗi DB thầm lặng (log lỗi thay vì hiện ra cho người dùng)
+    error_log("Database error in user/index.php: " . $conn->error);
+    $hotProducts = [];
+}
+
+// Cấu hình giao diện
 $page_title = 'Trang chủ';
 $current_page = 'index';
 include 'header.php';

@@ -88,8 +88,8 @@ include 'header.php';
   <?php if (!empty($_GET)): ?>
   <div class="alert alert-info alert-dismissible fade show" role="alert">
     <i class="fas fa-info-circle me-2"></i>
-    <strong>Báo cáo được lọc:</strong> Từ ngày <strong><?= date('d/m/Y', strtotime($fromDate)) ?></strong> 
-    đến ngày <strong><?= date('d/m/Y', strtotime($toDate)) ?></strong> 
+    <strong>Báo cáo được lọc:</strong> Từ ngày <strong><?= date('d/m/Y', strtotime($fromDate)) ?></strong>
+    đến ngày <strong><?= date('d/m/Y', strtotime($toDate)) ?></strong>
     (Hạn mức cảnh báo: ≤ <strong><?= $alertLimit ?></strong> sản phẩm)
     <?php if ($productKeyword !== ''): ?>
     - Tên sản phẩm chứa: <strong><?= htmlspecialchars($productKeyword) ?></strong>
@@ -214,7 +214,9 @@ include 'header.php';
             <td colspan="6" class="text-center py-5 text-muted">
               <i class="fas fa-inbox fa-3x mb-3 d-block opacity-50"></i>
               <strong>Không có dữ liệu</strong>
-              <p class="small mt-2">Khoảng thời gian từ <strong><?= date('d/m/Y', strtotime($fromDate)) ?></strong> đến <strong><?= date('d/m/Y', strtotime($toDate)) ?></strong> không có sản phẩm nào</p>
+              <p class="small mt-2">Khoảng thời gian từ <strong><?= date('d/m/Y', strtotime($fromDate)) ?></strong> đến
+                <strong><?= date('d/m/Y', strtotime($toDate)) ?></strong> không có sản phẩm nào
+              </p>
             </td>
           </tr>
           <?php else: ?>
@@ -224,9 +226,6 @@ include 'header.php';
           <tr class="<?= $isLow ? 'table-danger' : '' ?>">
             <td class="ps-4">
               <div class="d-flex align-items-center">
-                <img src="../uploads/<?= htmlspecialchars($item['image'] ?? 'no-image.png') ?>"
-                  class="rounded-3 border me-3" width="50" height="50" style="object-fit: cover;"
-                  onerror="this.src='https://placehold.co/100x100?text=None'">
                 <div>
                   <div class="fw-bold text-dark"><?= htmlspecialchars($item['name']) ?></div>
                   <small class="text-muted"><?= htmlspecialchars($item['category_name'] ?? 'Chưa phân loại') ?></small>
@@ -303,18 +302,23 @@ document.getElementById('btnRunLookup').addEventListener('click', function() {
   // Gọi API để tính tồn kho lùi ngày
   fetch(`../api/get_stock_at_time.php?id=${currentLookupId}&date=${date}`)
     .then(r => r.json())
+    // Tìm đến đoạn fetch dữ liệu trong script của bạn và sửa nội dung innerHTML
     .then(data => {
       if (data.success) {
+        // Tách chuỗi ngày YYYY-MM-DD thành mảng để đảo ngược
+        const dateParts = date.split('-');
+        const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`; // Chuyển thành DD/MM/YYYY
+
         resultBox.innerHTML = `
-                    <div class="small text-muted mb-1 text-uppercase">Số lượng tồn vào ngày ${date}</div>
-                    <h2 class="fw-bold text-dark mb-0">${data.stock} sản phẩm</h2>
-                `;
+        <div class="small text-muted mb-1 text-uppercase">Số lượng tồn vào ngày ${formattedDate}</div>
+        <div class="h2 fw-bold text-dark mb-0">${data.stock} sản phẩm</div>
+    `;
       } else {
         resultBox.innerHTML = `<div class="text-danger">${data.message}</div>`;
       }
     })
-    .catch(() => {
-      resultBox.innerHTML = '<div class="text-danger">Lỗi kết nối API!</div>';
+    .catch(err => {
+      resultBox.innerHTML = `<div class="text-danger">Lỗi khi lấy dữ liệu: ${err.message}</div>`;
     });
 });
 </script>
