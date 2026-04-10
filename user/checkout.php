@@ -63,39 +63,56 @@ $phone_default = !empty($user['phone']) ? $user['phone'] : 'Chưa cập nhật S
 // --- XỬ LÝ ĐẶT HÀNG ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $address_option = $_POST['address_option'] ?? 'default';
-    
+    $error = null; // Khởi tạo biến error
+    $final_address = "";
+
+    // 1. XỬ LÝ ĐỊA CHỈ
     if ($address_option === 'new') {
         $p_code = $_POST['city'] ?? '';
         $w_code = $_POST['ward'] ?? '';
-        $house = $_POST['house_number'] ?? '';
-        $final_address = $address_tool->getFullAddressShort($p_code, $w_code, $house);
+        $house = trim($_POST['house_number'] ?? '');
+
+        // Validate phía Server cho địa chỉ mới
+        if (empty($p_code) || empty($w_code) || empty($house)) {
+            $error = "Vui lòng nhập đầy đủ thông tin địa chỉ mới.";
+        } elseif (preg_match('/[@#$%^&*]/', $house)) {
+            $error = "Số nhà/tên đường không được chứa ký tự đặc biệt.";
+        } elseif (!preg_match('/\s+/', $house)) {
+            $error = "Vui lòng nhập chi tiết cả số nhà và tên đường.";
+        } else {
+            $final_address = $address_tool->getFullAddressShort($p_code, $w_code, $house);
+        }
     } else {
         $final_address = $address_default;
     }
 
-    if (empty($final_address)) {
-        $error = "Vui lòng cập nhật địa chỉ trước khi đặt hàng!";
-    } else {
-        $payment_method = $_POST['payment'] ?? 'cash';
+    // 2. KIỂM TRA ĐỊA CHỈ CUỐI CÙNG
+    if (!$error && empty($final_address)) {
+        $error = "Vui lòng cập nhật địa chỉ mặc định hoặc nhập địa chỉ mới!";
+    }
 
-        if ($payment_method === 'online') {
-          $error = "Thanh toán trực tuyến đang bảo trì, vui lòng chọn phương thức khác!";
-        } else {
+    // 3. XỬ LÝ PHƯƠNG THỨC THANH TOÁN
+    $payment_method = $_POST['payment'] ?? 'cash';
+    if (!$error && $payment_method === 'online') {
+        $error = "Thanh toán trực tuyến đang bảo trì, vui lòng chọn phương thức khác!";
+    }
 
-          // Sử dụng biến $total đã tính toán ở trên
-          $stmt = $conn->prepare("INSERT INTO orders (user_id, address, payment_method, status, total) VALUES (?, ?, ?, 'pending', ?)");
-          $stmt->bind_param("issd", $_SESSION['user_id'], $final_address, $payment_method, $total);
+    // 4. THỰC THI ĐẶT HÀNG (Chỉ chạy nếu KHÔNG có lỗi)
+    if (!$error) {
+        $stmt = $conn->prepare("INSERT INTO orders (user_id, address, payment_method, status, total) VALUES (?, ?, ?, 'pending', ?)");
+        $stmt->bind_param("issd", $_SESSION['user_id'], $final_address, $payment_method, $total);
 
-          if ($stmt->execute()) {
+        if ($stmt->execute()) {
             $order_id = $conn->insert_id;
             foreach ($items as $item) {
-              $stmt_item = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
-              $stmt_item->bind_param("iiid", $order_id, $item['id'], $item['quantity'], $item['price']);
-              $stmt_item->execute();
-              $cart->remove($item['id']);
+                $stmt_item = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
+                $stmt_item->bind_param("iiid", $order_id, $item['id'], $item['quantity'], $item['price']);
+                $stmt_item->execute();
+                $cart->remove($item['id']);
             }
             $success = true;
-            }
+        } else {
+            $error = "Có lỗi xảy ra trong quá trình lưu đơn hàng. Vui lòng thử lại.";
         }
     }
 }
@@ -167,7 +184,9 @@ include 'header.php';
                     </select>
                   </div>
                   <div class="col-12">
-                    <input type="text" name="house_number" class="form-control" placeholder="Số nhà, tên đường...">
+                    <input type="text" id="house_number" name="house_number" class="form-control"
+                      placeholder="Số nhà, tên đường...">
+                    <span id="err_house_number" class="text-danger small d-block mt-1"></span>
                   </div>
                 </div>
               </div>
@@ -190,7 +209,8 @@ include 'header.php';
               <div class="col-md-4">
                 <input type="radio" class="btn-check" name="payment" id="pay_online" value="online"
                   onchange="togglePaymentInfo()">
-                <label class="btn btn-outline-primary w-100 py-3 rounded-4" for="pay_online">Thanh toán trực tuyến</label>
+                <label class="btn btn-outline-primary w-100 py-3 rounded-4" for="pay_online">Thanh toán trực
+                  tuyến</label>
               </div>
             </div>
 
@@ -319,6 +339,30 @@ function togglePaymentInfo() {
     onlineMaintenance.classList.add('d-none');
   }
 }
+
+document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+  const isNew = document.getElementById('addr_new').checked;
+  const houseField = document.getElementById('house_number');
+  const errorField = document.getElementById('err_house_number');
+  if (errorField) {
+    errorField.textContent = '';
+  }
+
+  if (isNew) {
+    const value = houseField.value.trim();
+    const hasForbiddenChars = /[@#$%^&*]/.test(value);
+    const hasSpace = /\s+/.test(value);
+
+    if (hasForbiddenChars || !hasSpace) {
+      if (errorField) {
+        errorField.textContent =
+          'Địa chỉ giao khác không được chứa ký tự đặc biệt @#$%^&* và phải có ít nhất 1 khoảng trắng.';
+      }
+      houseField.focus();
+      e.preventDefault();
+    }
+  }
+});
 
 document.addEventListener('DOMContentLoaded', function() {
   togglePaymentInfo();

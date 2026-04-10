@@ -178,7 +178,7 @@ function getStatusBadge($status) {
                     style="width: <?= ($item['stock'] / 10) * 100 ?>%"></div>
                 </div>
                 <div class="mt-2 text-end">
-                  <a href="admin-QLKho.php?search=<?= urlencode($item['name']) ?>"
+                  <a href="admin-QLPhieuNH.php?search=<?= urlencode($item['name']) ?>"
                     class="btn btn-sm btn-outline-primary py-0 px-2 fw-bold" style="font-size: 0.7rem;">
                     NHẬP KHO
                   </a>
