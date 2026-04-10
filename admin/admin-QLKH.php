@@ -185,10 +185,6 @@ include 'header.php';
                   class="btn btn-sm btn-outline-secondary" title="<?= $c['status'] == 1 ? 'Khóa' : 'Mở' ?>">
                   <i class="fas fa-user-<?= $c['status'] == 1 ? 'slash text-danger' : 'check text-success' ?>"></i>
                 </a>
-                <a href="?delete_id=<?= $c['id'] ?>" class="btn btn-sm btn-outline-secondary"
-                  onclick="return confirm('Xóa vĩnh viễn khách hàng này?')" title="Xóa">
-                  <i class="fas fa-trash text-danger"></i>
-                </a>
               </div>
             </td>
           </tr>
