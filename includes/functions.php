@@ -77,6 +77,33 @@ function formatPrice($price)
 }
 }
 
+if (!function_exists('getProductImagePath')) {
+function getProductImagePath($image)
+{
+    $image = trim((string)$image);
+    if ($image === '') {
+        return '../images/no-image.png';
+    }
+
+    if (preg_match('#^https?://#i', $image)) {
+        return $image;
+    }
+
+    if (strpos($image, '../uploads/') === 0) {
+        return $image;
+    }
+
+    if (strpos($image, '/uploads/') === 0) {
+        return substr($image, 1);
+    }
+
+    if (strpos($image, 'uploads/') === 0) {
+        return '../' . $image;
+    }
+
+    return '../uploads/' . ltrim($image, '/');
+}
+}
 
 /* =============================
    DATABASE HELPERS

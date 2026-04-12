@@ -65,7 +65,8 @@ include 'header.php';
     <h2 class="fw-bold mb-0">
       <i class="fas fa-shopping-cart text-primary me-2"></i>Giỏ hàng
     </h2>
-    <span class="badge bg-primary rounded-pill px-3 py-2">Tổng <?php echo $total_items_in_cart; ?> món</span>
+    <span id="top-cart-count" class="badge bg-primary rounded-pill px-3 py-2">Tổng <?php echo $total_items_in_cart; ?>
+      món</span>
   </div>
 
   <?php if (empty($items)): ?>
@@ -98,14 +99,15 @@ include 'header.php';
             <tbody>
               <?php foreach ($items as $item): ?>
               <tr class="cart-item-row selected" data-id="<?php echo $item['id']; ?>"
-                data-price="<?php echo $item['price']; ?>">
+                data-price="<?php echo $item['price']; ?>" data-stock="<?php echo $item['stock']; ?>">
                 <td class="ps-4">
                   <input type="checkbox" class="form-check-input cart-checkbox item-checkbox"
                     value="<?php echo $item['id']; ?>" checked>
                 </td>
                 <td>
                   <div class="d-flex align-items-center py-2">
-                    <img src="<?php echo htmlspecialchars($item['image']); ?>" class="product-img me-3">
+                    <img src="<?php echo htmlspecialchars(getProductImagePath($item['image'])); ?>"
+                      class="product-img me-3">
                     <div>
                       <div class="fw-bold text-dark mb-0"><?php echo htmlspecialchars($item['name']); ?></div>
                       <small class="text-muted">ID: #<?php echo $item['id']; ?></small>
@@ -179,110 +181,7 @@ include 'header.php';
   <?php endif; ?>
 </main>
 
+<script src="../sylphia_shop.js/common.js"></script>
+<script src="../sylphia_shop.js/cart.js"></script>
+
 <?php include 'footer.php'; ?>
-
-<script>
-// 1. HÀM TÍNH TOÁN TIỀN ĐỘNG
-function updateCartUI() {
-  let subtotal = 0;
-  let count = 0;
-
-  document.querySelectorAll('.item-checkbox:checked').forEach(cb => {
-    const row = cb.closest('.cart-item-row');
-    const price = parseFloat(row.dataset.price);
-    const qty = parseInt(row.querySelector('.qty-val').value);
-    subtotal += (price * qty);
-    count++;
-    row.classList.add('selected');
-  });
-
-  document.querySelectorAll('.item-checkbox:not(:checked)').forEach(cb => {
-    cb.closest('.cart-item-row').classList.remove('selected');
-  });
-
-  const shipping = (subtotal > 0) ? 0 : 0;
-  const total = subtotal + shipping;
-
-  // Cập nhật lên giao diện
-  document.getElementById('selected-count').innerText = count;
-  document.getElementById('summary-subtotal').innerText = subtotal.toLocaleString('vi-VN') + '₫';
-  document.getElementById('summary-shipping').innerText = shipping.toLocaleString('vi-VN') + '₫';
-  document.getElementById('summary-total').innerText = total.toLocaleString('vi-VN') + '₫';
-}
-
-// 2. XỬ LÝ CHECKBOX "CHỌN TẤT CẢ"
-document.getElementById('checkAll')?.addEventListener('change', function() {
-  document.querySelectorAll('.item-checkbox').forEach(cb => {
-    cb.checked = this.checked;
-  });
-  updateCartUI();
-});
-
-// 3. XỬ LÝ CHỌN LẺ TỪNG MÓN
-document.querySelectorAll('.item-checkbox').forEach(cb => {
-  cb.onchange = updateCartUI;
-});
-
-// 4. HÀM ĐIỀU HƯỚNG SANG CHECKOUT KÈM IDS
-function goToCheckout() {
-  const selectedIds = Array.from(document.querySelectorAll('.item-checkbox:checked'))
-    .map(cb => cb.value);
-
-  if (selectedIds.length === 0) {
-    alert("Vui lòng chọn ít nhất 1 sản phẩm để mua!");
-    return;
-  }
-
-  // Gửi danh sách ID qua URL
-  window.location.href = `checkout.php?ids=${selectedIds.join(',')}`;
-}
-
-// 5. AJAX CẬP NHẬT SỐ LƯỢNG (Giữ logic cũ của bạn)
-function ajaxUpdateCart(id, qty) {
-  fetch('../api/cart.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      action: 'update',
-      id: id,
-      qty: qty
-    })
-  }).then(res => res.json()).then(data => {
-    if (data.success) location.reload();
-  });
-}
-
-document.querySelectorAll('.qty-inc, .qty-dec').forEach(btn => {
-  btn.onclick = function() {
-    const input = this.parentNode.querySelector('.qty-val');
-    let qty = parseInt(input.value);
-    qty = this.classList.contains('qty-inc') ? qty + 1 : (qty > 1 ? qty - 1 : 1);
-    ajaxUpdateCart(this.dataset.id, qty);
-  }
-});
-
-// 6. XỬ LÝ XÓA MÓN
-document.querySelectorAll('.remove-item').forEach(btn => {
-  btn.onclick = function() {
-    if (confirm('Bạn muốn bỏ sản phẩm này khỏi giỏ hàng?')) {
-      fetch('../api/cart.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          action: 'remove',
-          id: this.dataset.id
-        })
-      }).then(res => res.json()).then(data => {
-        if (data.success) location.reload();
-      });
-    }
-  }
-});
-
-// Chạy tính toán lần đầu khi load trang
-updateCartUI();
-</script>

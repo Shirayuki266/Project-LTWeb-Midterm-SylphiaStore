@@ -59,12 +59,12 @@ try {
      */
     $result = paginate($conn, $base_sql, $page, 12, $params, $types);
     
-    // Giữ nguyên cấu trúc JSON trả về để không làm gãy Frontend
+    // Trả về tên file gốc từ DB, frontend tự xử lý đường dẫn
     $products = array_map(function($row) {
         return [
             'id' => $row['id'],
             'name' => $row['name'],
-            'image' => $row['image'],
+            'image' => $row['image'] ?? '', // Tên file gốc từ DB
             'price' => (float)$row['price'],
             'cost_price' => (float)$row['cost_price'],
             'profit_percent' => (float)$row['profit_percent']

@@ -1,9 +1,10 @@
 <?php
 if (!isset($product)) return;
 
-// 1. Logic xử lý ảnh
-$imgRaw = trim($product['image']);
-$finalPath = (strpos($imgRaw, 'http') === 0) ? $imgRaw : "../uploads/" . ($imgRaw ?: 'logoshop.png');
+// 1. Logic xử lý ảnh - Frontend sẽ tự xử lý đường dẫn
+$imgRaw = trim($product['image'] ?? '');
+// Chỉ trả về tên file gốc, không xử lý đường dẫn
+$finalPath = $imgRaw ?: 'no-image.png';
 
 // 2. Dữ liệu từ SQL
 $name = htmlspecialchars($product['name']);
@@ -29,8 +30,8 @@ $unit = htmlspecialchars($product['unit'] ?? 'Chiếc');
       <?php endif; ?>
     </div>
 
-    <img src="<?php echo $finalPath; ?>" class="img-fluid main-img" style="max-height: 100%; object-fit: contain;"
-      onerror="this.src='../images/logoshop.png'">
+    <img src="../uploads/<?php echo $finalPath; ?>" class="img-fluid main-img" style="max-height: 100%; object-fit: contain;"
+      onerror="this.src='../images/no-image.png'">
   </div>
 
   <div class="card-body p-3 d-flex flex-column text-center">

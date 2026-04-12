@@ -33,12 +33,18 @@ window.loadProducts = async function () {
       return;
     }
     grid.innerHTML = result.products
-      .map(
-        (p) => `
+      .map((p) => {
+        let imgSrc = p.image;
+        if (imgSrc) {
+          imgSrc = "../uploads/" + imgSrc;
+        } else {
+          imgSrc = "../images/no-image.png";
+        }
+        return `
       <div class="col">
         <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
           <div class="p-3 bg-white d-flex align-items-center justify-content-center" style="height:180px">
-            <img src="${p.image}" class="img-fluid" style="max-height:100%; object-fit:contain" onerror="this.src='../images/logoshop.png'">
+            <img src="${imgSrc}" class="img-fluid" style="max-height:100%; object-fit:contain" onerror="this.src='../images/logoshop.png'">
           </div>
           <div class="card-body d-flex flex-column text-center pt-0">
             <small class="text-muted text-uppercase fw-bold" style="font-size:0.55rem">${p.category_name || "Sản phẩm"}</small>
@@ -50,8 +56,8 @@ window.loadProducts = async function () {
             </div>
           </div>
         </div>
-      </div>`,
-      )
+      </div>`;
+      })
       .join("");
     window.updatePagination(result.pagination);
   } catch (e) {

@@ -43,12 +43,24 @@ include 'header.php';
 <div class="container py-5">
   <div class="row g-5">
     <div class="col-lg-6">
-      <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-        <img id="mainImage" src="<?php echo htmlspecialchars($product['image']); ?>" class="img-fluid p-4"
-          style="height:420px;object-fit:contain">
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative">
+        <img id="mainImage" src="<?php echo !empty($product['image']) ? '../uploads/' . htmlspecialchars($product['image']) : '../images/no-image.png'; ?>" class="img-fluid p-4"
+          style="height:420px;object-fit:contain" onerror="this.src='../images/no-image.png'">
+
+        <div class="position-absolute bottom-0 end-0 m-3">
+          <label for="uploadImg" class="btn btn-dark btn-sm rounded-circle shadow" title="Đổi ảnh">
+            <i class="fas fa-camera"></i>
+          </label>
+          <input type="file" id="uploadImg" hidden accept="image/*" onchange="uploadProductImage(this)">
+        </div>
+      </div>
+
+      <div id="uploadProgress" class="progress mt-2 d-none" style="height: 5px;">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%">
+        </div>
       </div>
       <div class="d-flex gap-2 mt-3">
-        <img src="<?php echo htmlspecialchars($product['image']); ?>"
+        <img src="<?php echo !empty($product['image']) ? '../uploads/' . htmlspecialchars($product['image']) : '../images/no-image.png'; ?>"
           style="width:70px;height:70px;object-fit:contain;cursor:pointer" class="border rounded p-1 shadow-sm"
           onclick="changeImage(this.src)">
       </div>
@@ -108,8 +120,8 @@ include 'header.php';
     <?php foreach($related as $p): ?>
     <div class="col-md-3">
       <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
-        <img src="<?php echo htmlspecialchars($p['image']); ?>" class="card-img-top p-3"
-          style="height:200px;object-fit:contain">
+        <img src="<?php echo !empty($p['image']) ? '../uploads/' . htmlspecialchars($p['image']) : '../images/no-image.png'; ?>" class="card-img-top p-3"
+          style="height:200px;object-fit:contain" onerror="this.src='../images/no-image.png'">
         <div class="card-body">
           <h6 class="fw-semibold text-truncate"><?php echo htmlspecialchars($p['name']); ?></h6>
           <div class="text-primary fw-bold mb-2"><?php echo formatPrice($p['price']); ?></div>
@@ -233,6 +245,40 @@ function buyNow() {
       } else {
         alert("❌ Có lỗi xảy ra khi xử lý Mua ngay.");
       }
+    });
+}
+
+function uploadProductImage(input) {
+  if (!input.files || !input.files[0]) return;
+
+  const file = input.files[0];
+  const formData = new FormData();
+  formData.append('product_image', file);
+  formData.append('product_id', productId); // Biến productId đã có sẵn ở đầu script của cậu
+
+  // Hiển thị thanh loading
+  const progress = document.getElementById('uploadProgress');
+  progress.classList.remove('d-none');
+
+  fetch('process-upload.php', {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      progress.classList.add('d-none');
+      if (data.success) {
+        // Cập nhật ảnh mới ngay lập tức trên giao diện
+        document.getElementById('mainImage').src = data.newPath + '?t=' + new Date().getTime();
+        alert("✅ Cập nhật ảnh thành công!");
+      } else {
+        alert("❌ Lỗi: " + data.message);
+      }
+    })
+    .catch(err => {
+      progress.classList.add('d-none');
+      console.error(err);
+      alert("❌ Có lỗi xảy ra khi kết nối server.");
     });
 }
 </script>
